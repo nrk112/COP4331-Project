@@ -13,6 +13,6 @@ public interface User {
     public String state = null;
     public String zip = null;
     public boolean isSeller = false;
-    public boolean validateUser(String un, String pw);
+    public boolean validateUser(String pw);
 
 }
