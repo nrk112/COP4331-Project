@@ -14,6 +14,9 @@ public class SignupView extends JFrame {
 
     private final String TITLE = "Shopazon - Signup";
 
+    /**
+     * Constructs and shows the signup view
+     */
     public SignupView() {
         setTitle(TITLE);
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
@@ -61,7 +64,8 @@ public class SignupView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //TODO Check for all the validation of the fields here then call AccountManager.registerUser(). maybe pass this window handle have accountmanger return true when done then close window.
 
-                JOptionPane.showMessageDialog((Component) e.getSource(), "Registration Failed! Please fill in all the forms!");
+                //userName.getText()
+                JOptionPane.showMessageDialog((Component) e.getSource(), userName.getText() + "Registration Failed! Please fill in all the forms!");
 
                 //Close the window
                 dispose();
@@ -69,13 +73,13 @@ public class SignupView extends JFrame {
         });
 
 
-        int fillerX = 5;
+        int fillerX = ProjectConstants.FILLER_X;
         int fillerY = 50;
         mainPanel.add(getFiller(fillerX, fillerY));
         mainPanel.add(heading);
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        fillerY = 10;
+        fillerY = ProjectConstants.FILLER_Y;
         mainPanel.add(getFiller(fillerX, fillerY));
         mainPanel.add(userName);
 

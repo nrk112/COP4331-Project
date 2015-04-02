@@ -78,7 +78,7 @@ public class LoginView extends JFrame {
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (AccountManager.authorizeUser(userName.toString(), password.toString())) {
+                if (AccountManager.getInstance().authorizeUser(userName.toString(), password.toString())) {
                     //Close this window.
                     dispose();
                 }else{
@@ -94,7 +94,7 @@ public class LoginView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Have the AccountManger start the new user registration process.
-                AccountManager.signupClicked();
+                AccountManager.getInstance().signupClicked();
 
                 //Close the window
                 dispose();
@@ -102,13 +102,13 @@ public class LoginView extends JFrame {
         });
 
         //Add the objects to the main panel.
-        int fillerX = 5;
+        int fillerX = ProjectConstants.FILLER_X;
         int fillerY = 100;
         mainPanel.add(getFiller(fillerX, fillerY));
         mainPanel.add(heading);
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        fillerY = 10;
+        fillerY = ProjectConstants.FILLER_Y;
         mainPanel.add(getFiller(fillerX, fillerY));
         mainPanel.add(userName);
         userName.setAlignmentX(Component.CENTER_ALIGNMENT);

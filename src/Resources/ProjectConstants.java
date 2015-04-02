@@ -20,6 +20,30 @@ public interface ProjectConstants {
      */
     int TEXTFIELD_WIDTH = 350;
 
+    /**
+     * @FILLER_X The amount of pixels on the X axis to use as spacing between view objects.
+     */
+    int FILLER_X = 5;
+
+    /**
+     * @FILLER_Y The amount of pixels on the Y axis to use as spacing between view objects.
+     */
+    int FILLER_Y = 10;
+
+    /**
+     * @USER_FILE The location and name of the text file to store the users information in.
+     */
+    String USER_FILE = "\\users.txt";
+
+    /**
+     * @TRANSACTION_FILE The location and name of the text file to store the transaction information in.
+     */
+    String TRANSACTION_FILE = "\\transactions.txt";
+
+    /**
+     * @PRODUCT_FILE The location and name of the text file to store the product information in.
+     */
+    String PRODUCT_FILE = "\\products.txt";
 
 
 }

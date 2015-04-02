@@ -1,23 +1,39 @@
 package controller;
 
-import model.Customer;
+import Resources.ProjectConstants;
+import model.UserModel;
+import view.LoginView;
 import view.SignupView;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by Nick on 3/30/2015.
+ * Handles all functions related to customer registration. Singleton class.
  */
 public class AccountManager {
 
-    private static List<Customer> users = new ArrayList<>();
+    private static final AccountManager instance = new AccountManager();
+    private static List<UserModel> users = new ArrayList<>();
 
-    public AccountManager() {
+    private AccountManager() {
         //TODO we have to make this class a singleton. Also we should start LoginView from here and the main should start this.
         users = new ArrayList<>();
         readUsersFromFile();
+        LoginView loginView = new LoginView();
+    }
+
+    /**
+     * Returns the instance of the AccountManger singleton.
+     * @return the instance.
+     */
+    public static AccountManager getInstance() {
+        return instance;
     }
 
     /**
@@ -27,15 +43,15 @@ public class AccountManager {
      * @param password The password of the user to authorize.
      * @return true if successful.
      */
-    public static boolean authorizeUser(String userName, String password) {
+    public boolean authorizeUser(String userName, String password) {
         boolean isAuthorized = false;
 
         //Find the desired user from all current users.
-        Customer currentUser = null;
+        UserModel currentUser = null;
 
         Iterator userIter = users.iterator();
         while(userIter.hasNext()) {
-            currentUser = (Customer) userIter.next();
+            currentUser = (UserModel) userIter.next();
             if (currentUser.getName().equals(userName)) {
                 break;
             } else {
@@ -49,18 +65,29 @@ public class AccountManager {
         return isAuthorized;
     }
 
-    public static void signupClicked() {
+    public void signupClicked() {
 
         SignupView signupView = new SignupView();
 
     }
 
     /**
-     * Populates this object with all available users.
+     * Populates AccountManager with all available users.
      */
     private static void readUsersFromFile() {
         //TODO figure out how to read files and what format we want it in.
+
+        try (BufferedReader br = new BufferedReader(new FileReader(ProjectConstants.USER_FILE))) {
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                System.out.println(sCurrentLine);
+            }
+
+        } catch (FileNotFoundException e) {
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-
 }

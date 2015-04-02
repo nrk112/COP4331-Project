@@ -3,7 +3,7 @@ package model;
 /**
  *
  */
-public abstract class UserModel implements User {
+public class UserModel {
 
     private String name;
 

@@ -1,9 +1,9 @@
-import view.LoginView;
+import controller.AccountManager;
 
 import java.awt.*;
 
 /**
- * Created by Nick on 3/30/2015.
+ * The entry point for the program.
  */
 public class Shopazon {
 
@@ -13,7 +13,8 @@ public class Shopazon {
 
             @Override
             public void run() {
-                LoginView mainProgram = new LoginView();
+                //Call the getInstance function to have it create itself and start the program.
+                AccountManager.getInstance();
             }
         });
 
