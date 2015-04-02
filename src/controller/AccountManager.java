@@ -22,10 +22,9 @@ public class AccountManager {
     private static List<UserModel> users = new ArrayList<>();
 
     private AccountManager() {
-        //TODO we have to make this class a singleton. Also we should start LoginView from here and the main should start this.
         users = new ArrayList<>();
         readUsersFromFile();
-        LoginView loginView = new LoginView();
+        new LoginView();
     }
 
     /**
@@ -52,7 +51,7 @@ public class AccountManager {
         Iterator userIter = users.iterator();
         while(userIter.hasNext()) {
             currentUser = (UserModel) userIter.next();
-            if (currentUser.getName().equals(userName)) {
+            if (currentUser.getUsername().equals(userName)) {
                 break;
             } else {
                 return isAuthorized;
@@ -66,9 +65,7 @@ public class AccountManager {
     }
 
     public void signupClicked() {
-
-        SignupView signupView = new SignupView();
-
+        new SignupView();
     }
 
     /**

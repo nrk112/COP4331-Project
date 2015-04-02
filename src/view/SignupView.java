@@ -100,6 +100,7 @@ public class SignupView extends JFrame {
                 userName.getText();
                 JOptionPane.showMessageDialog((Component) e.getSource(), "Registration Failed! Please fill in all the forms!");
 
+                new LoginView();
                 //Close the window
                 dispose();
             }
