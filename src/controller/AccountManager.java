@@ -5,6 +5,8 @@ import model.Buyer;
 import model.Seller;
 import model.UserModel;
 import view.LoginView;
+import view.MarketPlaceView;
+import view.SellerListView;
 import view.SignupView;
 
 import java.io.BufferedReader;
@@ -45,28 +47,32 @@ public class AccountManager {
      * @return true if successful.
      */
     public boolean authorizeUser(String userName, String password) {
-        boolean isAuthorized = false;
 
+        UserModel currentUser;
         //Find the desired user from all current users.
-        UserModel currentUser = null;
-
         Iterator userIter = users.iterator();
         while(userIter.hasNext()) {
             currentUser = (UserModel) userIter.next();
-            if (currentUser.getUsername().equals(userName)) {
-                isAuthorized = currentUser.validateUser(password);
+            if (currentUser.getUsername().equals(userName) && currentUser.validateUser(password)) {
+                if (currentUser.isSeller()) {
+                    Seller seller = (Seller) currentUser;
+                    new SellerListView(seller);
+                } else {
+                    Buyer buyer = (Buyer) currentUser;
+                    new MarketPlaceView(buyer);
+                }
+
                 break;
             }
         }
-        return isAuthorized;
+        return true;
     }
 
     /**
      * Add a user to the list.
      * @param user the user to add
-     * @return true if successful false if failed.
      */
-    public void addUser(UserModel user) {
+    private void addUser(UserModel user) {
         users.add(user);
     }
 
@@ -79,9 +85,8 @@ public class AccountManager {
      * @param state The users state.
      * @param zip The users zip code.
      * @param isSeller True if the user is a seller.
-     * @return True if the user was successfully created.
      */
-    public boolean createUser(String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+    public void createUser(String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
         //Check if they are registering as a buyer or seller.
         if (!isSeller) {
             Buyer user = new Buyer(
@@ -106,14 +111,10 @@ public class AccountManager {
             );
             AccountManager.getInstance().addUser(user);
         }
-
-        //TODO: return true if successful.
-        return true;
     }
 
-
     /**
-     *
+     *Loads the signup view page for a user to register.
      */
     public void signupClicked() {
         new SignupView();

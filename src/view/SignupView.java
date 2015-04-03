@@ -227,7 +227,6 @@ public class SignupView extends JFrame {
                 zip.getText().matches("[0-9]{5}")
                 ){
             isValid = true;
-            JOptionPane.showMessageDialog(this, new String(password.getPassword()));
         }
         return isValid;
     }

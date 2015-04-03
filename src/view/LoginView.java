@@ -82,7 +82,7 @@ public class LoginView extends JFrame {
                 if (AccountManager.getInstance().authorizeUser(userName.getText(), pass)) {
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Success! Welcome!");
                     //Close this window.
-                    dispose();
+                    //dispose();
                 }else{
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Login Failed! Please try again!");
                 }
