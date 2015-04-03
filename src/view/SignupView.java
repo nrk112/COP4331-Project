@@ -1,8 +1,7 @@
 package view;
 
 import Resources.ProjectConstants;
-import model.Buyer;
-import model.Seller;
+import controller.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +15,14 @@ import java.awt.event.KeyEvent;
 public class SignupView extends JFrame {
 
     private final String TITLE = "Shopazon - Signup";
+
+    private final JTextField fullName;
+    private final JTextField userName;
+    private final JPasswordField password;
+    private final JTextField streetAddress;
+    private final JTextField city;
+    private final JTextField state;
+    private final JTextField zip;
 
     /**
      * Constructs and shows the signup view
@@ -37,14 +44,15 @@ public class SignupView extends JFrame {
         JLabel heading = new JLabel("Thank you for choosing Shopazon! Please fill in the following information to get started!");
 
         //Create the JTextFields
-        JTextField userName = createTextField("User Name");
-        JTextField streetAddress = createTextField("Street Address");
-        JTextField city = createTextField("City");
-        JTextField state = createTextField("State");
-        JTextField zip = createTextField("Zip");
+        fullName = createTextField("Full Name");
+        userName = createTextField("User Name");
+        streetAddress = createTextField("Street Address");
+        city = createTextField("City");
+        state = createTextField("State");
+        zip = createTextField("Zip");
 
         //Create the password field
-        JPasswordField password = new JPasswordField("Password");
+        password = new JPasswordField("Password");
         password.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, password.getPreferredSize().height));
 
@@ -86,23 +94,47 @@ public class SignupView extends JFrame {
 
         //Create the Register button.
         JButton registerBtn = new JButton("Register");
+        //Allow enter to press the button at any time.
+        this.getRootPane().setDefaultButton(registerBtn);
         registerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Check for all the validation of the fields here then call AccountManager.registerUser(). maybe pass this window handle have accountmanger return true when done then close window.
-                //Check if they are registering as a buyer or seller.
-                if (buyerButton.isSelected()) {
-                    Buyer user;
+
+                //If the input is valid, send the data to create a user.
+                if (validateFields()) {
+                    //Check if they are registering as a buyer or seller.
+                    if (buyerButton.isSelected()) {
+                        AccountManager.getInstance().createUser(
+                                userName.getText(),
+                                new String(password.getPassword()),
+                                streetAddress.getText(),
+                                city.getText(),
+                                state.getText(),
+                                zip.getText(),
+                                false
+                        );
+                    } else {
+                        AccountManager.getInstance().createUser(
+                                userName.getText(),
+                                new String(password.getPassword()),
+                                streetAddress.getText(),
+                                city.getText(),
+                                state.getText(),
+                                zip.getText(),
+                                true
+                        );
+                    }
+
+                    JOptionPane.showMessageDialog((Component) e.getSource(), "Success! Please log in.");
+                    //Go back to login view for the user to log in with new credentials.
+                    new LoginView();
+                    //Close the window
+                    dispose();
+
+                //Otherwise give the error message and let them try again.
                 } else {
-                    Seller user;
+                    JOptionPane.showMessageDialog((Component) e.getSource(), "Registration Failed! Please fill in all the forms properly!");
                 }
-
-                userName.getText();
-                JOptionPane.showMessageDialog((Component) e.getSource(), "Registration Failed! Please fill in all the forms!");
-
-                new LoginView();
-                //Close the window
-                dispose();
             }
         });
 
@@ -113,6 +145,10 @@ public class SignupView extends JFrame {
         mainPanel.add(getFiller(fillerX, fillerY));
         mainPanel.add(heading);
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        fillerY = ProjectConstants.FILLER_Y;
+        mainPanel.add(getFiller(fillerX, fillerY));
+        mainPanel.add(fullName);
 
         fillerY = ProjectConstants.FILLER_Y;
         mainPanel.add(getFiller(fillerX, fillerY));
@@ -174,6 +210,28 @@ public class SignupView extends JFrame {
         textField.setAlignmentX(Component.CENTER_ALIGNMENT);
         return textField;
     }
+
+    /**
+     * Validates the registration text fields.
+     * @return True if all fields are valid.
+     */
+    private boolean validateFields() {
+        boolean isValid = false;
+        if (
+                fullName.getText().matches("[a-zA-Z]+[ ][a-zA-Z]+") &&
+                userName.getText().matches("[A-Za-z0-9]+") &&
+                //password.getPassword().toString().matches("") &&
+                streetAddress.getText().matches("[0-9]+[ ][A-Za-z0-9]+(.+)?") &&
+                city.getText().matches("[A-Za-z[ ]]+") &&
+                state.getText().matches("[A-Za-z]+") &&
+                zip.getText().matches("[0-9]{5}")
+                ){
+            isValid = true;
+            JOptionPane.showMessageDialog(this, new String(password.getPassword()));
+        }
+        return isValid;
+    }
+
 
     /**
      * Creates the radio button grouping and puts the buttons in a panel for the user to select whether or not they are a buyer or seller upon registration.

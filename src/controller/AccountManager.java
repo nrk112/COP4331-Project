@@ -1,6 +1,8 @@
 package controller;
 
 import Resources.ProjectConstants;
+import model.Buyer;
+import model.Seller;
 import model.UserModel;
 import view.LoginView;
 import view.SignupView;
@@ -52,18 +54,67 @@ public class AccountManager {
         while(userIter.hasNext()) {
             currentUser = (UserModel) userIter.next();
             if (currentUser.getUsername().equals(userName)) {
+                isAuthorized = currentUser.validateUser(password);
                 break;
-            } else {
-                return isAuthorized;
             }
         }
-
-        //TODO authorize the user this is not yet working
-        //isAuthorized = currentUser.validateUser(password);
-
         return isAuthorized;
     }
 
+    /**
+     * Add a user to the list.
+     * @param user the user to add
+     * @return true if successful false if failed.
+     */
+    public void addUser(UserModel user) {
+        users.add(user);
+    }
+
+    /**
+     * Create a user, then add it to the list.
+     * @param username The users name.
+     * @param password The users password.
+     * @param streetAddress The users street address.
+     * @param city The users city.
+     * @param state The users state.
+     * @param zip The users zip code.
+     * @param isSeller True if the user is a seller.
+     * @return True if the user was successfully created.
+     */
+    public boolean createUser(String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+        //Check if they are registering as a buyer or seller.
+        if (!isSeller) {
+            Buyer user = new Buyer(
+                    username,
+                    password,
+                    streetAddress,
+                    city,
+                    state,
+                    zip,
+                    isSeller
+            );
+            AccountManager.getInstance().addUser(user);
+        } else {
+            Seller user = new Seller(
+                    username,
+                    password,
+                    streetAddress,
+                    city,
+                    state,
+                    zip,
+                    isSeller
+            );
+            AccountManager.getInstance().addUser(user);
+        }
+
+        //TODO: return true if successful.
+        return true;
+    }
+
+
+    /**
+     *
+     */
     public void signupClicked() {
         new SignupView();
     }

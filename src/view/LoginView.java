@@ -78,7 +78,9 @@ public class LoginView extends JFrame {
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (AccountManager.getInstance().authorizeUser(userName.toString(), password.toString())) {
+                String pass = new String(password.getPassword());
+                if (AccountManager.getInstance().authorizeUser(userName.getText(), pass)) {
+                    JOptionPane.showMessageDialog((Component) e.getSource(), "Success! Welcome!");
                     //Close this window.
                     dispose();
                 }else{

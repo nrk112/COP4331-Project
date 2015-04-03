@@ -29,14 +29,13 @@ public abstract class UserModel implements User {
         //TODO If passwords are encrypted we can decrypt here.
         boolean isValidated = false;
 
-        if (password == null) {
-            return isValidated;
-        }
         if (this.password.equals(pw)) {
             isValidated = true;
         }
         return isValidated;
     }
+
+
 
     public boolean isSeller() {
         return isSeller;
