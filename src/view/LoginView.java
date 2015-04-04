@@ -37,7 +37,7 @@ public class LoginView extends JFrame {
         JLabel heading = new JLabel("Thank you for choosing Shopazon! Please log in to continue.");
 
         //Create the username fields
-        JTextField userName = new JTextField("User Name");
+        final JTextField userName = new JTextField("User Name");
         userName.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, userName.getPreferredSize().height));
 
@@ -54,7 +54,7 @@ public class LoginView extends JFrame {
         });
 
         //Create the password field
-        JPasswordField password = new JPasswordField("Password");
+        final JPasswordField password = new JPasswordField("Password");
         password.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, password.getPreferredSize().height));
 

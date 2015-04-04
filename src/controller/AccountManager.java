@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import model.UserFactory;
 
 /**
  * Handles all functions related to customer registration. Singleton class.
@@ -48,7 +49,6 @@ public class AccountManager {
      */
     public boolean authorizeUser(String userName, String password) {
 
-        boolean isAuthorized = false;
 
         UserModel currentUser;
         //Find the desired user from all current users.
@@ -63,11 +63,11 @@ public class AccountManager {
                     Buyer buyer = (Buyer) currentUser;
                     new MarketPlaceView(buyer);
                 }
-                isAuthorized = true;
+
                 break;
             }
         }
-        return isAuthorized;
+        return false;
     }
 
     /**
@@ -90,31 +90,8 @@ public class AccountManager {
      */
     public void createUser(String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
         //Check if they are registering as a buyer or seller.
-        if (!isSeller) {
-            Buyer user = new Buyer(
-                    fullName,
-                    username,
-                    password,
-                    streetAddress,
-                    city,
-                    state,
-                    zip,
-                    isSeller
-            );
+        UserModel user = UserFactory.CreateUser(username, password, streetAddress, city, state, zip, isSeller);
             AccountManager.getInstance().addUser(user);
-        } else {
-            Seller user = new Seller(
-                    fullName,
-                    username,
-                    password,
-                    streetAddress,
-                    city,
-                    state,
-                    zip,
-                    isSeller
-            );
-            AccountManager.getInstance().addUser(user);
-        }
     }
 
     /**
