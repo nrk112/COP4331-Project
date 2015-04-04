@@ -6,6 +6,7 @@ package model;
 public abstract class UserModel implements User {
 
     private int ID = -1;
+    private String fullName = null;
     private String username = null;
     private String password;
     private String streetAddress = null;
@@ -14,7 +15,8 @@ public abstract class UserModel implements User {
     private String zip = null;
     private boolean isSeller = false;
 
-    public UserModel(String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+    public UserModel(String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+        this.fullName = fullName;
         this.username = username;
         this.password = password;
         this.streetAddress = streetAddress;
@@ -35,7 +37,9 @@ public abstract class UserModel implements User {
         return isValidated;
     }
 
-
+    public String getFullName() {
+        return fullName;
+    }
 
     public boolean isSeller() {
         return isSeller;

@@ -6,6 +6,7 @@ package model;
 public interface User {
 
     public int ID = -1;
+    public String fullName = null;
     public String username = null;
     public String password = null;
     public String streetAddress = null;

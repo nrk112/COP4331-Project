@@ -105,6 +105,7 @@ public class SignupView extends JFrame {
                     //Check if they are registering as a buyer or seller.
                     if (buyerButton.isSelected()) {
                         AccountManager.getInstance().createUser(
+                                fullName.getText(),
                                 userName.getText(),
                                 new String(password.getPassword()),
                                 streetAddress.getText(),
@@ -115,6 +116,7 @@ public class SignupView extends JFrame {
                         );
                     } else {
                         AccountManager.getInstance().createUser(
+                                fullName.getText(),
                                 userName.getText(),
                                 new String(password.getPassword()),
                                 streetAddress.getText(),
@@ -218,12 +220,12 @@ public class SignupView extends JFrame {
     private boolean validateFields() {
         boolean isValid = false;
         if (
-                fullName.getText().matches("[a-zA-Z]+[ ][a-zA-Z]+") &&
-                userName.getText().matches("[A-Za-z0-9]+") &&
+                //fullName.getText().matches("[a-zA-Z]+[ ][a-zA-Z]+") &&
+                //userName.getText().matches("[A-Za-z0-9]+") &&
                 //password.getPassword().toString().matches("") &&
-                streetAddress.getText().matches("[0-9]+[ ][A-Za-z0-9]+(.+)?") &&
-                city.getText().matches("[A-Za-z[ ]]+") &&
-                state.getText().matches("[A-Za-z]+") &&
+                //streetAddress.getText().matches("[0-9]+[ ][A-Za-z0-9]+(.+)?") &&
+                //city.getText().matches("[A-Za-z[ ]]+") &&
+                //state.getText().matches("[A-Za-z]+") &&
                 zip.getText().matches("[0-9]{5}")
                 ){
             isValid = true;

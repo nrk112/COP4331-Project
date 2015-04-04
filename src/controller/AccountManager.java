@@ -48,6 +48,8 @@ public class AccountManager {
      */
     public boolean authorizeUser(String userName, String password) {
 
+        boolean isAuthorized = false;
+
         UserModel currentUser;
         //Find the desired user from all current users.
         Iterator userIter = users.iterator();
@@ -61,11 +63,11 @@ public class AccountManager {
                     Buyer buyer = (Buyer) currentUser;
                     new MarketPlaceView(buyer);
                 }
-
+                isAuthorized = true;
                 break;
             }
         }
-        return true;
+        return isAuthorized;
     }
 
     /**
@@ -86,10 +88,11 @@ public class AccountManager {
      * @param zip The users zip code.
      * @param isSeller True if the user is a seller.
      */
-    public void createUser(String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+    public void createUser(String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
         //Check if they are registering as a buyer or seller.
         if (!isSeller) {
             Buyer user = new Buyer(
+                    fullName,
                     username,
                     password,
                     streetAddress,
@@ -101,6 +104,7 @@ public class AccountManager {
             AccountManager.getInstance().addUser(user);
         } else {
             Seller user = new Seller(
+                    fullName,
                     username,
                     password,
                     streetAddress,

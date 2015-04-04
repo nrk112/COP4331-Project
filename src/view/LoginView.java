@@ -80,9 +80,8 @@ public class LoginView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String pass = new String(password.getPassword());
                 if (AccountManager.getInstance().authorizeUser(userName.getText(), pass)) {
-                    JOptionPane.showMessageDialog((Component) e.getSource(), "Success! Welcome!");
                     //Close this window.
-                    //dispose();
+                    dispose();
                 }else{
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Login Failed! Please try again!");
                 }
@@ -146,9 +145,7 @@ public class LoginView extends JFrame {
      * @return the Filler component to add to another component for whitespace.
      */
     private Component getFiller(int x, int y) {
-        Dimension minSize = new Dimension(x, y);
-        Dimension prefSize = new Dimension(x, y);
-        Dimension maxSize = new Dimension(x, y);
-        return new Box.Filler(minSize, prefSize, maxSize);
+        Dimension size = new Dimension(x, y); //Same min max and preferred size.
+        return new Box.Filler(size, size, size);
     }
 }
