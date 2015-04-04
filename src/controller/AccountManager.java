@@ -127,7 +127,7 @@ public class AccountManager {
     /**
      * Populates AccountManager with all available users.
      */
-    private static void readUsersFromFile() {
+    public void readUsersFromFile() {
         //TODO figure out how to read files and what format we want it in.
 
         try (BufferedReader br = new BufferedReader(new FileReader(ProjectConstants.USER_FILE))) {
@@ -142,5 +142,9 @@ public class AccountManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void writeUsersToFile() {
+
     }
 }

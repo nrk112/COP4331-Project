@@ -5,9 +5,7 @@ import controller.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * The window where users can sign up for service.
@@ -55,14 +53,16 @@ public class SignupView extends JFrame {
         password = new JPasswordField("Password");
         password.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, password.getPreferredSize().height));
+        password.setEchoChar((char)0);
 
-        //The will highlight the text when it gets focus since its pre-populated.
-        password.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
+        //The will highlight the text and hide it when it gets focus since its pre-populated.
+        password.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent evt) {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         password.selectAll();
+                        password.setEchoChar('*');
                     }
                 });
             }

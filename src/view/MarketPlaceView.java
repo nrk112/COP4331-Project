@@ -16,6 +16,7 @@ public class MarketPlaceView extends JFrame {
 
     public MarketPlaceView(Buyer user) {
 
+        //Set window properties
         setTitle("Shopazon - Marketplace");
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -28,15 +29,47 @@ public class MarketPlaceView extends JFrame {
 
         //Create the heading panel where the shopping cart link will be.
         JPanel headingPanel = new JPanel(new BorderLayout(10,10));
-        String nameLink = user.getFullName() + " - Cart";
-        JLabel nameLinkLabel = new JLabel(nameLink);
-        nameLinkLabel.setFont(new Font("Calibri", Font.BOLD, 24));
-        nameLinkLabel.setBorder(new EmptyBorder(3,0,0,10));
-        headingPanel.add(nameLinkLabel, BorderLayout.EAST);
+        String cartLink = user.getFullName() + " - Cart";
+        JLabel cartLinkLabel = new JLabel(cartLink);
+        cartLinkLabel.setFont(new Font("Calibri", Font.BOLD, 24));
+        cartLinkLabel.setBorder(new EmptyBorder(3, 0, 0, 10));
+
+        //Add the mouse click listener to the label.
+        cartLinkLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                JOptionPane.showMessageDialog((Component) e.getSource(), "This will eventually go to the shopping cart...");
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+
+
+        headingPanel.add(cartLinkLabel, BorderLayout.EAST);
 
         //Create the scrollable product panel.
         JPanel productPanel = new JPanel(new GridLayout(0,3,10,10));
         productPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        productPanel.setBackground(Color.WHITE);
         JScrollPane scrollProductPanel = new JScrollPane(productPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         //Generate fake products for now.
@@ -84,13 +117,12 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                JOptionPane.showMessageDialog((Component) e.getSource(), "Here is some stuff about your item....  buy lots of them!");
 
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                JOptionPane.showMessageDialog((Component) e.getSource(), "Here is some stuff about your item....  buy lots of them!");
             }
 
             @Override

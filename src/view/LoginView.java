@@ -5,13 +5,12 @@ import controller.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  * The login window where a user can log in as either a buyer or a seller.
  */
-public class LoginView extends JFrame {
+public class LoginView extends JFrame implements WindowListener{
 
     //Window properties
     private final String TITLE = "Shopazon - Login";
@@ -55,6 +54,7 @@ public class LoginView extends JFrame {
 
         //Create the password field
         JPasswordField password = new JPasswordField("Password");
+        password.setEchoChar((char)0);
         password.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, password.getPreferredSize().height));
 
@@ -65,6 +65,7 @@ public class LoginView extends JFrame {
                     @Override
                     public void run() {
                         password.selectAll();
+                        password.setEchoChar('*');
                     }
                 });
             }
@@ -94,9 +95,7 @@ public class LoginView extends JFrame {
         registerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Have the AccountManger start the new user registration process.
                 AccountManager.getInstance().signupClicked();
-
                 //Close the window
                 dispose();
             }
@@ -147,5 +146,40 @@ public class LoginView extends JFrame {
     private Component getFiller(int x, int y) {
         Dimension size = new Dimension(x, y); //Same min max and preferred size.
         return new Box.Filler(size, size, size);
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        AccountManager.getInstance().writeUsersToFile();
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }
