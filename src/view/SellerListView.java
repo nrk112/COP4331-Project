@@ -21,8 +21,12 @@ public class SellerListView extends JFrame {
 
         //Make the main JPanel to use in the Frame
         JPanel mainPanel = new JPanel();
+
+        //TODO Put the code to create the window here.
         mainPanel.add(new JLabel("Here be more dragons!"));
-        this.add(mainPanel);
-        this.setVisible(true);
+
+        //Show the window
+        add(mainPanel);
+        setVisible(true);
     }
 }

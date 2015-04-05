@@ -15,7 +15,8 @@ public abstract class UserModel implements User {
     private String zip = null;
     private boolean isSeller = false;
 
-    public UserModel(String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+    public UserModel(int userID, String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+        this.ID = userID;
         this.fullName = fullName;
         this.username = username;
         this.password = password;
@@ -71,5 +72,9 @@ public abstract class UserModel implements User {
 
     public int getID() {
         return ID;
+    }
+
+    public boolean getIsSeller() {
+        return isSeller;
     }
 }

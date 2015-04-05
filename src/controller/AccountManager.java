@@ -3,31 +3,42 @@ package controller;
 import Resources.ProjectConstants;
 import model.Buyer;
 import model.Seller;
+import model.UserFactory;
 import model.UserModel;
 import view.LoginView;
 import view.MarketPlaceView;
 import view.SellerListView;
 import view.SignupView;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import model.UserFactory;
+import java.util.Scanner;
 
 /**
  * Handles all functions related to customer registration. Singleton class.
  */
 public class AccountManager {
 
-    private static final AccountManager instance = new AccountManager();
-    private static List<UserModel> users = new ArrayList<>();
+    private static final AccountManager INSTANCE = new AccountManager();
+    private final List<UserModel> users = new ArrayList<>();
 
+    /**
+     * Constructor does nothing.
+     */
     private AccountManager() {
-        users = new ArrayList<>();
+    }
+
+    /**
+     * Starts the program.
+     */
+    public void startProgram() {
+        //Required because INSTANCE appears to stay null until the constructor finishes.
+        // Cant call readUsersFromFile in constructor.
         readUsersFromFile();
         new LoginView();
     }
@@ -37,7 +48,7 @@ public class AccountManager {
      * @return the instance.
      */
     public static AccountManager getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -49,6 +60,7 @@ public class AccountManager {
      */
     public boolean authorizeUser(String userName, String password) {
 
+        boolean isAuthorized = false;
 
         UserModel currentUser;
         //Find the desired user from all current users.
@@ -63,11 +75,11 @@ public class AccountManager {
                     Buyer buyer = (Buyer) currentUser;
                     new MarketPlaceView(buyer);
                 }
-
+                isAuthorized = true;
                 break;
             }
         }
-        return false;
+        return isAuthorized;
     }
 
     /**
@@ -80,6 +92,7 @@ public class AccountManager {
 
     /**
      * Create a user, then add it to the list.
+     * @param fullName The users full name.
      * @param username The users name.
      * @param password The users password.
      * @param streetAddress The users street address.
@@ -88,10 +101,24 @@ public class AccountManager {
      * @param zip The users zip code.
      * @param isSeller True if the user is a seller.
      */
-    public void createUser(String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
-        //Check if they are registering as a buyer or seller.
-        UserModel user = UserFactory.CreateUser(username, password, streetAddress, city, state, zip, isSeller);
-            AccountManager.getInstance().addUser(user);
+    public void createUser(int userID, String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+        UserModel user = UserFactory.CreateUser(userID, fullName, username, password, streetAddress, city, state, zip, isSeller);
+            addUser(user);
+    }
+
+    /**
+     * Create a sequential userID.
+     * @return the userID.
+     */
+    public int getNewUserId(){
+        int newID;
+        if (users.isEmpty()){
+            newID = 0;
+        } else {
+            //Get last userID
+            newID = users.get(users.size() - 1).getID();
+        }
+        return newID + 1;
     }
 
     /**
@@ -105,23 +132,78 @@ public class AccountManager {
      * Populates AccountManager with all available users.
      */
     public void readUsersFromFile() {
-        //TODO figure out how to read files and what format we want it in.
 
-        try (BufferedReader br = new BufferedReader(new FileReader(ProjectConstants.USER_FILE))) {
-            String sCurrentLine;
+        String[] data = new String[9];
+        int index = 0;
+        String field;
 
-            while ((sCurrentLine = br.readLine()) != null) {
-                System.out.println(sCurrentLine);
+        try(FileReader fileReader = new FileReader(ProjectConstants.USER_FILE)) {
+            //Create the scanner
+            Scanner scanner = new Scanner(fileReader);
+
+            //Set the scanner to use commas and any amount of spaces for the delimiter
+            scanner.useDelimiter(", *");
+
+            //On each line, loop through each field.
+            while (scanner.hasNext()) {
+                field = scanner.next();
+                data[index] = field;
+                index++;
+
+                if (index == 9) {
+
+                    index = 0;
+
+                    //Create the user
+                    AccountManager.getInstance().createUser(
+                            //Convert string to integer and remove return characters.
+                            Integer.parseInt(data[0].replaceAll("[\\r\\n]", "")),    //userID
+                            data[1],    //FullName
+                            data[2],    //userName
+                            data[3],    //password
+                            data[4],    //Street address
+                            data[5],    //city
+                            data[6],    //State
+                            data[7],    //Zip
+                            data[8].equals("true")    //Seller status
+                    );
+                }
             }
-
-        } catch (FileNotFoundException e) {
-            return;
-        } catch (IOException e) {
+            fileReader.close();
+        } catch (Exception e) { //NumberFormatException or IOException
             e.printStackTrace();
         }
     }
 
+    /**
+     * Writes all user data from all users to a text file.
+     */
     public void writeUsersToFile() {
 
+        try(final FileWriter fw = new FileWriter(ProjectConstants.USER_FILE)) {
+            final PrintWriter pw = new PrintWriter(fw);
+
+            UserModel currentUser;
+            //Find the desired user from all current users.
+            Iterator userIter = users.iterator();
+            while(userIter.hasNext()) {
+                currentUser = (UserModel) userIter.next();
+                pw.println(
+                        currentUser.getID() + "," +
+                        currentUser.getFullName() + "," +
+                        currentUser.getUsername() + "," +
+                        currentUser.getPassword() + "," +
+                        currentUser.getStreetAddress() + "," +
+                        currentUser.getCity() + "," +
+                        currentUser.getState() + "," +
+                        currentUser.getZip() + "," +
+                        currentUser.getIsSeller() + ","
+                );
+            }
+            pw.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

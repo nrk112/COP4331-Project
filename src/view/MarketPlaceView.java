@@ -31,7 +31,7 @@ public class MarketPlaceView extends JFrame {
         JPanel headingPanel = new JPanel(new BorderLayout(10,10));
         String cartLink = user.getFullName() + " - Cart";
         JLabel cartLinkLabel = new JLabel(cartLink);
-        cartLinkLabel.setFont(new Font("Calibri", Font.BOLD, 24));
+        cartLinkLabel.setFont(ProjectConstants.TITLE_FONT);
         cartLinkLabel.setBorder(new EmptyBorder(3, 0, 0, 10));
 
         //Add the mouse click listener to the label.

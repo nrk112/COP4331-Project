@@ -5,9 +5,10 @@ package model;
  */
 public class UserFactory {
 
-    public static UserModel CreateUser(String fullname, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
+    public static UserModel CreateUser(int userID, String fullname, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
         if (!isSeller) {
             Buyer user = new Buyer(
+                    userID,
 					fullname,
                     username,
                     password,
@@ -20,6 +21,7 @@ public class UserFactory {
             return user;
         } else {
             Seller user = new Seller(
+                    userID,
 					fullname,
                     username,
                     password,

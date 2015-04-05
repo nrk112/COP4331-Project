@@ -93,7 +93,7 @@ public class SignupView extends JFrame {
         radioPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Create the Register button.
-        JButton registerBtn = new JButton("Register");
+        final JButton registerBtn = new JButton("Register");
         //Allow enter to press the button at any time.
         this.getRootPane().setDefaultButton(registerBtn);
         registerBtn.addActionListener(new ActionListener() {
@@ -104,6 +104,7 @@ public class SignupView extends JFrame {
                 if (validateFields()) {
                     //Check if they are registering as a buyer or seller.
                         AccountManager.getInstance().createUser(
+                                AccountManager.getInstance().getNewUserId(),
                                 fullName.getText(),
                                 userName.getText(),
                                 new String(password.getPassword()),
@@ -117,6 +118,10 @@ public class SignupView extends JFrame {
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Success! Please log in.");
                     //Go back to login view for the user to log in with new credentials.
                     new LoginView();
+
+                    //TODO: Figure out how to make the account manager automatically write to the file on quit.
+                    AccountManager.getInstance().writeUsersToFile();
+
                     //Close the window
                     dispose();
 
@@ -131,6 +136,7 @@ public class SignupView extends JFrame {
         //Add all the components to the main panel
         int fillerX = ProjectConstants.FILLER_X;
         int fillerY = 50;
+
         mainPanel.add(getFiller(fillerX, fillerY));
         mainPanel.add(heading);
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -205,51 +211,15 @@ public class SignupView extends JFrame {
      * @return True if all fields are valid.
      */
     private boolean validateFields() {
-        //boolean isValid = false;
         return (
-                fullName.getText().matches("[a-zA-Z]+[ ][a-zA-Z]+") &&
-                userName.getText().matches("[A-Za-z0-9]+") &&
+                //fullName.getText().matches("[a-zA-Z]+[ ][a-zA-Z]+") &&
+                //userName.getText().matches("[A-Za-z0-9]+") &&
                 //password.getPassword().toString().matches("") &&
-                streetAddress.getText().matches("[0-9]+[ ][A-Za-z0-9]+(.+)?") &&
-                city.getText().matches("[A-Za-z[ ]]+") &&
-                state.getText().matches("[A-Za-z]+") &&
+                //streetAddress.getText().matches("[0-9]+[ ][A-Za-z0-9]+(.+)?") &&
+                //city.getText().matches("[A-Za-z[ ]]+") &&
+                //state.getText().matches("[A-Za-z]+") &&
                 zip.getText().matches("[0-9]{5}")
                 );
-                //{isValid = true;}
-        //return isValid;
-    }
-
-
-    /**
-     * Creates the radio button grouping and puts the buttons in a panel for the user to select whether or not they are a buyer or seller upon registration.
-     * @return the JPanel.
-     */
-    private JPanel getRadioButtonPanel() {
-
-        JPanel radioPanel = new JPanel(new GridLayout(0, 1));
-
-        //Create the buttons
-        JRadioButton buyerButton = new JRadioButton("I am a Buyer");
-        buyerButton.setMnemonic(KeyEvent.VK_B);
-        buyerButton.setSelected(true);
-
-        JRadioButton sellerButton = new JRadioButton("I am a Seller");
-        sellerButton.setMnemonic(KeyEvent.VK_S);
-
-        //Create the button group
-        ButtonGroup group = new ButtonGroup();
-        group.add(buyerButton);
-        group.add(sellerButton);
-
-        //Add the buttons to the panel
-        radioPanel.add(buyerButton);
-        radioPanel.add(sellerButton);
-
-        //Set panel specs
-        radioPanel.setMaximumSize(new Dimension(100, 40));
-        radioPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        return radioPanel;
     }
 
     /**
@@ -259,9 +229,7 @@ public class SignupView extends JFrame {
      * @return the Filler component to add to another component for whitespace.
      */
     private Component getFiller(int x, int y) {
-        Dimension minSize = new Dimension(x, y);
-        Dimension prefSize = new Dimension(x, y);
-        Dimension maxSize = new Dimension(x, y);
-        return new Box.Filler(minSize, prefSize, maxSize);
+        Dimension size = new Dimension(x, y);
+        return new Box.Filler(size, size, size);//Min Max and Preferred are all the same
     }
 }

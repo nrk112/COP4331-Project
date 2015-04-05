@@ -57,6 +57,7 @@ public class LoginView extends JFrame {
         final JPasswordField password = new JPasswordField("Password");
         password.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, password.getPreferredSize().height));
+        password.setEchoChar((char)0);
 
         //The will highlight the text when it gets focus since its pre-populated.
         password.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -65,6 +66,7 @@ public class LoginView extends JFrame {
                     @Override
                     public void run() {
                         password.selectAll();
+                        password.setEchoChar('*');
                     }
                 });
             }

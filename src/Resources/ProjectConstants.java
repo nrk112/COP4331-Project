@@ -1,5 +1,7 @@
 package Resources;
 
+import java.awt.*;
+
 /**
  * Holds any common constant variables that will be used throughout the project.
  */
@@ -30,20 +32,22 @@ public interface ProjectConstants {
      */
     int FILLER_Y = 10;
 
+    Font TITLE_FONT = new Font("Calibri", Font.BOLD, 24);
+
     /**
      * @USER_FILE The location and name of the text file to store the users information in.
      */
-    String USER_FILE = "\\users.txt";
+    String USER_FILE = "users.txt";
 
     /**
      * @TRANSACTION_FILE The location and name of the text file to store the transaction information in.
      */
-    String TRANSACTION_FILE = "\\transactions.txt";
+    String TRANSACTION_FILE = "transactions.txt";
 
     /**
      * @PRODUCT_FILE The location and name of the text file to store the product information in.
      */
-    String PRODUCT_FILE = "\\products.txt";
+    String PRODUCT_FILE = "products.txt";
 
 
 }
