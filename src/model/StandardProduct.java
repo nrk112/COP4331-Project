@@ -9,7 +9,7 @@ package model;
  *
  * abstract class that defines common methods
  */
-public abstract class StandardProduct implements Product{
+public class StandardProduct implements Product{
 
     private int productID = -1;
     private int sellerID = -1;
