@@ -73,10 +73,10 @@ public class SignupView extends JFrame {
         JPanel radioPanel = new JPanel(new GridLayout(0, 1));
 
         //Create the buttons
-        JRadioButton buyerButton = new JRadioButton("I am a Buyer");
+        final JRadioButton buyerButton = new JRadioButton("I am a Buyer");
         buyerButton.setMnemonic(KeyEvent.VK_B);
         buyerButton.setSelected(true);
-        JRadioButton sellerButton = new JRadioButton("I am a Seller");
+        final JRadioButton sellerButton = new JRadioButton("I am a Seller");
         sellerButton.setMnemonic(KeyEvent.VK_S);
 
         //Create the button group
@@ -103,7 +103,6 @@ public class SignupView extends JFrame {
                 //If the input is valid, send the data to create a user.
                 if (validateFields()) {
                     //Check if they are registering as a buyer or seller.
-                    if (buyerButton.isSelected()) {
                         AccountManager.getInstance().createUser(
                                 fullName.getText(),
                                 userName.getText(),
@@ -112,20 +111,8 @@ public class SignupView extends JFrame {
                                 city.getText(),
                                 state.getText(),
                                 zip.getText(),
-                                false
+                                sellerButton.isSelected()
                         );
-                    } else {
-                        AccountManager.getInstance().createUser(
-                                fullName.getText(),
-                                userName.getText(),
-                                new String(password.getPassword()),
-                                streetAddress.getText(),
-                                city.getText(),
-                                state.getText(),
-                                zip.getText(),
-                                true
-                        );
-                    }
 
                     JOptionPane.showMessageDialog((Component) e.getSource(), "Success! Please log in.");
                     //Go back to login view for the user to log in with new credentials.
@@ -193,7 +180,7 @@ public class SignupView extends JFrame {
      */
     private JTextField createTextField(String label) {
 
-        JTextField textField = new JTextField(label);
+        final JTextField textField = new JTextField(label);
         textField.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, textField.getPreferredSize().height));
 
@@ -218,19 +205,18 @@ public class SignupView extends JFrame {
      * @return True if all fields are valid.
      */
     private boolean validateFields() {
-        boolean isValid = false;
-        if (
-                //fullName.getText().matches("[a-zA-Z]+[ ][a-zA-Z]+") &&
-                //userName.getText().matches("[A-Za-z0-9]+") &&
+        //boolean isValid = false;
+        return (
+                fullName.getText().matches("[a-zA-Z]+[ ][a-zA-Z]+") &&
+                userName.getText().matches("[A-Za-z0-9]+") &&
                 //password.getPassword().toString().matches("") &&
-                //streetAddress.getText().matches("[0-9]+[ ][A-Za-z0-9]+(.+)?") &&
-                //city.getText().matches("[A-Za-z[ ]]+") &&
-                //state.getText().matches("[A-Za-z]+") &&
+                streetAddress.getText().matches("[0-9]+[ ][A-Za-z0-9]+(.+)?") &&
+                city.getText().matches("[A-Za-z[ ]]+") &&
+                state.getText().matches("[A-Za-z]+") &&
                 zip.getText().matches("[0-9]{5}")
-                ){
-            isValid = true;
-        }
-        return isValid;
+                );
+                //{isValid = true;}
+        //return isValid;
     }
 
 

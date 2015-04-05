@@ -5,12 +5,13 @@ import controller.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The login window where a user can log in as either a buyer or a seller.
  */
-public class LoginView extends JFrame implements WindowListener{
+public class LoginView extends JFrame {
 
     //Window properties
     private final String TITLE = "Shopazon - Login";
@@ -36,7 +37,7 @@ public class LoginView extends JFrame implements WindowListener{
         JLabel heading = new JLabel("Thank you for choosing Shopazon! Please log in to continue.");
 
         //Create the username fields
-        JTextField userName = new JTextField("User Name");
+        final JTextField userName = new JTextField("User Name");
         userName.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, userName.getPreferredSize().height));
 
@@ -53,8 +54,7 @@ public class LoginView extends JFrame implements WindowListener{
         });
 
         //Create the password field
-        JPasswordField password = new JPasswordField("Password");
-        password.setEchoChar((char)0);
+        final JPasswordField password = new JPasswordField("Password");
         password.setMaximumSize(
                 new Dimension(ProjectConstants.TEXTFIELD_WIDTH, password.getPreferredSize().height));
 
@@ -65,7 +65,6 @@ public class LoginView extends JFrame implements WindowListener{
                     @Override
                     public void run() {
                         password.selectAll();
-                        password.setEchoChar('*');
                     }
                 });
             }
@@ -95,7 +94,9 @@ public class LoginView extends JFrame implements WindowListener{
         registerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO Have the AccountManger start the new user registration process.
                 AccountManager.getInstance().signupClicked();
+
                 //Close the window
                 dispose();
             }
@@ -146,40 +147,5 @@ public class LoginView extends JFrame implements WindowListener{
     private Component getFiller(int x, int y) {
         Dimension size = new Dimension(x, y); //Same min max and preferred size.
         return new Box.Filler(size, size, size);
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-        AccountManager.getInstance().writeUsersToFile();
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
     }
 }
