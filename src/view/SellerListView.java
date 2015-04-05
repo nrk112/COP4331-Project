@@ -3,6 +3,7 @@ package view;
 import Resources.ProjectConstants;
 import controller.SellerManager;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import model.Seller;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.DiscountedProduct;
 import model.Product;
@@ -114,6 +116,15 @@ public class SellerListView extends JFrame {
                     aModel.addRow(objects);                
                 }
             }
+            tbProducts.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {//alternate background color for rows
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (!isSelected) {
+                        c.setBackground(row % 2 == 0 ? Color.white : Color.LIGHT_GRAY);
+                    }
+                    return c;
+                }
+            });            
     this.tbProducts.setModel(aModel);
     }
     JTable tbProducts = new JTable();
