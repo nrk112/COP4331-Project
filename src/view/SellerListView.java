@@ -19,7 +19,7 @@ import model.DiscountedProduct;
 import model.Product;
 
 /**
- * Created by Nick on 4/2/2015.
+ * Presents to the seller a list of their products
  */
 public class SellerListView extends JFrame {
 
