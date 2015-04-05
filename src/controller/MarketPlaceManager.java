@@ -1,6 +1,6 @@
 package controller;
 
-import model.ProductModel;
+import model.Product;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class MarketPlaceManager {
 
     private static final MarketPlaceManager instance = new MarketPlaceManager();
-    private ArrayList<ProductModel> productList;
+    private ArrayList<Product> productList;
 
     private MarketPlaceManager() {
         populateProductList();
