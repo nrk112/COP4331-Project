@@ -46,7 +46,7 @@ public class SellerManager {
      * @param quantity The number of products for sale.
      * @param discountedBy the discount amount as percentage.
      */
-    public void createProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, int discountedBy) {
+    public void createProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy) {
         Product product = ProductFactory.CreateProduct(productID,sellerID, name, description, cost, price, quantity, discountedBy);
          
         addProduct(product);
@@ -118,7 +118,7 @@ public class SellerManager {
                             Double.parseDouble(data[4].replaceAll("[\\r\\n]", "")), //Cost
                             Double.parseDouble(data[5].replaceAll("[\\r\\n]", "")), //Price
                             Integer.parseInt(data[6].replaceAll("[\\r\\n]", "")),   //Quantity
-                            Integer.parseInt(data[7].replaceAll("[\\r\\n]", ""))  //DiscountedBy
+                            Double.parseDouble(data[7].replaceAll("[\\r\\n]", ""))  //DiscountedBy
                     );
                 }
             }
@@ -141,7 +141,7 @@ public class SellerManager {
             Iterator productIter = getProductList().iterator();
             while(productIter.hasNext()) {
                 currentProduct = (Product) productIter.next();
-                int discountedBy = 0;
+                double discountedBy = 0;
                 if(currentProduct instanceof DiscountedProduct)
                 {
                     discountedBy = ((DiscountedProduct)currentProduct).getDiscountedBy();

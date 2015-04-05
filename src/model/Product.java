@@ -12,6 +12,7 @@ public interface Product {
     public double price = 0.0;
     public int quantity = 0;
     public double getPrice();
+    public double getCurrentPrice();
     public int getQuantity();
     public int getProductID();
     public int getSellerID();

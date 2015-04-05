@@ -9,7 +9,8 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 import model.Seller;
-
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import model.DiscountedProduct;
@@ -73,20 +74,24 @@ public class SellerListView extends JFrame {
             return false;
             }
         };
-        Object[] tableColumnNames = new Object[7];
+        Object[] tableColumnNames = new Object[8];
         tableColumnNames[0] = "ProductID";
         tableColumnNames[1] = "Name";
         tableColumnNames[2] = "Description";
         tableColumnNames[3] = "Cost";
-        tableColumnNames[4] = "Price";
-        tableColumnNames[5] = "Quantity";
-        tableColumnNames[6] = "Discounted By";
+        tableColumnNames[4] = "Original Price";
+        tableColumnNames[5] = "Discounted By";
+        tableColumnNames[6] = "Current Price";
+        tableColumnNames[7] = "Quantity";
         aModel.setColumnIdentifiers(tableColumnNames);
         if (ProductsList == null) {
         this.tbProducts.setModel(aModel);
         return;
         }
-        Object[] objects = new Object[7];
+        Locale locale = new Locale("en", "US");
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
+        NumberFormat percentageFormat = NumberFormat.getPercentInstance(locale);
+        Object[] objects = new Object[8];
         Product currentProduct;
             Iterator productIter = SellerManager.getInstance().getProductList().iterator();
             while(productIter.hasNext()) {
@@ -101,10 +106,11 @@ public class SellerListView extends JFrame {
                     objects[0] =  currentProduct.getProductID();
                     objects[1] = currentProduct.getName();
                     objects[2] = currentProduct.getDescription();
-                    objects[3] = currentProduct.getCost();
-                    objects[4] =  currentProduct.getPrice();
-                    objects[5] =  currentProduct.getQuantity();
-                    objects[6] =  discountedBy;
+                    objects[3] = currencyFormat.format(currentProduct.getCost());
+                    objects[4] = currencyFormat.format(currentProduct.getPrice());
+                    objects[5] = (discountedBy==0)? "--" : percentageFormat.format(discountedBy/100);
+                    objects[6] = currencyFormat.format(currentProduct.getCurrentPrice());
+                    objects[7] = currentProduct.getQuantity();
                     aModel.addRow(objects);                
                 }
             }

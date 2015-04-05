@@ -11,16 +11,21 @@ package model;
  */
 public class DiscountedProduct implements Product{
     private Product item;
-    private int discountedBy =  0;   
+    private double discountedBy =  0;   
     
-    public DiscountedProduct(Product item, int discountedBy)
+    public DiscountedProduct(Product item, double discountedBy)
     {
         this.item=item;
         this.discountedBy = discountedBy;
     }
         
     public double getPrice() {
-       return (item.getPrice()*(1-(discountedBy/100))); 
+       return item.getPrice(); 
+    }  
+    public double getCurrentPrice()
+    {
+        double newPrice = getPrice()*(1-(discountedBy/100)); 
+        return Math.round(newPrice*100.0)/100.0;
     }    
     public int getQuantity()
     {
@@ -46,7 +51,7 @@ public class DiscountedProduct implements Product{
     {
         return this.item.getDescription();
     }
-    public int getDiscountedBy()
+    public double getDiscountedBy()
     {
         return discountedBy;
     }

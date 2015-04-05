@@ -50,7 +50,7 @@ public class AddProductView extends JFrame {
         cost = createTextField("Cost (x.xx)");
         price = createTextField("Price (x.xx)");
         quantity = createTextField("Quantity (xxx)");
-        discountedBy = createTextField("Discounted By (xx)");
+        discountedBy = createTextField("Discounted By (x.xx)");
 
         //Create the Save button.
        final JButton btnSave = new JButton("Save");
@@ -71,7 +71,7 @@ public class AddProductView extends JFrame {
                                 Double.parseDouble(cost.getText()),                   
                                 Double.parseDouble(price.getText()),
                                 Integer.parseInt(quantity.getText()),                   
-                                Integer.parseInt(discountedBy.getText())
+                                Double.parseDouble(discountedBy.getText())
                         );
                     
                     // update products fle
@@ -167,7 +167,7 @@ public class AddProductView extends JFrame {
                 !name.getText().isEmpty() &&
                 cost.getText().matches("\\d+(\\.\\d{1,2})?") &&
                 price.getText().matches("\\d+(\\.\\d{1,2})?") &&
-                discountedBy.getText().matches("\\d+") &&
+                discountedBy.getText().matches("\\d+(\\.\\d{1,2})?") &&
                 quantity.getText().matches("\\d+")
                 );
     }

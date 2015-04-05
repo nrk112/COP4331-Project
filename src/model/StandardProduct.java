@@ -33,6 +33,9 @@ public class StandardProduct implements Product{
     public double getPrice() {
         return price;
     }
+    public double getCurrentPrice(){
+        return getPrice();
+    }       
     public int getQuantity()
     {
         return quantity;

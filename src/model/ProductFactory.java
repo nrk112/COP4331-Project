@@ -10,7 +10,7 @@ package model;
  * @author Lenore
  */
 public class ProductFactory {
-     public static Product CreateProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, int discountedBy) {
+     public static Product CreateProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy) {
         
          Product product = new StandardProduct(
                  productID,
