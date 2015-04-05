@@ -11,39 +11,44 @@ package model;
  */
 public class DiscountedProduct implements Product{
     private Product item;
-    private double discountedBy =  0;    
-    public DiscountedProduct(Product item, double discountedBy)
+    private int discountedBy =  0;   
+    
+    public DiscountedProduct(Product item, int discountedBy)
     {
         this.item=item;
         this.discountedBy = discountedBy;
     }
         
     public double getPrice() {
-      return item.getPrice()*(1-discountedBy/100);
+       return (item.getPrice()*(1-(discountedBy/100))); 
     }    
     public int getQuantity()
     {
-        return quantity;
+        return this.item.getQuantity();
     }
     public int getProductID()
     {
-        return productID;
+        return this.item.getProductID();
     }
     public int getSellerID()
     {
-        return sellerID;
+        return this.item.getSellerID();
     }
     public double getCost()
     {
-        return cost;
+        return this.item.getCost();
     }
     public String getName()
     {
-        return name;
+        return this.item.getName();
     }
     public String getDescription()
     {
-        return description;
+        return this.item.getDescription();
+    }
+    public int getDiscountedBy()
+    {
+        return discountedBy;
     }
     public String toString()
     {
