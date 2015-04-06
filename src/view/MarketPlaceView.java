@@ -14,7 +14,7 @@ import java.awt.event.MouseListener;
  */
 public class MarketPlaceView extends JFrame {
 
-    public MarketPlaceView(Buyer user) {
+    public MarketPlaceView(final Buyer user) {
 
         //Set window properties
         setTitle("Shopazon - Marketplace");
@@ -48,7 +48,8 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                JOptionPane.showMessageDialog((Component) e.getSource(), "This will eventually go to the shopping cart...");
+                //JOptionPane.showMessageDialog((Component) e.getSource(), "This will eventually go to the shopping cart...");
+                new ShoppingCartView(user);
             }
 
             @Override
