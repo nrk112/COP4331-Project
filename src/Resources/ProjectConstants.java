@@ -31,6 +31,11 @@ public interface ProjectConstants {
      * @FILLER_Y The amount of pixels on the Y axis to use as spacing between view objects.
      */
     int FILLER_Y = 10;
+    
+    /**
+     * @SALES_TAX the sales tax in Florida
+     */
+    double SALES_TAX = .06;
 
     Font TITLE_FONT = new Font("Calibri", Font.BOLD, 24);
 

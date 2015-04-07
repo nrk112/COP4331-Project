@@ -27,27 +27,20 @@ import model.Seller;
 /**
  * Created by Nick on 4/4/2015.
  */
-public class ShoppingCartView extends JFrame {
+public class ConfirmationView extends JFrame {
     
-    private final JTextField nameOnCard;
-    private final JTextField creditcardNumber;
-    private final JTextField cvv;
-    private final JTextField expirationMonth;
-    private final JTextField expirationYear;
-    
-    public ShoppingCartView(Buyer user) {
+    public ConfirmationView(Buyer user) {
 
         this.buyer = user;
         ///TODO Remove test function
         this.buyer.PopulateList();
-        setTitle("Shopazon - Shopping Cart");
+        setTitle("Shopazon - Confirmation");
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
        
         //Open the window in the center of the screen.
          setLocationRelativeTo(null);
          ShoppingCartManager.getInstance();
-         ShoppingCartManager.getInstance().GetTransactionData();
          
          
         //Make the main JPanel to use in the Frame
@@ -57,46 +50,21 @@ public class ShoppingCartView extends JFrame {
         //Add new button
         JPanel topPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
-        JButton addButton = CreateAddNewButton(buyer);
+        JButton addButton = CreateReturnButton(buyer);
         bottomPanel.add(addButton);
          
         //Add Payment text Fields
         
         //Create the heading
-        JLabel heading = new JLabel("Payment:");
-        //Create the JTextFields
-        nameOnCard = Common.createTextField("Name on Credit Card");
-        creditcardNumber = Common.createTextField("Credit Card Number");
-        cvv = Common.createTextField("3 or 4 Digit Code");
-        expirationMonth = Common.createTextField("Expiration Month (xx)");
-        expirationYear = Common.createTextField("Expiration Year (xxxx)");
+        JLabel heading = new JLabel("Thank you for shopping at Shopazon!");
+       
         
         int fillerX = ProjectConstants.FILLER_X;
         int fillerY = 25;
 
         topPanel.add(Common.getFiller(fillerX, fillerY));
         topPanel.add(heading);
-        heading.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        fillerY = ProjectConstants.FILLER_Y;
-        topPanel.add(Common.getFiller(fillerX, fillerY));
-        topPanel.add(nameOnCard);
-
-        fillerY = ProjectConstants.FILLER_Y;
-        topPanel.add(Common.getFiller(fillerX, fillerY));
-        topPanel.add(creditcardNumber);
-
-        fillerY = ProjectConstants.FILLER_Y;
-        topPanel.add(Common.getFiller(fillerX, fillerY));
-        topPanel.add(cvv);
-
-        fillerY = ProjectConstants.FILLER_Y;
-        topPanel.add(Common.getFiller(fillerX, fillerY));
-        topPanel.add(expirationMonth);
-        
-        fillerY = ProjectConstants.FILLER_Y;
-        topPanel.add(Common.getFiller(fillerX, fillerY));
-        topPanel.add(expirationYear);
+        heading.setAlignmentX(Component.LEFT_ALIGNMENT);      
         
         
         //populate jtable with products
@@ -111,41 +79,20 @@ public class ShoppingCartView extends JFrame {
         add(mainPanel);
         setVisible(true);
     }
-     /**
-     * Validates the payment info text fields.
-     * @return True if all fields are valid.
-     */
-    private boolean validateFields() {
-        return (
-                !nameOnCard.getText().isEmpty() &&
-                expirationYear.getText().matches("[0-9]{4}")&&
-                expirationMonth.getText().matches("[0-9]{2}")&&
-                cvv.getText().matches("[0-9]{3,4}") &&
-                creditcardNumber.getText().matches("\\d+")
-                );
-    }
+   
     
-    private JButton CreateAddNewButton(final Buyer user)
+    private JButton CreateReturnButton(final Buyer user)
     {
         //Create the Save button.
-        final JButton btn = new JButton("Buy Now");
+        final JButton btn = new JButton("Return to MarketPlace");
         //Allow enter to press the button at any time.
         this.getRootPane().setDefaultButton(btn);
         btn.addActionListener(new ActionListener() 
         {
             @Override
             public void actionPerformed(ActionEvent e) 
-            {               
-                  if (validateFields()) {
-                    ShoppingCartManager.getInstance().BuyNow(user);                    
-                    ShoppingCartManager.getInstance().writeTransactionsToFile();
-                    new ConfirmationView(user); 
-                    //Close the window
-                    dispose();
-                  } //Otherwise give the error message and let them try again.
-                 else {
-                    JOptionPane.showMessageDialog((Component) e.getSource(), "Please provide payment information!");
-                }
+            {     
+                  new MarketPlaceView(user);
             }
         });
         return btn;
@@ -242,6 +189,7 @@ public class ShoppingCartView extends JFrame {
                         }
                          if(row == table.getRowCount()-1) c.setFont(c.getFont().deriveFont(Font.BOLD));
                     }
+                    
                     return c;
                 }
             });            

@@ -1,5 +1,6 @@
 package view;
 
+import Resources.Common;
 import Resources.ProjectConstants;
 import controller.AccountManager;
 
@@ -107,28 +108,28 @@ public class LoginView extends JFrame {
         //Add the objects to the main panel.
         int fillerX = ProjectConstants.FILLER_X;
         int fillerY = 100;
-        mainPanel.add(getFiller(fillerX, fillerY));
+        mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(heading);
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         fillerY = ProjectConstants.FILLER_Y;
-        mainPanel.add(getFiller(fillerX, fillerY));
+        mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(userName);
         userName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        mainPanel.add(getFiller(fillerX, fillerY));
+        mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(password);
         password.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        mainPanel.add(getFiller(fillerX, fillerY));
+        mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(loginBtn);
         loginBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        mainPanel.add(getFiller(fillerX, fillerY));
+        mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(registerLabel);
         registerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        mainPanel.add(getFiller(fillerX, fillerY));
+        mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(registerBtn);
         registerBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -146,8 +147,4 @@ public class LoginView extends JFrame {
      * @param y the amount of whitespace pixels along the y axis.
      * @return the Filler component to add to another component for whitespace.
      */
-    private Component getFiller(int x, int y) {
-        Dimension size = new Dimension(x, y); //Same min max and preferred size.
-        return new Box.Filler(size, size, size);
-    }
 }
