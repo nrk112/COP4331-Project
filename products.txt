@@ -1,0 +1,9 @@
+1~1~Red Coffee Cup~Red glazed, raku fired~0.99~4.99~100~20.0~red-coffee-cup-raku.jpg~
+2~1~Blue Coffee Mug~Blue glazed, raku fired~0.89~4.99~250~0.0~blue-coffee-cup-raku.jpg~
+3~1~Black Coffee Cup~Black glazed, raku finish~0.99~4.99~1000~5.0~black-coffee-cup-raku.jpg~
+4~1~English Garden Tea Set~English garden tea set with 4 cups, saucers, tea pot, sugar holder and creamer~3.78~25.0~60~0.0~English-Garden-tea-set.jpg~
+5~1~Green Flower vase - Large~ABstract design, transparent green 12" vase ~0.25~15.99~75~10.0~Green-Flower-vase.jpg~
+6~1~Green Goffee Cup~Green glazed~0.79~4.99~100~50.0~green-coffee-cup.jpg~
+7~1~Mirrored Glasses~Shiny pretty~0.15~15.0~600~20.0~mirrored-glasses.jpg~
+8~2~Silver Slippers~Shiny shoes~2.0~70.0~500~0.0~silver-slippers.jpg~
+9~2~Gold Slippers~Glittering shoes~3.0~100.0~700~5.0~gold-slippers.jpg~
