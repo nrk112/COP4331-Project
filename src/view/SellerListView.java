@@ -1,7 +1,7 @@
 package view;
 
 import Resources.ProjectConstants;
-import controller.SellerManager;
+import controller.InventoryManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -31,17 +31,23 @@ public class SellerListView extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Open the window in the center of the screen.
-        setLocationRelativeTo(null);
-         SellerManager.getInstance();
-         SellerManager.getInstance().GetSellerData();
+         setLocationRelativeTo(null);
+         InventoryManager.getInstance();
+         //populate seller products data
+         InventoryManager.getInstance().GetSellerData();
+         
+         
         //Make the main JPanel to use in the Frame
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        //TODO Put the code to create the window here.
+
+        //Add new button
         JPanel topPanel = new JPanel();
         JButton addButton = CreateAddNewButton(seller);
         topPanel.add(addButton);
-        DisplayData(SellerManager.getInstance().getProductList(), seller);
+        
+        //populate jtable with products
+        DisplayData(InventoryManager.getInstance().getProductList(), seller);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
 
         mainPanel.add(tableContainer, BorderLayout.CENTER);
@@ -51,21 +57,26 @@ public class SellerListView extends JFrame {
         add(mainPanel);
         setVisible(true);
     }
+    
     private JButton CreateAddNewButton(final Seller user)
     {
+        //Create the Save button.
         final JButton btn = new JButton("Add New Product");
+        //Allow enter to press the button at any time.
         this.getRootPane().setDefaultButton(btn);
         btn.addActionListener(new ActionListener() 
         {
             @Override
             public void actionPerformed(ActionEvent e) 
             {               
-                    SellerManager.getInstance().AddProductView(user);
+                    InventoryManager.getInstance().AddProductView(user);
+                    //Close the window
                     dispose();
             }
         });
         return btn;
     }
+    
     private void DisplayData(List<Product> ProductsList, Seller user) 
     {
         DefaultTableModel aModel = new DefaultTableModel() 
@@ -76,6 +87,8 @@ public class SellerListView extends JFrame {
             return false;
             }
         };
+        
+        //setting the column name
         Object[] tableColumnNames = new Object[8];
         tableColumnNames[0] = "ProductID";
         tableColumnNames[1] = "Name";
@@ -85,6 +98,7 @@ public class SellerListView extends JFrame {
         tableColumnNames[5] = "Discounted By";
         tableColumnNames[6] = "Current Price";
         tableColumnNames[7] = "Quantity";
+
         aModel.setColumnIdentifiers(tableColumnNames);
         if (ProductsList == null) {
         this.tbProducts.setModel(aModel);
@@ -95,7 +109,8 @@ public class SellerListView extends JFrame {
         NumberFormat percentageFormat = NumberFormat.getPercentInstance(locale);
         Object[] objects = new Object[8];
         Product currentProduct;
-            Iterator productIter = SellerManager.getInstance().getProductList().iterator();
+            //Write each product to a products file.
+            Iterator productIter = InventoryManager.getInstance().getProductList().iterator();
             while(productIter.hasNext()) {
                 currentProduct = (Product) productIter.next();
                 if(currentProduct.getSellerID() == user.getID())
@@ -105,7 +120,7 @@ public class SellerListView extends JFrame {
                     {
                         discountedBy = ((DiscountedProduct)currentProduct).getDiscountedBy();
                     }
-                    objects[0] =  currentProduct.getProductID();
+                    objects[0] = currentProduct.getProductID();
                     objects[1] = currentProduct.getName();
                     objects[2] = currentProduct.getDescription();
                     objects[3] = currencyFormat.format(currentProduct.getCost());
@@ -116,6 +131,7 @@ public class SellerListView extends JFrame {
                     aModel.addRow(objects);                
                 }
             }
+
             tbProducts.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {//alternate background color for rows
                 public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                     Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -125,6 +141,7 @@ public class SellerListView extends JFrame {
                     return c;
                 }
             });            
+    //binding the jtable to the model
     this.tbProducts.setModel(aModel);
     }
     JTable tbProducts = new JTable();

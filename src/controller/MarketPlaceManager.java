@@ -1,8 +1,8 @@
 package controller;
 
 import model.Product;
-
-import java.util.ArrayList;
+import model.Buyer;
+import view.ProductDetailView;
 
 /**
  * Created by Nick on 4/4/2015.
@@ -10,23 +10,17 @@ import java.util.ArrayList;
 public class MarketPlaceManager {
 
     private static final MarketPlaceManager instance = new MarketPlaceManager();
-    private ArrayList<Product> productList;
 
-    private MarketPlaceManager() {
-        populateProductList();
 
-    }
 
-    public MarketPlaceManager getInstance() {
+    public static MarketPlaceManager getInstance() {
         return instance;
     }
 
-    public ArrayList getProductList() {
-        return productList;
-    }
 
-    private void populateProductList() {
+
+    public void ProductDetalView(Buyer user, Product product) {
         //TODO populate the product list here.
-        productList = new ArrayList<>();
+        new ProductDetailView(user, product);
     }
 }

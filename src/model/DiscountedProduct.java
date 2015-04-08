@@ -26,7 +26,7 @@ public class DiscountedProduct implements Product{
     {
         double newPrice = getPrice()*(1-(discountedBy/100)); 
         return Math.round(newPrice*100.0)/100.0;
-    }    
+    }
     public int getQuantity()
     {
         return this.item.getQuantity();
@@ -50,6 +50,11 @@ public class DiscountedProduct implements Product{
     public String getDescription()
     {
         return this.item.getDescription();
+    }
+    
+    public String getImage()
+    {
+        return item.getImage();
     }
     public double getDiscountedBy()
     {

@@ -11,6 +11,7 @@ public interface Product {
     public double cost = 0.0;
     public double price = 0.0;
     public int quantity = 0;
+    public String image=null;
     public double getPrice();
     public double getCurrentPrice();
     public int getQuantity();
@@ -19,5 +20,6 @@ public interface Product {
     public double getCost();
     public String getName();
     public String getDescription();
+    public String getImage();
     public String toString();
 }

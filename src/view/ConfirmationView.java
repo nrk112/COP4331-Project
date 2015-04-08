@@ -2,7 +2,7 @@ package view;
 
 import Resources.Common;
 import Resources.ProjectConstants;
-import controller.SellerManager;
+import controller.InventoryManager;
 import controller.ShoppingCartManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -68,7 +68,7 @@ public class ConfirmationView extends JFrame {
         
         
         //populate jtable with products
-        DisplayData(SellerManager.getInstance().getProductList(), buyer);
+        DisplayData(InventoryManager.getInstance().getProductList(), buyer);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
 
         mainPanel.add(tableContainer, BorderLayout.CENTER);

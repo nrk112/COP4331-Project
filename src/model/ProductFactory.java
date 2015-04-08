@@ -10,7 +10,7 @@ package model;
  * @author Lenore
  */
 public class ProductFactory {
-     public static Product CreateProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy) {
+     public static Product CreateProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy, String image) {
         
          Product product = new StandardProduct(
                  productID,
@@ -19,7 +19,8 @@ public class ProductFactory {
                  description,
                  cost,
                  price,
-                 quantity
+                 quantity, 
+                 image
          );
          if (discountedBy>0) 
          {

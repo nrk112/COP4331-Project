@@ -2,7 +2,7 @@ package view;
 
 import Resources.Common;
 import Resources.ProjectConstants;
-import controller.SellerManager;
+import controller.InventoryManager;
 import controller.ShoppingCartManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,7 +39,7 @@ public class ShoppingCartView extends JFrame {
 
         this.buyer = user;
         ///TODO Remove test function
-        this.buyer.PopulateList();
+        //this.buyer.PopulateList();
         setTitle("Shopazon - Shopping Cart");
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -100,7 +100,7 @@ public class ShoppingCartView extends JFrame {
         
         
         //populate jtable with products
-        DisplayData(SellerManager.getInstance().getProductList(), buyer);
+        DisplayData(InventoryManager.getInstance().getProductList(), buyer);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
 
         mainPanel.add(tableContainer, BorderLayout.CENTER);

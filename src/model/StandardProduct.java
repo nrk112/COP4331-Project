@@ -18,8 +18,9 @@ public class StandardProduct implements Product{
     private double cost = 0.0;
     private double price = 0.0;
     private int quantity = 0;
+    private String image = null;
     
-    public StandardProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity)
+    public StandardProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, String image)
     {
         this.cost=cost;
         this.description = description;
@@ -28,6 +29,7 @@ public class StandardProduct implements Product{
         this.productID = productID;
         this.quantity = quantity;
         this.sellerID = sellerID;
+        this.image = image;
     }
     
     public double getPrice() {
@@ -36,6 +38,7 @@ public class StandardProduct implements Product{
     public double getCurrentPrice(){
         return getPrice();
     }       
+            
     public int getQuantity()
     {
         return quantity;
@@ -59,6 +62,11 @@ public class StandardProduct implements Product{
     public String getDescription()
     {
         return description;
+    }
+    
+    public String getImage()
+    {
+        return image;
     }
     
     public String toString()

@@ -1,6 +1,8 @@
 package view;
 
 import Resources.ProjectConstants;
+import controller.MarketPlaceManager;
+import controller.InventoryManager;
 import model.Buyer;
 
 import javax.swing.*;
@@ -8,6 +10,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Iterator;
+import model.DiscountedProduct;
+import model.Product;
 
 /**
  * Created by Nick on 4/2/2015.
@@ -73,9 +79,15 @@ public class MarketPlaceView extends JFrame {
         productPanel.setBackground(Color.WHITE);
         JScrollPane scrollProductPanel = new JScrollPane(productPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+         InventoryManager.getInstance();
+         InventoryManager.getInstance().GetSellerData();
         //Generate fake products for now.
-        for (int i = 0; i < 8; i++) {
-            productPanel.add(createItemIcon());
+         Iterator productIter = InventoryManager.getInstance().getProductList().iterator();
+         Product currentProduct;
+            while(productIter.hasNext()) 
+            {
+                currentProduct = (Product) productIter.next();                
+                productPanel.add(createItemIcon(user, currentProduct));
         }
 
         //
@@ -87,7 +99,7 @@ public class MarketPlaceView extends JFrame {
     }
 
     //Turn an inventory item into an icon for use in the main window.
-    private JPanel createItemIcon() {
+    private JPanel createItemIcon(final Buyer user, final Product product) {
         int side = 180;
         JPanel panel = new JPanel(new BorderLayout());
         Dimension dimension = new Dimension(side, side);
@@ -96,15 +108,18 @@ public class MarketPlaceView extends JFrame {
         panel.setPreferredSize(dimension);
         panel.setBackground(Color.GRAY);
 
-        JLabel title = new JLabel("Product Name");
+        JLabel title = new JLabel(product.getName());
         title.setBorder(new EmptyBorder(3, 3, 3, 3));
         title.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(title, BorderLayout.NORTH);
         JPanel fakePic = new JPanel();
+        ImageIcon image = new ImageIcon(product.getImage());
+        JLabel label = new JLabel(image);
         fakePic.setBackground(Color.DARK_GRAY);
+        fakePic.add(label);
         panel.add(fakePic, BorderLayout.CENTER);
 
-        JLabel price = new JLabel("Product Name");
+        JLabel price = new JLabel(String.format("%1$,.2f", product.getCurrentPrice()));
         price.setBorder(new EmptyBorder(3, 3, 3, 3));
         price.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(price, BorderLayout.SOUTH);
@@ -123,7 +138,7 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                JOptionPane.showMessageDialog((Component) e.getSource(), "Here is some stuff about your item....  buy lots of them!");
+                MarketPlaceManager.getInstance().ProductDetalView(user, product);
             }
 
             @Override
