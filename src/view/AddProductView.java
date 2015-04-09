@@ -52,7 +52,7 @@ public class AddProductView extends JFrame {
         price = Common.createTextField("Price (x.xx)");
         quantity = Common.createTextField("Quantity (xxx)");
         discountedBy = Common.createTextField("Discounted By (x.xx)");
-        image = Common.createTextField("Image file name (image.jpg");
+        image = Common.createTextField("Image file name (image.jpg)");
 
         //Create the Save button.
        final JButton btnSave = new JButton("Save");

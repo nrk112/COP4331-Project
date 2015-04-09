@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *  Represents the buyer object
@@ -15,17 +16,27 @@ public class Buyer extends UserModel {
     {
         return cartItems;
     }
-    ///TODO Remove test function
-    public void PopulateList()
-    {
-     //(int productID, int sellerID, String name, String description, double cost, double price, int quantity)
-        //addToShoppingCart(new StandardProduct(1,1,"Red Coffee Cup", "desc", 0.99, 4.99, 1)); 
-        //addToShoppingCart(new StandardProduct(2,1,"Blue Coffee Cup", "desc", 0.89, 4.99, 2));
-        //addToShoppingCart(new DiscountedProduct( new StandardProduct(3,1,"Black Coffee Cup", "desc", 0.99, 4.99, 3), 5.0)); 
-        
-    }
+    
     public void addToShoppingCart(Product item)
     {
         cartItems.add(item);
+    }
+    public int getShoppingCartQuantity(Product item)
+    {
+     int count = 0;
+     Product currentProduct;
+     Iterator lineItemIter = cartItems.iterator();
+            while(lineItemIter.hasNext()) {
+                currentProduct = (Product) lineItemIter.next();
+                if(currentProduct.equals(item))
+                {
+                    count++;
+                }
+            }
+       return count;
+    }
+
+    public void ClearShoppingCart() {
+        cartItems.clear();
     }
 }

@@ -1,13 +1,23 @@
 package controller;
 
 import Resources.ProjectConstants;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import model.Buyer;
 import model.DiscountedProduct;
 import model.Product;
@@ -20,15 +30,14 @@ import view.ConfirmationView;
 public class ShoppingCartManager {
 
     private static final ShoppingCartManager instance = new ShoppingCartManager();
-    //private final ArrayList<Product> products = new ArrayList<>();
-    private final ArrayList<TransactionLineItem> lineItems = new ArrayList<>();
 
     private ShoppingCartManager() {
     }
     
-    public void GetTransactionData()
+    public void getTransactionData()
     {                
-        populateTransactionList();
+        TransactionManager.getInstance();
+        TransactionManager.getInstance().getTransactionData();
     }
     /**
      * Returns the instance of the SellerManager singleton.
@@ -43,22 +52,9 @@ public class ShoppingCartManager {
     * @return the product ArrayList.
     */
     public ArrayList getTransactionLineItemList() {
-        return lineItems;
+        return TransactionManager.getInstance().getTransactionLineItemList();
     }
-    /**
-     * Create a sequential productID.
-     * @return the productID.
-     */
-    public int getTransactionLineItemId(){
-         int newID;
-         if (lineItems.isEmpty()){
-             newID = 0;
-         } else {
-             //Get last userID
-             newID = lineItems.get(lineItems.size() - 1).getLineItemID();
-         }
-         return newID + 1;
-     } 
+    
     /**
      * Create a product, then add it to the list.
      * @param transactionLineItemID The transaction line item I\id.
@@ -71,118 +67,133 @@ public class ShoppingCartManager {
      * @param quantity The number of products for sale.
      */
     public void createTransactionLineItem(int transactionLineItemID, int productID, int sellerID, int buyerID, String name, double cost, double price, int quantity) {
-        TransactionLineItem lineItem = createLineItem( transactionLineItemID, productID, sellerID, buyerID, name, cost, price, quantity);         
-        addTransactionLineitem(lineItem);
+        TransactionManager.getInstance().createTransactionLineItem(transactionLineItemID, productID, sellerID, buyerID, name, cost, price, quantity);
     }
-    public void BuyNow(Buyer user) {
-       
-        Product currentProduct;
-        //Create a transaction line item per product for this user and add to transactionlineitem list
-        Iterator productIter = user.getShoppingCart().iterator();
-        while(productIter.hasNext()) {
-             currentProduct = (Product) productIter.next();
-             createTransactionLineItem(getTransactionLineItemId(), currentProduct.getProductID(), currentProduct.getSellerID(),
-                                                            user.getID(), currentProduct.getName(), currentProduct.getCost(), 
-                                                            currentProduct.getPrice(), currentProduct.getQuantity()); 
-        }
+    
+    /*
+    
+    */
+    public void BuyNow(Buyer user) {       
+       TransactionManager.getInstance().BuyNow(user);
     }
     
      /**
      * reads all transaction line item data from transaction line item list to a text file.
+     * @param ProductsList
+     * @param user
+     * @return 
      */
-    
-     public void readTransactionsFromFile() {
-
-        String[] data = new String[8];
-        int index = 0;
-        String field;
-
-        try(FileReader fileReader = new FileReader(ProjectConstants.TRANSACTION_FILE)) {
-            //Create the scanner
-            Scanner scanner = new Scanner(fileReader);
-
-            //Set the scanner to use commas and any amount of spaces for the delimiter
-            scanner.useDelimiter("~");
-
-            //On each line, loop through each field.
-            while (scanner.hasNext()) {
-                field = scanner.next();
-                data[index] = field;
-                index++;
-
-                if (index == 8) {
-
-                    index = 0;
-
-                    //Create product
-                    ShoppingCartManager.getInstance().createTransactionLineItem(
-                            //Convert string to appropriate types and remove return characters.
-                            Integer.parseInt(data[0].replaceAll("[\\r\\n]", "")),   //TransactionLineItemID
-                            Integer.parseInt(data[1].replaceAll("[\\r\\n]", "")),   //ProductID
-                            Integer.parseInt(data[2].replaceAll("[\\r\\n]", "")),   //SellerID
-                            Integer.parseInt(data[3].replaceAll("[\\r\\n]", "")),   //UserID
-                            data[4],                                                //Name
-                            Double.parseDouble(data[5].replaceAll("[\\r\\n]", "")), //Cost
-                            Double.parseDouble(data[6].replaceAll("[\\r\\n]", "")), //Price
-                            Integer.parseInt(data[7].replaceAll("[\\r\\n]", ""))   //Quantity
-                    );
-                }
+    public JTable DisplayData(List<Product> ProductsList, Buyer user) 
+   {
+       JTable tbProducts = new JTable();
+        DefaultTableModel aModel = new DefaultTableModel() 
+        {            //setting the jtable read only
+            @Override
+            public boolean isCellEditable(int row, int column) 
+            {
+            return false;
             }
-            fileReader.close();
-        } catch (Exception e) { //NumberFormatException or IOException
-            e.printStackTrace();
+        };
+        
+        //setting the column name
+        Object[] tableColumnNames = new Object[5];
+        tableColumnNames[0] = "Name";
+        tableColumnNames[1] = "Price per Item";
+        tableColumnNames[2] = "Quantity";
+        tableColumnNames[3] = "Total Price per item";
+        tableColumnNames[4] = "Totals";
+        
+
+        aModel.setColumnIdentifiers(tableColumnNames);
+        if (ProductsList == null) {
+        tbProducts.setModel(aModel);
+        return tbProducts;
         }
-    }
-     /**
-     * Writes all transaction line item data from transaction line item list to a text file.
-     */
-    public void writeTransactionsToFile() {
-
-        try(final FileWriter fw = new FileWriter(ProjectConstants.TRANSACTION_FILE, false)) {
-            final PrintWriter pw = new PrintWriter(fw);
-
-            TransactionLineItem currentLineItem;
+        Locale locale = new Locale("en", "US");
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
+        NumberFormat percentageFormat = NumberFormat.getPercentInstance(locale);
+        Object[] objects = new Object[5];
+        Product currentProduct;
+        double subTotal = 0.0;
             //Write each product to a products file.
-            Iterator lineItemIter = getTransactionLineItemList().iterator();
-            while(lineItemIter.hasNext()) {
-                 currentLineItem = (TransactionLineItem) lineItemIter.next();
-                pw.println(
-                        currentLineItem.getLineItemID()+ "~" +
-                        currentLineItem.getProductID() + "~" +
-                        currentLineItem.getSellerID() + "~" +                                
-                        currentLineItem.getBuyerID() + "~" +
-                        currentLineItem.getName() + "~" +
-                        currentLineItem.getCost() + "~" +
-                        currentLineItem.getPrice() + "~" +
-                        currentLineItem.getQuantity() + "~"                         
-                );
+            ArrayList list = new ArrayList();
+            Iterator cartIter = user.getShoppingCart().iterator();
+            while(cartIter.hasNext()) {
+                    currentProduct = (Product) cartIter.next();
+                   if(!list.contains(currentProduct.getProductID()))
+                   {  
+                        int quantity = user.getShoppingCartQuantity(currentProduct);
+                        objects[0] = currentProduct.getName();
+                        objects[1] = currencyFormat.format(currentProduct.getCurrentPrice());
+                        objects[2] = quantity;
+                        objects[3] = currencyFormat.format(currentProduct.getCurrentPrice()*quantity);
+                        aModel.addRow(objects);
+                        subTotal += (currentProduct.getCurrentPrice()*quantity);
+                        list.add(currentProduct.getProductID());
+                   }
             }
-            pw.close();
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            if(subTotal>0){
+                objects[0] = "";
+                objects[1] = "";
+                objects[2] = "SubTotal:";
+                objects[3] = "";
+                objects[4] = currencyFormat.format(subTotal);
+                aModel.addRow(objects);   
+                
+                objects[0] = "";
+                objects[1] = "";
+                objects[2] = "Sales Tax:";
+                objects[3] = "";
+                objects[4] = percentageFormat.format(.06);
+                aModel.addRow(objects);                 
+                
+                objects[0] = "";
+                objects[1] = "";
+                objects[2] = "Grand Total:";
+                objects[3] = "";
+                objects[4] = currencyFormat.format((subTotal + (subTotal * (ProjectConstants.SALES_TAX))));
+                aModel.addRow(objects);                 
+            }
+            tbProducts.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {//alternate background color for rows
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (!isSelected) {
+                        c.setBackground(row % 2 == 0 ? Color.white : Color.LIGHT_GRAY);
+                        if(column==0){
+                            c.setHorizontalAlignment(JLabel.LEFT);
+                        }
+                        else if(column == 2)
+                        {
+                            if (value instanceof Integer) 
+                            {
+                            c.setHorizontalAlignment(JLabel.CENTER);  
+                            }
+                            else
+                            {
+                                c.setHorizontalAlignment(JLabel.RIGHT); 
+                            }
+                        }
+                        else
+                        {
+                            c.setHorizontalAlignment(JLabel.RIGHT);                            
+                        }
+                         if(row == table.getRowCount()-1) c.setFont(c.getFont().deriveFont(Font.BOLD));
+                    }
+                    
+                    return c;
+                }
+            });            
+    //binding the jtable to the model
+    tbProducts.setModel(aModel);
+    return tbProducts;
     }
 
-    private TransactionLineItem createLineItem(int transactionLineItemID, int productID, int sellerID, int buyerID, String name, double cost, double price, int quantity) {
-        
-        return new TransactionLineItem(transactionLineItemID, productID, sellerID, buyerID, name, cost, price, quantity);
-        
+    public void writeTransactionsToFile() {
+        TransactionManager.getInstance().writeTransactionsToFile();
     }
- private void populateTransactionList() {
-        if(getTransactionLineItemList().size()> 0)
-        {
-            lineItems.clear();
-        }        
-        readTransactionsFromFile();
-    }
-    private void addTransactionLineitem(TransactionLineItem lineItem) {
-      
-        //if(!lineItems.contains(lineItem))  
-        //{
-            lineItems.add(lineItem);
-        //}
-    }
+     
+    
 
 
 }

@@ -119,6 +119,22 @@ public class ProductDetailView extends JFrame {
                     dispose();
             }
         });
+        
+         //Create the Cancel button.
+       final JButton btnGoToCart = new JButton("Go To Cart");
+        //Allow enter to press the button at any time.
+        this.getRootPane().setDefaultButton(btnGoToCart);
+        btnGoToCart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               
+                    //Go back to sellerlist view.
+                    new ShoppingCartView(buyer);
+
+                    //Close the window
+                    dispose();
+            }
+        });
 
        
 
@@ -130,6 +146,9 @@ public class ProductDetailView extends JFrame {
         buttonPanel.add(btnCancel);
         btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        buttonPanel.add(btnGoToCart);
+        btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         //Add the created panel to the main Frame
         this.add(mainPanel, BorderLayout.CENTER);

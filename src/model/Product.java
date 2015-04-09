@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Comparator;
+
 /**
  * Establishes the baseline for products
  */
@@ -22,4 +24,6 @@ public interface Product {
     public String getDescription();
     public String getImage();
     public String toString();
+    public boolean equals(Object other);   
+    
 }

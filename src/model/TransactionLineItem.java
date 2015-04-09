@@ -5,22 +5,23 @@
  */
 package model;
 
+import java.util.Comparator;
+
 /**
  *
  * Holds the Shopping Cart item for recording purposes
  */
 public class TransactionLineItem implements LineItem{
+    private int lineItemID;
+    private int productID;
+    private int sellerID;
+    private int buyerID;
+    private String name;
+    private double cost;
+    private double price;
+    private int quantity;
 
-    private int lineItemID = -1;
-    private int productID = -1;
-    private int sellerID = -1;
-    private int buyerID = -1;
-    private String name = null;
-    private double cost = 0.0;
-    private double price = 0.0;
-    private int quantity = 0;
-
-    public TransactionLineItem(int transactionLineItemId, int productID, int sellerID, int buyerID, String name, double cost, double price, int quantity) {
+    public TransactionLineItem(int transactionLineItemId, int productID, int sellerID, int buyerID, String name, double cost, double price, int quantity) {      
         this.lineItemID     = transactionLineItemId;
         this.productID      = productID;
         this.sellerID       = sellerID;
@@ -68,6 +69,18 @@ public class TransactionLineItem implements LineItem{
     @Override
     public int getLineItemID() {
         return lineItemID;
+    }
+     
+    public static Comparator<LineItem> SortByProductID()
+    {
+       Comparator comp = new Comparator<LineItem>()
+       {            
+            public int compare(LineItem s1, LineItem s2)
+            {
+                return ((Integer)s1.productID).compareTo(s2.productID);
+            }        
+        };
+    return comp;
     }
     
 }

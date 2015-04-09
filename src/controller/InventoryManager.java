@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 import model.DiscountedProduct;
+import model.LineItem;
 import model.Product;
 import model.ProductFactory;
 import model.Seller;
@@ -25,13 +26,16 @@ import view.AddProductView;
 public class InventoryManager {
     private static final InventoryManager instance = new InventoryManager();
     private final ArrayList<Product> products = new ArrayList<>();
+    private final ArrayList<LineItem> lineItems = new ArrayList<>();
 
     private InventoryManager() {
     }
     
     public void GetSellerData()
     {                
-        populateProductList();
+        populateProductList();   
+        TransactionManager.getInstance();
+        TransactionManager.getInstance().getTransactionData();
     }
     
     /**
@@ -79,7 +83,13 @@ public class InventoryManager {
          }
          return newID + 1;
      } 
-    
+    /*
+    *  Get product list
+    * @return the product ArrayList.
+    */
+    public ArrayList getTransactionLineItemList() {
+        return lineItems;
+    }
     /**
      * Populates InventoryManager with all available products by reading from text file.
      */
@@ -189,6 +199,11 @@ public class InventoryManager {
 
     public void AddProductView(Seller user) {
         new AddProductView(user);
+    }
+    
+     public void readTransactionsFromFile() {
+
+       TransactionManager.getInstance().readTransactionsFromFile();
     }
     
 }

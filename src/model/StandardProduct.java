@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Comparator;
+
 /**
  *
  * abstract class that defines common methods
@@ -72,6 +74,37 @@ public class StandardProduct implements Product{
     public String toString()
     {
         return name + ": "+ description;
+    }
+    
+    public static Comparator<Product> SortByName()
+    {
+       Comparator comp = new Comparator<Product>()
+       {
+            @Override
+            public int compare(Product s1, Product s2)
+            {
+                return s1.name.compareTo(s2.name);
+            }        
+        };
+    return comp;
+    }
+    
+    @Override
+    public boolean equals(Object other)
+    {
+        if(!(other instanceof StandardProduct)) return false;
+        if(other == null && this !=null) return false;
+        if(other !=null && this == null) return false;
+        StandardProduct item = (StandardProduct) other;
+        return( 
+                item.getCost() == this.getCost() &&
+                item.getPrice() == this.getPrice() &&
+                item.getProductID() == this.getProductID() &&
+                item.getSellerID() == this.getSellerID() &&
+                item.getName().contentEquals(this.getName()))&&
+                item.getDescription().contentEquals(this.getDescription()) &&
+                item.getImage().contentEquals(this.getImage()
+           );        
     }
     
 }

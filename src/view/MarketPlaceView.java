@@ -35,7 +35,7 @@ public class MarketPlaceView extends JFrame {
 
         //Create the heading panel where the shopping cart link will be.
         JPanel headingPanel = new JPanel(new BorderLayout(10,10));
-        String cartLink = user.getFullName() + " - Cart";
+        String cartLink = user.getFullName() + " - Cart: " + user.getShoppingCart().size();
         JLabel cartLinkLabel = new JLabel(cartLink);
         cartLinkLabel.setFont(ProjectConstants.TITLE_FONT);
         cartLinkLabel.setBorder(new EmptyBorder(3, 0, 0, 10));
@@ -54,8 +54,10 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                //JOptionPane.showMessageDialog((Component) e.getSource(), "This will eventually go to the shopping cart...");
+                
                 new ShoppingCartView(user);
+                    //Close the window
+                    dispose();
             }
 
             @Override
@@ -78,9 +80,11 @@ public class MarketPlaceView extends JFrame {
         productPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         productPanel.setBackground(Color.WHITE);
         JScrollPane scrollProductPanel = new JScrollPane(productPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
+        
          InventoryManager.getInstance();
+         //populate seller products data
          InventoryManager.getInstance().GetSellerData();
+        
         //Generate fake products for now.
          Iterator productIter = InventoryManager.getInstance().getProductList().iterator();
          Product currentProduct;
@@ -88,7 +92,7 @@ public class MarketPlaceView extends JFrame {
             {
                 currentProduct = (Product) productIter.next();                
                 productPanel.add(createItemIcon(user, currentProduct));
-        }
+            }
 
         //
         mainPanel.add(headingPanel, BorderLayout.NORTH);
@@ -139,6 +143,7 @@ public class MarketPlaceView extends JFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 MarketPlaceManager.getInstance().ProductDetalView(user, product);
+                
             }
 
             @Override
