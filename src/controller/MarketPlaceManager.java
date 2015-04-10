@@ -1,8 +1,7 @@
 package controller;
 
-import model.Product;
 import model.Buyer;
-import view.ProductDetailView;
+import model.Product;
 
 /**
  * Created by Nick on 4/4/2015.
@@ -21,6 +20,6 @@ public class MarketPlaceManager {
 
     public void ProductDetalView(Buyer user, Product product) {
         //TODO populate the product list here.
-        new ProductDetailView(user, product);
+        //new ProductDetailView(user, product);
     }
 }

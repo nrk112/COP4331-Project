@@ -86,7 +86,7 @@ public class LoginView extends JFrame {
                     //Close this window.
                     dispose();
                 }else{
-                    JOptionPane.showMessageDialog((Component) e.getSource(), "Login Failed! Please try again!");
+                    JOptionPane.showMessageDialog(null, "Login Failed! Please try again!","", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -101,7 +101,7 @@ public class LoginView extends JFrame {
                 AccountManager.getInstance().signupClicked();
 
                 //Close the window
-                dispose();
+
             }
         });
 
@@ -140,11 +140,4 @@ public class LoginView extends JFrame {
         //make the window visible.
         setVisible(true);
     }
-
-    /**
-     * Creates a component that can be used to insert whitespace around GUI elements.
-     * @param x the amount of whitespace pixels along the x axis.
-     * @param y the amount of whitespace pixels along the y axis.
-     * @return the Filler component to add to another component for whitespace.
-     */
 }

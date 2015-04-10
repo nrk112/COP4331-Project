@@ -1,19 +1,16 @@
 package view;
 
 import Resources.ProjectConstants;
-import controller.MarketPlaceManager;
 import controller.InventoryManager;
 import model.Buyer;
+import model.Product;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.Iterator;
-import model.DiscountedProduct;
-import model.Product;
 
 /**
  * Created by Nick on 4/2/2015.
@@ -142,8 +139,8 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                MarketPlaceManager.getInstance().ProductDetalView(user, product);
-                
+                //MarketPlaceManager.getInstance().ProductDetalView(user, product);
+                new ProductDetailView(user, product);
             }
 
             @Override

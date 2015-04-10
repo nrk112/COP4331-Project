@@ -6,6 +6,12 @@
 package controller;
 
 import Resources.ProjectConstants;
+import model.DiscountedProduct;
+import model.Product;
+import model.ProductFactory;
+import model.Seller;
+import view.AddProductView;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,12 +19,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-import model.DiscountedProduct;
-import model.Product;
-import model.ProductFactory;
-import model.Seller;
-import model.UserModel;
-import view.AddProductView;
 
 /**
  * Handles all functions related to seller product management. Singleton class.
@@ -47,7 +47,7 @@ public class SellerManager {
      * @param discountedBy the discount amount as percentage.
      */
     public void createProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy) {
-        Product product = ProductFactory.CreateProduct(productID,sellerID, name, description, cost, price, quantity, discountedBy);
+        Product product = ProductFactory.CreateProduct(productID,sellerID, name, description, cost, price, quantity, discountedBy, null);
          
         addProduct(product);
     }

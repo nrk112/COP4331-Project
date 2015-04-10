@@ -3,11 +3,13 @@ package view;
 import Resources.Common;
 import Resources.ProjectConstants;
 import controller.InventoryManager;
+import model.Seller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import model.Seller;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * The window where users can sign up for service.
@@ -24,6 +26,8 @@ public class AddProductView extends JFrame {
     private final JTextField discountedBy;
     private final Seller seller;
     private final JTextField image;
+    private final JFileChooser fileChooser;
+    private File imageFile;
     /**
      * Constructs and shows the add product view view
      * @param user Current instance of the seller object
@@ -54,6 +58,10 @@ public class AddProductView extends JFrame {
         discountedBy = Common.createTextField("Discounted By (x.xx)");
         image = Common.createTextField("Image file name (image.jpg)");
 
+        //Create the file chooser.
+        fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
         //Create the Save button.
        final JButton btnSave = new JButton("Save");
         //Allow enter to press the button at any time.
@@ -65,17 +73,18 @@ public class AddProductView extends JFrame {
                 //If the input is valid, send the data to create a user.
                 if (validateFields()) {
                     //Check if they are registering as a buyer or seller.
-                        InventoryManager.getInstance().createProduct(InventoryManager.getInstance().getProductId(),
-                                seller.getID(),
-                                name.getText(),
-                                description.getText(),                                
-                                Double.parseDouble(cost.getText()),                   
-                                Double.parseDouble(price.getText()),
-                                Integer.parseInt(quantity.getText()),                   
-                                Double.parseDouble(discountedBy.getText()),
-                                image.getText()               
-                        );
-                    
+                    InventoryManager.getInstance().createProduct(InventoryManager.getInstance().getProductId(),
+                            seller.getID(),
+                            name.getText(),
+                            description.getText(),
+                            Double.parseDouble(cost.getText()),
+                            Double.parseDouble(price.getText()),
+                            Integer.parseInt(quantity.getText()),
+                            Double.parseDouble(discountedBy.getText()),
+                            //image.getText()
+                            fileChooser.getName()
+                    );
+
                     // update products fle
                     InventoryManager.getInstance().writeProductsToFile();
                     //Go back to sellerlist view.
@@ -84,9 +93,9 @@ public class AddProductView extends JFrame {
                     //Close the window
                     dispose();
 
-                //Otherwise give the error message and let them try again.
+                    //Otherwise give the error message and let them try again.
                 } else {
-                    JOptionPane.showMessageDialog((Component) e.getSource(), "Could not save product, please verify all information is provided" );
+                    JOptionPane.showMessageDialog(null, "Could not save product, please verify all information is provided", "", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -98,12 +107,26 @@ public class AddProductView extends JFrame {
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+
                     //Go back to sellerlist view.
                     new SellerListView(seller);
 
                     //Close the window
                     dispose();
+            }
+        });
+
+        //Image chooser button
+        final JButton btnImageChooser = new JButton("Select Image");
+        btnImageChooser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int result = fileChooser.showDialog(getContentPane(),"Open");
+                if(result == JFileChooser.APPROVE_OPTION) {
+                    imageFile = fileChooser.getSelectedFile();
+                }
+
             }
         });
 
@@ -136,7 +159,8 @@ public class AddProductView extends JFrame {
         mainPanel.add(discountedBy);
         
         mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(image);
+        mainPanel.add(btnImageChooser);
+        //mainPanel.add(image);
 
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(btnSave);

@@ -1,5 +1,6 @@
 package controller;
 
+import Resources.Common;
 import Resources.ProjectConstants;
 import model.Buyer;
 import model.Seller;
@@ -10,10 +11,7 @@ import view.MarketPlaceView;
 import view.SellerListView;
 import view.SignupView;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,17 +26,9 @@ public class AccountManager {
     private final List<UserModel> users = new ArrayList<>();
 
     /**
-     * Constructor does nothing.
+     * Constructor populates users and shows a login view.
      */
     private AccountManager() {
-    }
-
-    /**
-     * Starts the program.
-     */
-    public void startProgram() {
-        //Required because INSTANCE appears to stay null until the constructor finishes.
-        // Cant call readUsersFromFile in constructor.
         readUsersFromFile();
         new LoginView();
     }
@@ -155,21 +145,24 @@ public class AccountManager {
                     index = 0;
 
                     //Create the user
-                    AccountManager.getInstance().createUser(
-                            //Convert string to integer and remove return characters.
-                            Integer.parseInt(data[0].replaceAll("[\\r\\n]", "")),    //userID
-                            data[1],    //FullName
-                            data[2],    //userName
-                            data[3],    //password
-                            data[4],    //Street address
-                            data[5],    //city
-                            data[6],    //State
-                            data[7],    //Zip
-                            data[8].equals("true")    //Seller status
-                    );
+                    //AccountManager.getInstance().
+                            createUser(
+                                    //Convert string to integer and remove return characters.
+                                    Integer.parseInt(data[0].replaceAll("[\\r\\n]", "")),    //userID
+                                    data[1],    //FullName
+                                    data[2],    //userName
+                                    data[3],    //password
+                                    data[4],    //Street address
+                                    data[5],    //city
+                                    data[6],    //State
+                                    data[7],    //Zip
+                                    data[8].equals("true")    //Seller status
+                            );
                 }
             }
             fileReader.close();
+        } catch (FileNotFoundException e) {
+            Common.resetDatabase();
         } catch (Exception e) { //NumberFormatException or IOException
             e.printStackTrace();
         }

@@ -3,23 +3,18 @@ package view;
 import Resources.ProjectConstants;
 import controller.InventoryManager;
 import controller.TransactionManager;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Iterator;
-import java.util.List;
-import model.Seller;
-import java.text.NumberFormat;
-import java.util.Locale;
+import model.*;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import model.DiscountedProduct;
-import model.LineItem;
-import model.Product;
-import model.RevenueReportingItem;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Presents to the seller a list of their products
@@ -34,14 +29,15 @@ public class SellerListView extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Open the window in the center of the screen.
-         setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
          
-         TransactionManager.getInstance();
-         InventoryManager.getInstance();
+        TransactionManager.getInstance();
+        InventoryManager.getInstance();
          
-         //populate seller products data
-         InventoryManager.getInstance().GetSellerData();
-         GetSellerTransactions();
+        //populate seller products data
+        InventoryManager.getInstance().GetSellerData();
+        GetSellerTransactions();
+
         //Make the main JPanel to use in the Frame
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());

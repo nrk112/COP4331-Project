@@ -1,16 +1,14 @@
 package view;
 
-import Resources.Common;
 import Resources.ProjectConstants;
-import controller.InventoryManager;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.border.EmptyBorder;
 import model.Buyer;
 import model.Product;
-import model.Seller;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The window where users can sign up for service.
@@ -36,7 +34,7 @@ public class ProductDetailView extends JFrame {
         this.buyer = user;
         setTitle(TITLE);
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);
@@ -51,7 +49,14 @@ public class ProductDetailView extends JFrame {
         {
             onSale = "Now on Sale!";
         }
-        
+
+        //Create the heading panel where the shopping cart link will be.
+        JPanel headingPanel = new JPanel(new BorderLayout(10,10));
+        String cartLink = user.getFullName() + " - Cart: " + user.getShoppingCart().size();
+        JLabel cartLinkLabel = new JLabel(cartLink);
+        cartLinkLabel.setFont(ProjectConstants.TITLE_FONT);
+        cartLinkLabel.setBorder(new EmptyBorder(3, 0, 0, 10));
+        mainPanel.add(headingPanel);
         JLabel heading = new JLabel(product.getName() + " " + onSale);
         mainPanel.add(heading, BorderLayout.NORTH);
         

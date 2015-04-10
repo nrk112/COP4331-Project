@@ -1,19 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Resources;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import javax.swing.Box;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
- *
- * @author Lenore
+ *Has functions that are common to more than one other class.
  */
 public class Common {
    
@@ -53,5 +47,39 @@ public class Common {
 
         textField.setAlignmentX(Component.CENTER_ALIGNMENT);
         return textField;
+    }
+
+    /**
+     * Write blank files for users, products and transactions.
+     * @return true if successful
+     */
+    public static boolean resetDatabase() {
+        boolean success = true;
+        boolean deleted;
+
+        try {
+            //Reset the user File.
+            File file = new File(ProjectConstants.USER_FILE);
+            deleted = file.delete();
+            if (!file.createNewFile())
+                success = false;
+
+            //Reset the Product file.
+            file = new File(ProjectConstants.PRODUCT_FILE);
+            deleted = file.delete();
+            if (!file.createNewFile())
+                success = false;
+
+            //Reset the transaction file.
+            file = new File(ProjectConstants.TRANSACTION_FILE);
+            deleted = file.delete();
+            if (!file.createNewFile())
+                success = false;
+
+        } catch (IOException e) {
+            System.out.println("Reset failed!");
+            e.printStackTrace();
+        }
+        return success;
     }
 }

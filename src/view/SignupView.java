@@ -29,7 +29,7 @@ public class SignupView extends JFrame {
     public SignupView() {
         setTitle(TITLE);
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);
@@ -116,11 +116,9 @@ public class SignupView extends JFrame {
                                 sellerButton.isSelected()
                         );
 
-                    JOptionPane.showMessageDialog((Component) e.getSource(), "Success! Please log in.");
-                    //Go back to login view for the user to log in with new credentials.
-                    new LoginView();
+                    JOptionPane.showMessageDialog(null, "Success! Please log in.","", JOptionPane.PLAIN_MESSAGE);
 
-                    //TODO: Figure out how to make the account manager automatically write to the file on quit.
+                    //Save users to file
                     AccountManager.getInstance().writeUsersToFile();
 
                     //Close the window
@@ -128,7 +126,7 @@ public class SignupView extends JFrame {
 
                 //Otherwise give the error message and let them try again.
                 } else {
-                    JOptionPane.showMessageDialog((Component) e.getSource(), "Registration Failed! Please fill in all the forms properly!");
+                    JOptionPane.showMessageDialog(null, "Registration Failed! Please fill in all the forms properly!", "", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -181,16 +179,6 @@ public class SignupView extends JFrame {
     }
 
     /**
-     * Creates a JTextField that will highlight the text when it gets focus.
-     * @param label The temporary filler text.
-     * @return the constructed JTextField.
-     */
-
-
-        //The will highlight the text when it gets focus since its pre-populated.
-
-
-    /**
      * Validates the registration text fields.
      * @return True if all fields are valid.
      */
@@ -205,11 +193,4 @@ public class SignupView extends JFrame {
                 zip.getText().matches("[0-9]{5}")
                 );
     }
-
-    /**
-     * Creates a component that can be used to insert whitespace around GUI elements.
-     * @param x the amount of whitespace pixels along the x axis.
-     * @param y the amount of whitespace pixels along the y axis.
-     * @return the Filler component to add to another component for whitespace.
-     */
 }

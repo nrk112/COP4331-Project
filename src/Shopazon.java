@@ -16,7 +16,7 @@ public class Shopazon {
                 //Call the getInstance function to have it create an instance of itself.
                 AccountManager.getInstance();
                 //Construct the Account manager and load the login window.
-                AccountManager.getInstance().startProgram();
+                AccountManager.getInstance();
             }
         });
 
