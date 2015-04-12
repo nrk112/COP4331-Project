@@ -77,4 +77,6 @@ public abstract class UserModel implements User {
     public boolean getIsSeller() {
         return isSeller;
     }
+
+
 }

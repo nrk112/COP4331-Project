@@ -19,7 +19,7 @@ public class StandardProduct implements Product{
     private String description = null;
     private double cost = 0.0;
     private double price = 0.0;
-    private int quantity = 0;
+    private int quantity;
     private String image = null;
     
     public StandardProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, String image)

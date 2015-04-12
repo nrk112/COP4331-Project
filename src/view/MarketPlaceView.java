@@ -13,25 +13,29 @@ import java.awt.event.MouseListener;
 import java.util.Iterator;
 
 /**
- * Created by Nick on 4/2/2015.
+ * Displays all the items currently available for sale in the marketplace.
  */
 public class MarketPlaceView extends JFrame {
 
+    /**
+     * Constructor sets up and displays the view.
+     * @param user
+     */
     public MarketPlaceView(final Buyer user) {
 
         //Set window properties
         setTitle("Shopazon - Marketplace");
-        setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
+        setSize(ProjectConstants.WINDOW_WIDTH + 50, ProjectConstants.WINDOW_HEIGHT+ 50);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);
 
         //Make the main JPanel to use in the Frame
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel = new JPanel(new BorderLayout());
 
         //Create the heading panel where the shopping cart link will be.
-        JPanel headingPanel = new JPanel(new BorderLayout(10,10));
+        headingPanel = new JPanel(new BorderLayout(10,10));
         String cartLink = user.getFullName() + " - Cart: " + user.getShoppingCart().size();
         JLabel cartLinkLabel = new JLabel(cartLink);
         cartLinkLabel.setFont(ProjectConstants.TITLE_FONT);
@@ -51,10 +55,10 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
-                new ShoppingCartView(user);
-                    //Close the window
-                    dispose();
+
+                new ShoppingCartView(MarketPlaceView.this, user);
+                //Close the window
+                //dispose();
             }
 
             @Override
@@ -77,7 +81,9 @@ public class MarketPlaceView extends JFrame {
         productPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         productPanel.setBackground(Color.WHITE);
         JScrollPane scrollProductPanel = new JScrollPane(productPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
+        scrollProductPanel.getVerticalScrollBar().setUnitIncrement(ProjectConstants.SCROLL_SPEED);
+
+
          InventoryManager.getInstance();
          //populate seller products data
          InventoryManager.getInstance().GetSellerData();
@@ -139,8 +145,8 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                //MarketPlaceManager.getInstance().ProductDetalView(user, product);
-                new ProductDetailView(user, product);
+                //MarketPlaceManager.getInstance().ProductDetailView(user, product);
+                new ProductDetailView(MarketPlaceView.this, user, product);
             }
 
             @Override
@@ -156,5 +162,8 @@ public class MarketPlaceView extends JFrame {
 
         return panel;
     }
+
+    private JPanel headingPanel;
+    private JPanel mainPanel;
 
 }

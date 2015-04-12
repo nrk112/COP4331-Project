@@ -54,5 +54,10 @@ public interface ProjectConstants {
      */
     String PRODUCT_FILE = "products.txt";
 
+    /**
+     * @SCROLL_SPEED The speed that the scroll bars will scroll.
+     */
+    int SCROLL_SPEED = 16;
+
 
 }

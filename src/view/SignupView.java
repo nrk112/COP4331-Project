@@ -11,7 +11,7 @@ import java.awt.event.*;
 /**
  * The window where users can sign up for service.
  */
-public class SignupView extends JFrame {
+public class SignupView extends JDialog {
 
     private final String TITLE = "Shopazon - Signup";
 
@@ -28,8 +28,10 @@ public class SignupView extends JFrame {
      */
     public SignupView() {
         setTitle(TITLE);
-        setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
+        setSize(ProjectConstants.WINDOW_WIDTH - 75, ProjectConstants.WINDOW_HEIGHT - 75);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        setModal(true);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);
@@ -121,6 +123,8 @@ public class SignupView extends JFrame {
                     //Save users to file
                     AccountManager.getInstance().writeUsersToFile();
 
+                    //refresh main panel.
+
                     //Close the window
                     dispose();
 
@@ -134,7 +138,7 @@ public class SignupView extends JFrame {
 
         //Add all the components to the main panel
         int fillerX = ProjectConstants.FILLER_X;
-        int fillerY = 50;
+        int fillerY = 25;
 
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(heading);

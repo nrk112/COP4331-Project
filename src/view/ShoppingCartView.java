@@ -4,30 +4,15 @@ import Resources.Common;
 import Resources.ProjectConstants;
 import controller.InventoryManager;
 import controller.ShoppingCartManager;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
 import model.Buyer;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import model.DiscountedProduct;
-import model.Product;
-import model.Seller;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
- * Created by Nick on 4/4/2015.
+ * The view that displays a particular users shopping cart.
  */
 public class ShoppingCartView extends JFrame {
     
@@ -36,22 +21,26 @@ public class ShoppingCartView extends JFrame {
     private final JTextField cvv;
     private final JTextField expirationMonth;
     private final JTextField expirationYear;
+    private JTable tbProducts;
+    private Buyer buyer;
+    private JFrame parentFrame;
     
-    public ShoppingCartView(Buyer user) {
+    public ShoppingCartView(JFrame parentFrame, Buyer user) {
 
         this.buyer = user;
+        this.parentFrame = parentFrame;
+
         ///TODO Remove test function
         //this.buyer.PopulateList();
         setTitle("Shopazon - Shopping Cart");
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
        
         //Open the window in the center of the screen.
          setLocationRelativeTo(null);
          ShoppingCartManager.getInstance();
          ShoppingCartManager.getInstance().getTransactionData();
-         
-         
+
         //Make the main JPanel to use in the Frame
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -106,7 +95,7 @@ public class ShoppingCartView extends JFrame {
         
         
         //populate jtable with products
-        this.tbProducts=ShoppingCartManager.getInstance().DisplayData(InventoryManager.getInstance().getProductList(), buyer);
+        this.tbProducts = ShoppingCartManager.getInstance().DisplayData(InventoryManager.getInstance().getProductList(), buyer);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
 
         mainPanel.add(tableContainer, BorderLayout.CENTER);
@@ -141,8 +130,9 @@ public class ShoppingCartView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                
-                    //Go back to sellerlist view.
-                    new MarketPlaceView(user);
+                    //Go back to Marketplace view.
+                    //new MarketPlaceView(user);
+                parentFrame.repaint();
 
                     //Close the window
                     dispose();
@@ -150,6 +140,8 @@ public class ShoppingCartView extends JFrame {
         });
         return btn;
     }
+
+
     private JButton CreateAddNewButton(final Buyer user)
     {
         //Create the Save button.
@@ -170,6 +162,7 @@ public class ShoppingCartView extends JFrame {
                     new ConfirmationView(user); 
 
                     //Close the window
+                      parentFrame.repaint();
                     dispose();
 
                   } //Otherwise give the error message and let them try again.
@@ -180,7 +173,5 @@ public class ShoppingCartView extends JFrame {
         });
         return btn;
     }
-    
-    JTable tbProducts = new JTable();
-    Buyer buyer;
+
 }

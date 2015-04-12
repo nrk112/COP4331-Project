@@ -91,9 +91,27 @@ public class AccountManager {
      * @param zip The users zip code.
      * @param isSeller True if the user is a seller.
      */
-    public void createUser(int userID, String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
-        UserModel user = UserFactory.CreateUser(userID, fullName, username, password, streetAddress, city, state, zip, isSeller);
-            addUser(user);
+    public void createUser(int userID,
+                           String fullName,
+                           String username,
+                           String password,
+                           String streetAddress,
+                           String city,
+                           String state,
+                           String zip,
+                           boolean isSeller) {
+        addUser(
+                UserFactory.CreateUser(
+                                        userID,
+                                        fullName,
+                                        username,
+                                        password,
+                                        streetAddress,
+                                        city,
+                                        state,
+                                        zip,
+                                        isSeller));
+            //addUser(user);
     }
 
     /**

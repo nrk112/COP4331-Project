@@ -6,6 +6,9 @@
 package controller;
 
 import Resources.ProjectConstants;
+import model.*;
+import view.AddProductView;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,12 +16,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-import model.DiscountedProduct;
-import model.LineItem;
-import model.Product;
-import model.ProductFactory;
-import model.Seller;
-import view.AddProductView;
 
 /**
  * Handles all functions related to seller product management. Singleton class.
@@ -83,8 +80,7 @@ public class InventoryManager {
          }
          return newID + 1;
      } 
-    /*
-    *  Get product list
+    /**  Get product list
     * @return the product ArrayList.
     */
     public ArrayList getTransactionLineItemList() {

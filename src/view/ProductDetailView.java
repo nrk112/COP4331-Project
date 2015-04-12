@@ -13,26 +13,30 @@ import java.awt.event.ActionListener;
 /**
  * The window where users can sign up for service.
  */
-public class ProductDetailView extends JFrame {
+public class ProductDetailView extends JDialog {
 
-    private final String TITLE = "Shopazon - Add New Product";
-
-//    private final JTextField name;
-//    private final JTextField description;
-//    private final JTextField cost;
-//    private final JTextField price;
-//    private final JTextField quantity;
-//    private final JTextField discountedBy;
     private final Buyer buyer;
-//    private final JTextField image;
+    private JFrame parentFrame;
+    private Product product;
+    private JComboBox qtyComboBox;
+
+
     /**
      * Constructs and shows the add product view view
      * @param user Current instance of the seller object
      * @param product
      */
-    public ProductDetailView(Buyer user, final Product product) {
+    public ProductDetailView(JFrame parentFrame, Buyer user, final Product product) {
+
         this.buyer = user;
-        setTitle(TITLE);
+        this.parentFrame = parentFrame;
+        this.product = product;
+
+        //Make this window modal
+        this.setModal(true);
+
+        //Set window properties
+        setTitle(product.getName() + " - Details");
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -41,8 +45,41 @@ public class ProductDetailView extends JFrame {
 
         //Make the main JPanel to use in the Frame
         JPanel mainPanel = new JPanel();
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.setLayout(new BorderLayout());
 
+        //Create the title panel.
+        JPanel titlePanel = new JPanel(new GridLayout(0, 3, 10, 10));
+
+        //Convert numbers to strings.
+        String productPrice = null;
+        String productQty = null;
+        try{
+            productPrice = Double.toString(product.getPrice());
+            productQty = Integer.toString(product.getQuantity());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JLabel titleLabel = new JLabel(product.getName());
+        titleLabel.setFont(ProjectConstants.TITLE_FONT);
+        titleLabel.setAlignmentX(LEFT_ALIGNMENT);
+
+        JLabel priceLabel = new JLabel("$" + productPrice);
+        priceLabel.setFont(ProjectConstants.TITLE_FONT);
+        priceLabel.setAlignmentX(RIGHT_ALIGNMENT);
+
+        JLabel qtyLabel = new JLabel("Qty Available: " +productQty);
+        qtyLabel.setFont(ProjectConstants.TITLE_FONT);
+        qtyLabel.setAlignmentX(CENTER_ALIGNMENT);
+
+        titlePanel.add(titleLabel);
+        titlePanel.add(qtyLabel);
+        titlePanel.add(priceLabel);
+
+
+
+        /*
         //Create the heading
         String onSale = "";
         if(product.getCurrentPrice()!=product.getPrice())
@@ -118,7 +155,8 @@ public class ProductDetailView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                
                     //Go back to sellerlist view.
-                    new MarketPlaceView(buyer);
+                    //new MarketPlaceView(buyer);
+                parentFrame.repaint();
 
                     //Close the window
                     dispose();
@@ -134,7 +172,7 @@ public class ProductDetailView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                
                     //Go back to sellerlist view.
-                    new ShoppingCartView(buyer);
+                    new ShoppingCartView(null, buyer);
 
                     //Close the window
                     dispose();
@@ -158,6 +196,13 @@ public class ProductDetailView extends JFrame {
         //Add the created panel to the main Frame
         this.add(mainPanel, BorderLayout.CENTER);
 
+        */
+
+        mainPanel.add(titlePanel, BorderLayout.NORTH);
+        mainPanel.add(getDescriptionPanel(), BorderLayout.CENTER);
+        mainPanel.add(getButtonPanel(), BorderLayout.SOUTH);
+
+        this.add(mainPanel, BorderLayout.CENTER);
         //make the window visible.
         setVisible(true);
     }
@@ -168,13 +213,113 @@ public class ProductDetailView extends JFrame {
      * @return True if all fields are valid.
      */
     private boolean validateFields() {
-        return ( true
-//                !name.getText().isEmpty() &&
-//                cost.getText().matches("\\d+(\\.\\d{1,2})?") &&
-//                price.getText().matches("\\d+(\\.\\d{1,2})?") &&
-//                discountedBy.getText().matches("\\d+(\\.\\d{1,2})?") &&
-//                quantity.getText().matches("\\d+") &&
-//                !image.getText().isEmpty()
-                );
+        //TODO: This should check to make sure there is enough quantity to purchase.
+        return true;
+    }
+
+    /**
+     * Create the description panel with image.
+     * @return the constructed panel.
+     */
+    private JPanel getDescriptionPanel(){
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBorder(BorderFactory.createLoweredBevelBorder());
+
+        //create the description text area
+        JTextArea description = new JTextArea(product.getDescription());
+        description.setLineWrap(true);
+        description.setWrapStyleWord(true);
+        description.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(description, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        //Create the image panel
+        ImageIcon image = new ImageIcon(product.getImage());
+        JLabel imageLabel = new JLabel(image);
+        imageLabel.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        //Add stuff to the main panel
+        panel.add(imageLabel ,BorderLayout.WEST);
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        return panel;
+    }
+
+    /**
+     * Create the lower panel with the quantity and add to cart button
+     * @return the panel
+     */
+    private JPanel getButtonPanel() {
+
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(new EmptyBorder(5, 0, 0, 0));
+
+        JPanel panel = new JPanel();
+
+        //Make quantity label
+        JLabel qtyLabel = new JLabel("Qty: ");
+
+        //Make the quantity field
+        String[] qytStrings = {"1", "2", "3", "4", "5"};
+        qtyComboBox = new JComboBox(qytStrings);
+        qtyComboBox.setPreferredSize(new Dimension(50, 27));
+
+        //Make the add to cart button
+        JButton addButton = new JButton("Add to Cart");
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //Check the qty selection and assign it
+                int qtySelected;
+                String msg = (String)qtyComboBox.getSelectedItem();
+                switch (msg) {
+                    case "1":
+                        qtySelected = 1;
+                        break;
+                    case "2":
+                        qtySelected = 2;
+                        break;
+                    case "3":
+                        qtySelected = 3;
+                        break;
+                    case "4":
+                        qtySelected = 4;
+                        break;
+                    case "5":
+                        qtySelected = 5;
+                        break;
+                    default:
+                        qtySelected = 1;
+                        break;
+                }
+
+                if (qtySelected <= product.getQuantity()) {
+
+                    //Add the specified amount to the cart.
+                    for (int i = 0; i < qtySelected; i++) {
+                        buyer.addToShoppingCart(product);
+                    }
+
+                    //Notify them of success
+                    JOptionPane.showMessageDialog(null, qtySelected + " " + product.getName()+ " added to cart. Total items: "+ buyer.getShoppingCart().size() );
+
+                    //Close the window.
+                    dispose();
+
+                } else {
+                    //Notify them of failure
+                    JOptionPane.showMessageDialog(null, "Sorry! There is only " + product.getQuantity() + " of " + product.getName() + " left! Please select a different amount." );
+                }
+            }
+        });
+
+        //Add the stuff to the panel
+        panel.add(qtyLabel);
+        panel.add(qtyComboBox);
+        panel.add(addButton);
+
+        mainPanel.add(panel, BorderLayout.EAST);
+
+        return mainPanel;
     }
 }
