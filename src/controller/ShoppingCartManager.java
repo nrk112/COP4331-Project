@@ -1,32 +1,22 @@
 package controller;
 
 import Resources.ProjectConstants;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import model.Buyer;
+import model.Product;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import model.Buyer;
-import model.DiscountedProduct;
-import model.Product;
-import model.TransactionLineItem;
-import view.ConfirmationView;
 
 /**
- * Shopping Cart Manager handles all functions related with the shopping cart
- */
+  * Shopping Cart Manager handles all functions related with the shopping cart
+  */
 public class ShoppingCartManager {
 
     private static final ShoppingCartManager instance = new ShoppingCartManager();
@@ -47,10 +37,10 @@ public class ShoppingCartManager {
         return instance;
     }
     
-   /*
-    *  Get product list
-    * @return the product ArrayList.
-    */
+    /**
+     * Get product list
+     * @return the product ArrayList.
+     */
     public ArrayList getTransactionLineItemList() {
         return TransactionManager.getInstance().getTransactionLineItemList();
     }
@@ -69,10 +59,7 @@ public class ShoppingCartManager {
     public void createTransactionLineItem(int transactionLineItemID, int productID, int sellerID, int buyerID, String name, double cost, double price, int quantity) {
         TransactionManager.getInstance().createTransactionLineItem(transactionLineItemID, productID, sellerID, buyerID, name, cost, price, quantity);
     }
-    
-    /*
-    
-    */
+
     public void BuyNow(Buyer user) {       
        TransactionManager.getInstance().BuyNow(user);
     }
@@ -102,16 +89,18 @@ public class ShoppingCartManager {
         tableColumnNames[2] = "Quantity";
         tableColumnNames[3] = "Total Price per item";
         tableColumnNames[4] = "Totals";
-        
 
         aModel.setColumnIdentifiers(tableColumnNames);
+
         if (ProductsList == null) {
-        tbProducts.setModel(aModel);
-        return tbProducts;
+            tbProducts.setModel(aModel);
+            return tbProducts;
         }
+
         Locale locale = new Locale("en", "US");
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
         NumberFormat percentageFormat = NumberFormat.getPercentInstance(locale);
+
         Object[] objects = new Object[5];
         Product currentProduct;
         double subTotal = 0.0;
@@ -183,7 +172,8 @@ public class ShoppingCartManager {
                     
                     return c;
                 }
-            });            
+            });
+
     //binding the jtable to the model
     tbProducts.setModel(aModel);
     return tbProducts;

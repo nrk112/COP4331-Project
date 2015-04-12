@@ -6,6 +6,7 @@ import controller.TransactionManager;
 import model.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -25,7 +26,7 @@ public class SellerListView extends JFrame {
 
         this.seller = user;
         setTitle("Shopazon - Seller List View");
-        setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
+        setSize(ProjectConstants.WINDOW_WIDTH + 200, ProjectConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Open the window in the center of the screen.
@@ -41,6 +42,7 @@ public class SellerListView extends JFrame {
         //Make the main JPanel to use in the Frame
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         //Add new button
         JPanel topPanel = new JPanel();

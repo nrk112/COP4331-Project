@@ -20,7 +20,6 @@ public class ProductDetailView extends JDialog {
     private Product product;
     private JComboBox qtyComboBox;
 
-
     /**
      * Constructs and shows the add product view view
      * @param user Current instance of the seller object
@@ -31,6 +30,7 @@ public class ProductDetailView extends JDialog {
         this.buyer = user;
         this.parentFrame = parentFrame;
         this.product = product;
+
 
         //Make this window modal
         this.setModal(true);
@@ -49,33 +49,19 @@ public class ProductDetailView extends JDialog {
         mainPanel.setLayout(new BorderLayout());
 
         //Create the title panel.
-        JPanel titlePanel = new JPanel(new GridLayout(0, 3, 10, 10));
+        JPanel titlePanel = new JPanel(new BorderLayout());
 
-        //Convert numbers to strings.
-        String productPrice = null;
-        String productQty = null;
-        try{
-            productPrice = Double.toString(product.getPrice());
-            productQty = Integer.toString(product.getQuantity());
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        //Format price
+        String productPrice = String.format("%1$,.2f", product.getPrice());
 
         JLabel titleLabel = new JLabel(product.getName());
         titleLabel.setFont(ProjectConstants.TITLE_FONT);
-        titleLabel.setAlignmentX(LEFT_ALIGNMENT);
 
         JLabel priceLabel = new JLabel("$" + productPrice);
         priceLabel.setFont(ProjectConstants.TITLE_FONT);
-        priceLabel.setAlignmentX(RIGHT_ALIGNMENT);
 
-        JLabel qtyLabel = new JLabel("Qty Available: " +productQty);
-        qtyLabel.setFont(ProjectConstants.TITLE_FONT);
-        qtyLabel.setAlignmentX(CENTER_ALIGNMENT);
-
-        titlePanel.add(titleLabel);
-        titlePanel.add(qtyLabel);
-        titlePanel.add(priceLabel);
+        titlePanel.add(titleLabel, BorderLayout.WEST);
+        titlePanel.add(priceLabel, BorderLayout.EAST);
 
 
 
@@ -207,16 +193,6 @@ public class ProductDetailView extends JDialog {
         setVisible(true);
     }
 
-
-    /**
-     * Validates the registration text fields.
-     * @return True if all fields are valid.
-     */
-    private boolean validateFields() {
-        //TODO: This should check to make sure there is enough quantity to purchase.
-        return true;
-    }
-
     /**
      * Create the description panel with image.
      * @return the constructed panel.
@@ -303,6 +279,7 @@ public class ProductDetailView extends JDialog {
                     //Notify them of success
                     JOptionPane.showMessageDialog(null, qtySelected + " " + product.getName()+ " added to cart. Total items: "+ buyer.getShoppingCart().size() );
 
+                    parentFrame.repaint();
                     //Close the window.
                     dispose();
 

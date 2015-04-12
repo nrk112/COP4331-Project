@@ -14,7 +14,7 @@ import java.io.File;
 /**
  * The window where users can sign up for service.
  */
-public class AddProductView extends JFrame {
+public class AddProductView extends JDialog {
 
     private final String TITLE = "Shopazon - Add New Product";
 
@@ -28,15 +28,18 @@ public class AddProductView extends JFrame {
     private final JTextField image;
     private final JFileChooser fileChooser;
     private File imageFile;
+
     /**
      * Constructs and shows the add product view view
      * @param user Current instance of the seller object
      */
     public AddProductView(Seller user) {
+
+        setModal(true);
         this.seller = user;
         setTitle(TITLE);
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);

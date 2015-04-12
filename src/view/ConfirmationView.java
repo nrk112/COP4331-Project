@@ -4,35 +4,27 @@ import Resources.Common;
 import Resources.ProjectConstants;
 import controller.InventoryManager;
 import controller.ShoppingCartManager;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
 import model.Buyer;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import model.Product;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
- * Created by Nick on 4/4/2015.
+ * Displays a confirmation page that the products were purchased.
  */
-public class ConfirmationView extends JFrame {
+public class ConfirmationView extends JDialog {
     
     public ConfirmationView(Buyer user) {
 
         this.buyer = user;
-        ///TODO Remove test function
+
+        setModal(true);
+
         setTitle("Shopazon - Confirmation");
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
        
         //Open the window in the center of the screen.
          setLocationRelativeTo(null);
@@ -80,7 +72,7 @@ public class ConfirmationView extends JFrame {
     private JButton CreateReturnButton(final Buyer user)
     {
         //Create the Save button.
-        final JButton btn = new JButton("Return to MarketPlace");
+        final JButton btn = new JButton("OK");
         //Allow enter to press the button at any time.
         this.getRootPane().setDefaultButton(btn);
         btn.addActionListener(new ActionListener() 
@@ -89,7 +81,8 @@ public class ConfirmationView extends JFrame {
             public void actionPerformed(ActionEvent e) 
             {     
                   user.ClearShoppingCart();
-                  new MarketPlaceView(user);
+                  //new MarketPlaceView(user);
+                dispose();
             }
         });
         return btn;

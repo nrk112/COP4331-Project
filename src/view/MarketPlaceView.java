@@ -55,10 +55,8 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
                 new ShoppingCartView(MarketPlaceView.this, user);
-                //Close the window
-                //dispose();
+                repaint();
             }
 
             @Override
@@ -88,7 +86,7 @@ public class MarketPlaceView extends JFrame {
          //populate seller products data
          InventoryManager.getInstance().GetSellerData();
         
-        //Generate fake products for now.
+        //Generate products
          Iterator productIter = InventoryManager.getInstance().getProductList().iterator();
          Product currentProduct;
             while(productIter.hasNext()) 
@@ -131,7 +129,6 @@ public class MarketPlaceView extends JFrame {
         price.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(price, BorderLayout.SOUTH);
 
-
         panel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -145,8 +142,9 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                //MarketPlaceManager.getInstance().ProductDetailView(user, product);
                 new ProductDetailView(MarketPlaceView.this, user, product);
+                new MarketPlaceView(user);
+                dispose();
             }
 
             @Override
