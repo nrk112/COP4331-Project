@@ -73,7 +73,7 @@ public class StandardProduct implements Product{
     
     public String toString()
     {
-        return name + ": "+ description;
+        return description;
     }
     
     public static Comparator<Product> SortByName()

@@ -50,7 +50,7 @@ public class DiscountedProduct implements Product{
     }
     public String getDescription()
     {
-        return this.item.getDescription()+ " (Marked down by " + discountedBy + "%)";
+        return this.item.getDescription();
     }
     
     public String getImage()
@@ -63,7 +63,7 @@ public class DiscountedProduct implements Product{
     }
     public String toString()
     {
-        return item.toString() + " (" + discountedBy + "% Discount)";
+        return this.item.getDescription()+ " (Marked down by " + discountedBy + "%)";
     }
     
     public static Comparator<Product> SortByName()

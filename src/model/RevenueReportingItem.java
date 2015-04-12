@@ -27,7 +27,7 @@ public class RevenueReportingItem {
         return revenue-cost;
     }
     
-    public int remainingQuantity(int originalInventory)
+    public int getRemainingQuantity(int originalInventory)
     {
         return originalInventory - quantitySold;
     }

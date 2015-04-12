@@ -92,7 +92,7 @@ public class ProductDetailView extends JDialog {
         panel.setPreferredSize(dimension);
         panel.setBackground(Color.LIGHT_GRAY);
 
-        JLabel title = new JLabel(product.getDescription());
+        JLabel title = new JLabel(product.toString());
         title.setBorder(new EmptyBorder(3, 3, 3, 3));
         title.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(title, BorderLayout.NORTH);
@@ -202,7 +202,7 @@ public class ProductDetailView extends JDialog {
         panel.setBorder(BorderFactory.createLoweredBevelBorder());
 
         //create the description text area
-        JTextArea description = new JTextArea(product.getDescription());
+        JTextArea description = new JTextArea(product.toString());
         description.setLineWrap(true);
         description.setWrapStyleWord(true);
         description.setEditable(false);

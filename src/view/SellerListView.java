@@ -95,7 +95,7 @@ public class SellerListView extends JFrame {
         Object[] tableColumnNames = new Object[11];
         tableColumnNames[0] = "Name";
         tableColumnNames[1] = "Description";
-        tableColumnNames[2] = "Quantity";
+        tableColumnNames[2] = "Quantity Remaining";
         tableColumnNames[3] = "Quantity Sold";
         tableColumnNames[4] = "Cost";
         tableColumnNames[5] = "Total Cost";
@@ -132,7 +132,7 @@ public class SellerListView extends JFrame {
                     RevenueReportingItem rri = seller.getRevenueReportingItem(currentProduct);
                     objects[0] = currentProduct.getName();
                     objects[1] = currentProduct.getDescription();
-                    objects[2] = currentProduct.getQuantity();
+                    objects[2] = rri.getRemainingQuantity(currentProduct.getQuantity());
                     objects[3] = rri.getTotalQuantitySold();
                     objects[4] = currencyFormat.format(currentProduct.getCost());
                     objects[5] = currencyFormat.format(rri.getTotalCost());
@@ -177,9 +177,28 @@ public class SellerListView extends JFrame {
             }
             tbProducts.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {//alternate background color for rows
                 public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                   JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                     if (!isSelected) {
                         c.setBackground(row % 2 == 0 ? Color.white : Color.LIGHT_GRAY);
+                        if(column==0){
+                            c.setHorizontalAlignment(JLabel.LEFT);
+                        }
+                        else if(column < 4)
+                        {
+                            if (value instanceof Integer) 
+                            {
+                            c.setHorizontalAlignment(JLabel.CENTER);  
+                            }
+                            else
+                            {
+                                c.setHorizontalAlignment(JLabel.RIGHT); 
+                            }
+                        }
+                        else
+                        {
+                            c.setHorizontalAlignment(JLabel.RIGHT);                            
+                        }
+                         if(row == table.getRowCount()-1) c.setFont(c.getFont().deriveFont(Font.BOLD));
                     }
                     return c;
                 }
