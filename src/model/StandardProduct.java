@@ -92,9 +92,7 @@ public class StandardProduct implements Product{
     @Override
     public boolean equals(Object other)
     {
-        if(!(other instanceof StandardProduct)) return false;
-        if(other == null && this !=null) return false;
-        if(other !=null && this == null) return false;
+        if((other.getClass() != this.getClass())) return false;
         StandardProduct item = (StandardProduct) other;
         return( 
                 item.getCost() == this.getCost() &&

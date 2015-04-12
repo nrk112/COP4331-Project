@@ -81,9 +81,7 @@ public class DiscountedProduct implements Product{
     @Override
     public boolean equals(Object other)
     {
-        if(!(other instanceof DiscountedProduct)) return false;
-        if(other == null && this !=null) return false;
-        if(other !=null && this == null) return false;
+        if((other.getClass()!= this.getClass())) return false;
         DiscountedProduct item = (DiscountedProduct) other;
         return( 
                 item.getDiscountedBy() == this.getDiscountedBy() &&
