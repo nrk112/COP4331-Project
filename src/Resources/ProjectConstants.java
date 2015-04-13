@@ -10,12 +10,12 @@ public interface ProjectConstants {
     /**
      * @WINDOW_WIDTH The standard window width
      */
-    int WINDOW_WIDTH = 640;
+    int WINDOW_WIDTH = 800;
 
     /**
      * @WINDOW_HEIIGHT The standard window height
      */
-    int WINDOW_HEIGHT = 480;
+    int WINDOW_HEIGHT = 600;
 
     /**
      * @TEXTFIELD_WIDTH The standard width for most JTextField objects
@@ -37,22 +37,25 @@ public interface ProjectConstants {
      */
     double SALES_TAX = .06;
 
+    /**
+     * @TITLE_FONT the font to use for large title text.
+     */
     Font TITLE_FONT = new Font("Calibri", Font.BOLD, 24);
 
     /**
      * @USER_FILE The location and name of the text file to store the users information in.
      */
-    String USER_FILE = "users.txt";
+    String USER_FILE = "database\\users.txt";
 
     /**
      * @TRANSACTION_FILE The location and name of the text file to store the transaction information in.
      */
-    String TRANSACTION_FILE = "transactions.txt";
+    String TRANSACTION_FILE = "database\\transactions.txt";
 
     /**
      * @PRODUCT_FILE The location and name of the text file to store the product information in.
      */
-    String PRODUCT_FILE = "products.txt";
+    String PRODUCT_FILE = "database\\products.txt";
 
     /**
      * @SCROLL_SPEED The speed that the scroll bars will scroll.

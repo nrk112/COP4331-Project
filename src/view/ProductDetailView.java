@@ -63,127 +63,6 @@ public class ProductDetailView extends JDialog {
         titlePanel.add(titleLabel, BorderLayout.WEST);
         titlePanel.add(priceLabel, BorderLayout.EAST);
 
-
-
-        /*
-        //Create the heading
-        String onSale = "";
-        if(product.getCurrentPrice()!=product.getPrice())
-        {
-            onSale = "Now on Sale!";
-        }
-
-        //Create the heading panel where the shopping cart link will be.
-        JPanel headingPanel = new JPanel(new BorderLayout(10,10));
-        String cartLink = user.getFullName() + " - Cart: " + user.getShoppingCart().size();
-        JLabel cartLinkLabel = new JLabel(cartLink);
-        cartLinkLabel.setFont(ProjectConstants.TITLE_FONT);
-        cartLinkLabel.setBorder(new EmptyBorder(3, 0, 0, 10));
-        mainPanel.add(headingPanel);
-        JLabel heading = new JLabel(product.getName() + " " + onSale);
-        mainPanel.add(heading, BorderLayout.NORTH);
-        
-                
-        int side = 180;
-        JPanel panel = new JPanel(new BorderLayout());
-        Dimension dimension = new Dimension(side, side);
-        panel.setMaximumSize(dimension);
-        panel.setMinimumSize(dimension);
-        panel.setPreferredSize(dimension);
-        panel.setBackground(Color.LIGHT_GRAY);
-
-        JLabel title = new JLabel(product.toString());
-        title.setBorder(new EmptyBorder(3, 3, 3, 3));
-        title.setAlignmentX(CENTER_ALIGNMENT);
-        panel.add(title, BorderLayout.NORTH);
-        
-        
-        JPanel fakePic = new JPanel();
-        ImageIcon image = new ImageIcon(product.getImage());
-        JLabel label = new JLabel(image);
-        fakePic.setBackground(Color.DARK_GRAY);
-        fakePic.add(label);
-        panel.add(fakePic, BorderLayout.CENTER);
-
-        JLabel price = new JLabel(String.format("$"+"%1$,.2f", product.getCurrentPrice()));
-        price.setBorder(new EmptyBorder(3, 3, 3, 3));
-        price.setAlignmentX(CENTER_ALIGNMENT);
-        panel.add(price, BorderLayout.SOUTH);
-        
-        mainPanel.add(panel, BorderLayout.CENTER);
-
-        //Create the Save button.
-       final JButton btnSave = new JButton("Save");
-        //Allow enter to press the button at any time.
-        this.getRootPane().setDefaultButton(btnSave);
-        btnSave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                //If the input is valid, send the data to create a user.
-                if (validateFields()) {
-                    //Check if they are registering as a buyer or seller.
-                        buyer.addToShoppingCart(product);
-                        JOptionPane.showMessageDialog((Component) e.getSource(), product.getName()+ " added to cart. Total items: "+ buyer.getShoppingCart().size() );
-                //Otherwise give the error message and let them try again.
-                } else {
-                    JOptionPane.showMessageDialog((Component) e.getSource(), "Could not save product, please verify all information is provided" );
-                }
-            }
-        });
-
-        //Create the Cancel button.
-       final JButton btnCancel = new JButton("Return to Market Place");
-        //Allow enter to press the button at any time.
-        this.getRootPane().setDefaultButton(btnCancel);
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               
-                    //Go back to sellerlist view.
-                    //new MarketPlaceView(buyer);
-                parentFrame.repaint();
-
-                    //Close the window
-                    dispose();
-            }
-        });
-        
-         //Create the Cancel button.
-       final JButton btnGoToCart = new JButton("Go To Cart");
-        //Allow enter to press the button at any time.
-        this.getRootPane().setDefaultButton(btnGoToCart);
-        btnGoToCart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               
-                    //Go back to sellerlist view.
-                    new ShoppingCartView(null, buyer);
-
-                    //Close the window
-                    dispose();
-            }
-        });
-
-       
-
-    JPanel buttonPanel = new JPanel(new GridLayout(0,3,10,10));
-
-        buttonPanel.add(btnSave);
-        btnSave.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
-        buttonPanel.add(btnCancel);
-        btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        buttonPanel.add(btnGoToCart);
-        btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-        //Add the created panel to the main Frame
-        this.add(mainPanel, BorderLayout.CENTER);
-
-        */
-
         mainPanel.add(titlePanel, BorderLayout.NORTH);
         mainPanel.add(getDescriptionPanel(), BorderLayout.CENTER);
         mainPanel.add(getButtonPanel(), BorderLayout.SOUTH);
@@ -206,6 +85,7 @@ public class ProductDetailView extends JDialog {
         description.setLineWrap(true);
         description.setWrapStyleWord(true);
         description.setEditable(false);
+        //description.setBackground(Color.);
         JScrollPane scrollPane = new JScrollPane(description, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         //Create the image panel

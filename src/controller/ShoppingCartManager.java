@@ -26,8 +26,8 @@ public class ShoppingCartManager {
     
     public void getTransactionData()
     {                
-        TransactionManager.getInstance();
-        TransactionManager.getInstance().getTransactionData();
+        //TransactionManager.getInstance();
+        //TransactionManager.getInstance().getTransactionData();
     }
     /**
      * Returns the instance of the SellerManager singleton.

@@ -38,21 +38,7 @@ public class LoginView extends JFrame {
         JLabel heading = new JLabel("Thank you for choosing Shopazon! Please log in to continue.");
 
         //Create the username fields
-        final JTextField userName = new JTextField("User Name");
-        userName.setMaximumSize(
-                new Dimension(ProjectConstants.TEXTFIELD_WIDTH, userName.getPreferredSize().height));
-
-        //The will highlight the text when it gets focus since its pre-populated.
-        userName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        userName.selectAll();
-                    }
-                });
-            }
-        });
+        final JTextField userName = Common.createTextField("User Name");
 
         //Create the password field
         final JPasswordField password = new JPasswordField("Password");
@@ -97,11 +83,7 @@ public class LoginView extends JFrame {
         registerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Have the AccountManger start the new user registration process.
                 AccountManager.getInstance().signupClicked();
-
-                //Close the window
-
             }
         });
 

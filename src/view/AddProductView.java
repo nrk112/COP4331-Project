@@ -85,7 +85,7 @@ public class AddProductView extends JDialog {
                             Integer.parseInt(quantity.getText()),
                             Double.parseDouble(discountedBy.getText()),
                             //image.getText()
-                            fileChooser.getName()
+                            imageFile.getPath()
                     );
 
                     // update products fle
@@ -129,23 +129,20 @@ public class AddProductView extends JDialog {
                 if(result == JFileChooser.APPROVE_OPTION) {
                     imageFile = fileChooser.getSelectedFile();
                 }
-
             }
         });
 
         //Add all the components to the main panel
         int fillerX = ProjectConstants.FILLER_X;
-        int fillerY = 50;
+        int fillerY = ProjectConstants.FILLER_Y;
 
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(heading);
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        fillerY = ProjectConstants.FILLER_Y;
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(name);
 
-        fillerY = ProjectConstants.FILLER_Y;
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(description);
 
@@ -163,7 +160,7 @@ public class AddProductView extends JDialog {
         
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(btnImageChooser);
-        //mainPanel.add(image);
+        btnImageChooser.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(btnSave);

@@ -78,6 +78,25 @@ public class AccountManager {
      */
     private void addUser(UserModel user) {
         users.add(user);
+        writeUsersToFile();
+    }
+
+    /**
+     * Checks if a particular username is already being used by another customer.
+     * @param userName the name to check for
+     * @return true if the name exists.
+     */
+    private boolean userNameExists(String userName) {
+
+        UserModel currentUser;
+        Iterator userIter = users.iterator();
+        while(userIter.hasNext()) {
+            currentUser = (UserModel) userIter.next();
+            if (currentUser.getUsername().equals(userName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -91,7 +110,7 @@ public class AccountManager {
      * @param zip The users zip code.
      * @param isSeller True if the user is a seller.
      */
-    public void createUser(int userID,
+    public boolean createUser(int userID,
                            String fullName,
                            String username,
                            String password,
@@ -100,18 +119,21 @@ public class AccountManager {
                            String state,
                            String zip,
                            boolean isSeller) {
-        addUser(
-                UserFactory.CreateUser(
-                                        userID,
-                                        fullName,
-                                        username,
-                                        password,
-                                        streetAddress,
-                                        city,
-                                        state,
-                                        zip,
-                                        isSeller));
-            //addUser(user);
+        boolean success = false;
+        if (!userNameExists(username)){
+            addUser(UserFactory.CreateUser(
+                    userID,
+                    fullName,
+                    username,
+                    password,
+                    streetAddress,
+                    city,
+                    state,
+                    zip,
+                    isSeller));
+            success = true;
+        }
+        return success;
     }
 
     /**

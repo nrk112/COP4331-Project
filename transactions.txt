@@ -1,8 +1,0 @@
-1~9~2~3~Gold Slippers~3.0~100.0~1~
-2~9~2~3~Gold Slippers~3.0~100.0~1~
-3~7~1~3~Mirrored Glasses~0.15~15.0~1~
-4~5~1~3~Green Flower vase - Large~0.25~15.99~1~
-5~8~2~3~Silver Slippers~2.0~70.0~1~
-6~7~1~3~Mirrored Glasses~0.15~15.0~1~
-7~1~1~3~Red Coffee Cup~0.99~4.99~1~
-8~1~1~3~Red Coffee Cup~0.99~4.99~1~

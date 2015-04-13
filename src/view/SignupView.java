@@ -105,30 +105,28 @@ public class SignupView extends JDialog {
 
                 //If the input is valid, send the data to create a user.
                 if (validateFields()) {
-                    //Check if they are registering as a buyer or seller.
-                        AccountManager.getInstance().createUser(
-                                AccountManager.getInstance().getNewUserId(),
-                                fullName.getText(),
-                                userName.getText(),
-                                new String(password.getPassword()),
-                                streetAddress.getText(),
-                                city.getText(),
-                                state.getText(),
-                                zip.getText(),
-                                sellerButton.isSelected()
-                        );
 
-                    JOptionPane.showMessageDialog(null, "Success! Please log in.","", JOptionPane.PLAIN_MESSAGE);
+                    //Attempt to create the user.
+                    boolean success = AccountManager.getInstance().createUser(
+                                                    AccountManager.getInstance().getNewUserId(),
+                                                    fullName.getText(),
+                                                    userName.getText(),
+                                                    new String(password.getPassword()),
+                                                    streetAddress.getText(),
+                                                    city.getText(),
+                                                    state.getText(),
+                                                    zip.getText(),
+                                                    sellerButton.isSelected()
+                    );
+                    if (success) {
+                        JOptionPane.showMessageDialog(null, "Success! Please log in.","", JOptionPane.INFORMATION_MESSAGE);
+                        //Close the window
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Someone with that username already exists! Please pick a different one.","", JOptionPane.ERROR_MESSAGE);
+                    }
 
-                    //Save users to file
-                    AccountManager.getInstance().writeUsersToFile();
-
-                    //refresh main panel.
-
-                    //Close the window
-                    dispose();
-
-                //Otherwise give the error message and let them try again.
+                //If input is not valid, give the error message and let them try again.
                 } else {
                     JOptionPane.showMessageDialog(null, "Registration Failed! Please fill in all the forms properly!", "", JOptionPane.ERROR_MESSAGE);
                 }

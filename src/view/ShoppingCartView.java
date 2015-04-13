@@ -40,6 +40,7 @@ public class ShoppingCartView extends JDialog {
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);
 
+        //TODO: REMOVE THESE
         ShoppingCartManager.getInstance();
         ShoppingCartManager.getInstance().getTransactionData();
 
@@ -117,10 +118,12 @@ public class ShoppingCartView extends JDialog {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) 
-            {     
+            {
+                //TODO: check if cart is empty here.
                   if (validateFields()) {
                     ShoppingCartManager.getInstance().BuyNow(user);                    
-                    
+
+                      //TODO: Move this to the buynow method?
                     // update transactions file
                     ShoppingCartManager.getInstance().writeTransactionsToFile();
 
