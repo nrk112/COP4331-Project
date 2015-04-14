@@ -27,7 +27,7 @@ public class AddProductView extends JDialog {
     private final Seller seller;
     private final JTextField image;
     private final JFileChooser fileChooser;
-    private File imageFile;
+    private File imageFile = null;
 
     /**
      * Constructs and shows the add product view view
@@ -73,9 +73,7 @@ public class AddProductView extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //If the input is valid, send the data to create a user.
                 if (validateFields()) {
-                    //Check if they are registering as a buyer or seller.
                     InventoryManager.getInstance().createProduct(InventoryManager.getInstance().getProductId(),
                             seller.getID(),
                             name.getText(),
@@ -84,16 +82,11 @@ public class AddProductView extends JDialog {
                             Double.parseDouble(price.getText()),
                             Integer.parseInt(quantity.getText()),
                             Double.parseDouble(discountedBy.getText()),
-                            //image.getText()
                             imageFile.getPath()
                     );
 
-                    // update products fle
+                    // update products file
                     InventoryManager.getInstance().writeProductsToFile();
-                    //Go back to sellerlist view.
-                    new SellerListView(seller);
-
-                    //Close the window
                     dispose();
 
                     //Otherwise give the error message and let them try again.
@@ -110,11 +103,6 @@ public class AddProductView extends JDialog {
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                    //Go back to sellerlist view.
-                    new SellerListView(seller);
-
-                    //Close the window
                     dispose();
             }
         });
@@ -124,7 +112,6 @@ public class AddProductView extends JDialog {
         btnImageChooser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 int result = fileChooser.showDialog(getContentPane(),"Open");
                 if(result == JFileChooser.APPROVE_OPTION) {
                     imageFile = fileChooser.getSelectedFile();
@@ -183,6 +170,9 @@ public class AddProductView extends JDialog {
      * @return True if all fields are valid.
      */
     private boolean validateFields() {
+        if (imageFile == null) {
+            imageFile = new File(ProjectConstants.DEFAULT_IMAGE_FILE);
+        }
         return (
                 !name.getText().isEmpty() &&
                 cost.getText().matches("\\d+(\\.\\d{1,2})?") &&

@@ -24,16 +24,13 @@ public class SellerListView extends JFrame {
 
     public SellerListView(Seller user) {
 
-        this.seller = user;
-        setTitle("Shopazon - Seller List View");
+        this.user = user;
+        setTitle("Shopazon - " + user.getFullName() + "'s items.");
         setSize(ProjectConstants.WINDOW_WIDTH + 200, ProjectConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);
-         
-        TransactionManager.getInstance();
-        InventoryManager.getInstance();
          
         //populate seller products data
         InventoryManager.getInstance().GetSellerData();
@@ -46,11 +43,11 @@ public class SellerListView extends JFrame {
 
         //Add new button
         JPanel topPanel = new JPanel();
-        JButton addButton = CreateAddNewButton(seller);
+        JButton addButton = CreateAddNewButton(user);
         topPanel.add(addButton);
         
         //populate jtable with products
-        DisplayData(InventoryManager.getInstance().getProductList(), seller);
+        displayData(InventoryManager.getInstance().getProductList(), user);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
 
         mainPanel.add(tableContainer, BorderLayout.CENTER);
@@ -63,24 +60,21 @@ public class SellerListView extends JFrame {
     
     private JButton CreateAddNewButton(final Seller user)
     {
-        //Create the Save button.
         final JButton btn = new JButton("Add New Product");
         //Allow enter to press the button at any time.
         this.getRootPane().setDefaultButton(btn);
         btn.addActionListener(new ActionListener() 
         {
             @Override
-            public void actionPerformed(ActionEvent e) 
-            {               
+            public void actionPerformed(ActionEvent e) {
                     InventoryManager.getInstance().AddProductView(user);
-                    //Close the window
-                    dispose();
+                displayData(InventoryManager.getInstance().getProductList(), user);
             }
         });
         return btn;
     }
     
-    private void DisplayData(List<Product> ProductsList, Seller user) 
+    private void displayData(List<Product> ProductsList, Seller user)
     {
         DefaultTableModel aModel = new DefaultTableModel() 
         {            //setting the jtable read only
@@ -129,7 +123,7 @@ public class SellerListView extends JFrame {
                     {
                         discountedBy = ((DiscountedProduct)currentProduct).getDiscountedBy();
                     }
-                    RevenueReportingItem rri = seller.getRevenueReportingItem(currentProduct);
+                    RevenueReportingItem rri = user.getRevenueReportingItem(currentProduct);
                     objects[0] = currentProduct.getName();
                     objects[1] = currentProduct.getDescription();
                     objects[2] = rri.getRemainingQuantity(currentProduct.getQuantity());
@@ -203,20 +197,24 @@ public class SellerListView extends JFrame {
                     return c;
                 }
             });            
-    //binding the jtable to the model
-    this.tbProducts.setModel(aModel);
+        //binding the jtable to the model
+        this.tbProducts.setModel(aModel);
     }
     JTable tbProducts = new JTable();
-    Seller seller;
+    Seller user;
 
+    /**
+     *
+     */
+    //TODO:  Shouldn't this be in the SellerManager or Seller class itself? When a user is created it can get its own stuff.
     private void GetSellerTransactions() {
         Iterator lineItemIter = TransactionManager.getInstance().getTransactionLineItemList().iterator();
         LineItem currentLineItem ;
         while(lineItemIter.hasNext()) {
             currentLineItem = (LineItem) lineItemIter.next();
-            if(currentLineItem.getSellerID() == seller.getID())
+            if(currentLineItem.getSellerID() == user.getID())
             {
-                seller.addToTransactionLineItemList(currentLineItem);
+                user.addToTransactionLineItemList(currentLineItem);
             }
         }
     }

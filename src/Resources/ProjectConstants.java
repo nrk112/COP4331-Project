@@ -62,5 +62,7 @@ public interface ProjectConstants {
      */
     int SCROLL_SPEED = 16;
 
+    String DEFAULT_IMAGE_FILE = "database\\images\\default.jpg";
+
 
 }

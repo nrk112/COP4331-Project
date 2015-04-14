@@ -45,6 +45,7 @@ public class ConfirmationView extends JDialog {
         
         //Create the heading
         JLabel heading = new JLabel("Thank you for shopping at Shopazon!");
+        heading.setFont(ProjectConstants.TITLE_FONT);
        
         
         int fillerX = ProjectConstants.FILLER_X;

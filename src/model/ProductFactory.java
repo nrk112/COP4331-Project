@@ -25,13 +25,12 @@ public class ProductFactory {
          if (discountedBy>0) 
          {
             Product discountedProduct = new DiscountedProduct(
-                    product,
-		    discountedBy
+                product,
+		        discountedBy
             );
             return discountedProduct;
          }
             return product;
-       
         }
     }
     

@@ -119,11 +119,12 @@ public class ShoppingCartView extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
-                //TODO: check if cart is empty here.
-                  if (validateFields()) {
-                    ShoppingCartManager.getInstance().BuyNow(user);                    
+                if(buyer.getShoppingCart().size() == 0) {
+                    JOptionPane.showMessageDialog(null, "Your Cart is empty, please add something to purchase.");
+                }else if(validateFields()) {
+                    ShoppingCartManager.getInstance().BuyNow(user);
 
-                      //TODO: Move this to the buynow method?
+                    //TODO: Move this to the buynow method?
                     // update transactions file
                     ShoppingCartManager.getInstance().writeTransactionsToFile();
 
@@ -133,9 +134,8 @@ public class ShoppingCartView extends JDialog {
                     //Close the window
                     getParent().repaint();
                     dispose();
-
-                  } else {
-                    JOptionPane.showMessageDialog(null, "Please provide payment information!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please provide correct payment information!");
                 }
             }
         });

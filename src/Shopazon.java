@@ -13,9 +13,7 @@ public class Shopazon {
 
             @Override
             public void run() {
-                //Call the getInstance function to have it create an instance of itself.
-                AccountManager.getInstance();
-                //Construct the Account manager and load the login window.
+                //Start the program
                 AccountManager.getInstance();
             }
         });

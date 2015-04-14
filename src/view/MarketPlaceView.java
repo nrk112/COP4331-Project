@@ -19,27 +19,29 @@ public class MarketPlaceView extends JFrame {
 
     /**
      * Constructor sets up and displays the view.
-     * @param user
+     * @param user The buyer object representing the customer.
      */
     public MarketPlaceView(final Buyer user) {
 
+        this.user = user;
+
         //Set window properties
         setTitle("Shopazon - Marketplace");
-        setSize(ProjectConstants.WINDOW_WIDTH + 50, ProjectConstants.WINDOW_HEIGHT+ 50);
+        setSize(ProjectConstants.WINDOW_WIDTH + 50, ProjectConstants.WINDOW_HEIGHT + 50);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);
 
         //Make the main JPanel to use in the Frame
-        mainPanel = new JPanel(new BorderLayout());
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
         //Create the heading panel where the shopping cart link will be.
-        headingPanel = new JPanel(new BorderLayout(10,10));
-        String cartLink = user.getFullName() + " - Cart: " + user.getShoppingCart().size();
-        JLabel cartLinkLabel = new JLabel(cartLink);
+        JPanel headingPanel = new JPanel(new BorderLayout(10,10));
+        cartLinkLabel = new JLabel();
         cartLinkLabel.setFont(ProjectConstants.TITLE_FONT);
         cartLinkLabel.setBorder(new EmptyBorder(3, 0, 0, 10));
+        updateHeading();
 
         //Add the mouse click listener to the label.
         cartLinkLabel.addMouseListener(new MouseListener() {
@@ -56,7 +58,7 @@ public class MarketPlaceView extends JFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 new ShoppingCartView(MarketPlaceView.this, user);
-                repaint();
+                updateHeading();
             }
 
             @Override
@@ -92,7 +94,7 @@ public class MarketPlaceView extends JFrame {
             while(productIter.hasNext()) 
             {
                 currentProduct = (Product) productIter.next();                
-                productPanel.add(createItemIcon(user, currentProduct));
+                productPanel.add(createItemIcon(currentProduct));
             }
 
         //
@@ -103,8 +105,20 @@ public class MarketPlaceView extends JFrame {
         this.setVisible(true);
     }
 
-    //Turn an inventory item into an icon for use in the main window.
-    private JPanel createItemIcon(final Buyer user, final Product product) {
+    /**
+     * Updates the heading which shows the amount of items int he cart.
+     */
+    private void updateHeading(){
+        String cartLink = user.getFullName() + " - Cart: " + user.getShoppingCart().size();
+        cartLinkLabel.setText(cartLink);
+    }
+
+    /**
+     * Turn an inventory item into a JPanel contianing price, picture, and name of the product.
+     * @param product the object representing the item for sale.
+     * @return The constructed JPanel holding the information
+     */
+    private JPanel createItemIcon(final Product product) {
         int side = 180;
         JPanel panel = new JPanel(new BorderLayout());
         Dimension dimension = new Dimension(side, side);
@@ -143,8 +157,7 @@ public class MarketPlaceView extends JFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 new ProductDetailView(MarketPlaceView.this, user, product);
-                new MarketPlaceView(user);
-                dispose();
+                updateHeading();
             }
 
             @Override
@@ -161,7 +174,6 @@ public class MarketPlaceView extends JFrame {
         return panel;
     }
 
-    private JPanel headingPanel;
-    private JPanel mainPanel;
-
+    private JLabel cartLinkLabel;
+    private Buyer user;
 }

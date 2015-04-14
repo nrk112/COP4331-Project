@@ -1,16 +1,19 @@
 package model;
 
+import controller.TransactionManager;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Created by Nick on 3/30/2015.
+ *
  */
 public class Seller extends UserModel {
     private ArrayList<LineItem> lineItems = new ArrayList<>();
     
     public Seller(int userID, String fullName, String username, String password, String streetAddress, String city, String state, String zip, boolean isSeller) {
         super(userID, fullName, username, password, streetAddress, city, state, zip, isSeller);
+        getSellerTransactions();
     }
     
     public ArrayList<LineItem> getTransactionLineItems()
@@ -41,5 +44,21 @@ public class Seller extends UserModel {
                 }
             }
        return new RevenueReportingItem(cost, revenue, quantity);
+    }
+
+    /**
+     *
+     */
+    //TODO:  Shouldn't this be in the SellerManager or Seller class itself? When a user is created it can get its own stuff.
+    private void getSellerTransactions() {
+        Iterator lineItemIter = TransactionManager.getInstance().getTransactionLineItemList().iterator();
+        LineItem currentLineItem ;
+        while(lineItemIter.hasNext()) {
+            currentLineItem = (LineItem) lineItemIter.next();
+            if(currentLineItem.getSellerID() == this.getID())
+            {
+                this.addToTransactionLineItemList(currentLineItem);
+            }
+        }
     }
 }

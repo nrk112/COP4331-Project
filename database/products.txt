@@ -7,7 +7,5 @@
 7~1~Mirrored Glasses~Shiny pretty (Marked down by 20.0%)~0.15~15.0~600~20.0~database\images\mirrored-glasses.jpg~
 8~2~Silver Slippers~Shiny shoes~2.0~70.0~500~0.0~silver-database\images\slippers.jpg~
 9~2~Gold Slippers~Glittering shoes (Marked down by 5.0%)~3.0~100.0~700~5.0~database\images\gold-slippers.jpg~
-10~4~Test Item~This is the story of a boy who wsa;lkasjddddddddddd dddddddddddddddddddddddddd dddddddd dddddddddddddddddddddd dddddddddddddddddddddddddddd ddddddddddddddddddddddddddddd dddd (Marked down by 1.0%)~1.11~1.11~111~1.0~null~
-11~4~Name~Description~1.11~2.22~333~0.0~database\images\black-coffee-cup-raku.jpg~
-12~4~Test 2~Desc 2~3.33~4.44~1~20.0~database\images\green-coffee-cup.jpg~
-13~4~Why do we use it.~It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).~10.0~15.0~3~0.0~database\images\gold-slippers.jpg~
+10~1~Name~Description~1.11~1.11~10~0.0~C:\Users\Nick\IdeaProjects\COP4331-Project\gold-slippers.jpg~
+11~1~Name~Description~123.0~123.0~123~0.0~database\images\default.jpg~

@@ -60,6 +60,14 @@ public class ProductDetailView extends JDialog {
         JLabel priceLabel = new JLabel("$" + productPrice);
         priceLabel.setFont(ProjectConstants.TITLE_FONT);
 
+        //TODO: Add get discount to product?
+        /*if(product.getDiscountedBy() != 0.0){
+            JLabel discountLabel = new JLabel("On Sale! " + product.getDiscountedBy() + "% OFF!");
+            discountLabel.setBackground(Color.RED);
+            discountLabel.setFont(ProjectConstants.TITLE_FONT);
+            titlePanel.add(discountLabel, BorderLayout.SOUTH);
+        }*/
+
         titlePanel.add(titleLabel, BorderLayout.WEST);
         titlePanel.add(priceLabel, BorderLayout.EAST);
 
@@ -158,9 +166,6 @@ public class ProductDetailView extends JDialog {
 
                     //Notify them of success
                     JOptionPane.showMessageDialog(null, qtySelected + " " + product.getName()+ " added to cart. Total items: "+ buyer.getShoppingCart().size() );
-
-                    parentFrame.repaint();
-                    //Close the window.
                     dispose();
 
                 } else {
