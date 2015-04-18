@@ -69,8 +69,9 @@ public class LoginView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String pass = new String(password.getPassword());
                 if (AccountManager.getInstance().authorizeUser(userName.getText(), pass)) {
-                    //Close this window.
-                    //dispose();
+                    userName.setText("User Name");
+                    password.setText("Password");
+                    password.setEchoChar((char)0);
                 }else{
                     JOptionPane.showMessageDialog(null, "Login Failed! Please try again!","", JOptionPane.ERROR_MESSAGE);
                 }

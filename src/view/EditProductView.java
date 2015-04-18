@@ -3,6 +3,8 @@ package view;
 import Resources.Common;
 import Resources.ProjectConstants;
 import controller.InventoryManager;
+import model.DiscountedProduct;
+import model.Product;
 import model.Seller;
 
 import javax.swing.*;
@@ -12,11 +14,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- * The window where users can sign up for service.
+ *
  */
-public class AddProductView extends JDialog {
+public class EditProductView extends JDialog {
 
-    private final String TITLE = "Shopazon - Add New Product";
+    private final String TITLE = "Shopazon - Edit Existing Product";
 
     private final JTextField name;
     private final JTextField description;
@@ -28,12 +30,15 @@ public class AddProductView extends JDialog {
     private final JTextField image;
     private final JFileChooser fileChooser;
     private File imageFile = null;
+    private Product product;
 
     /**
      * Constructs and shows the add product view view
      * @param user Current instance of the seller object
      */
-    public AddProductView(Seller user) {
+    public EditProductView(int productID, Seller user) {
+
+        product = InventoryManager.getInstance().getProductByID(productID);
 
         setModal(true);
         this.seller = user;
@@ -53,12 +58,17 @@ public class AddProductView extends JDialog {
         JLabel heading = new JLabel("Please fill in the following information for your product:");
 
         //Create the JTextFields
-        name = Common.createTextField("Name");
-        description = Common.createTextField("Description");
-        cost = Common.createTextField("Cost (x.xx)");
-        price = Common.createTextField("Price (x.xx)");
-        quantity = Common.createTextField("Quantity (xxx)");
-        discountedBy = Common.createTextField("Discounted By (x.xx)");
+        name = Common.createTextField(product.getName());
+        description = Common.createTextField(product.getDescription());
+        cost = Common.createTextField(Double.toString(product.getCost()));
+        price = Common.createTextField(Double.toString(product.getPrice()));
+        quantity = Common.createTextField(Integer.toString(product.getQuantity()));
+        discountedBy = Common.createTextField("");
+        if (product instanceof DiscountedProduct) {
+            String discountTitle = Double.toString(((DiscountedProduct)product).getDiscountedBy());
+            discountedBy.setText(discountTitle);
+        }
+
         image = Common.createTextField("Image file name (image.jpg)");
 
         //Create the file chooser.
@@ -74,7 +84,8 @@ public class AddProductView extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 if (validateFields()) {
-                    InventoryManager.getInstance().createProduct(InventoryManager.getInstance().getProductId(),
+                    //TODO: Figure out where to edit the product. Here or in inventory manager.
+                    /*InventoryManager.getInstance().editProduct(productID,
                             seller.getID(),
                             name.getText(),
                             description.getText(),
@@ -83,9 +94,8 @@ public class AddProductView extends JDialog {
                             Integer.parseInt(quantity.getText()),
                             Double.parseDouble(discountedBy.getText()),
                             imageFile.getPath()
-                    );
+                    );*/
                     dispose();
-
                     //Otherwise give the error message and let them try again.
                 } else {
                     JOptionPane.showMessageDialog(null, "Could not save product, please verify all information is provided", "", JOptionPane.ERROR_MESSAGE);
@@ -116,11 +126,14 @@ public class AddProductView extends JDialog {
             }
         });
 
+        //JPanel textFieldPanel = new JPanel(new GridLayout(0,2, 20, ProjectConstants.FILLER_Y));
+        //textFieldPanel.add(new JLabel("Name:"));
+        //textFieldPanel.add(name);
+
         //Add all the components to the main panel
         int fillerX = ProjectConstants.FILLER_X;
         int fillerY = ProjectConstants.FILLER_Y;
 
-        //TODO: ADD A HIDDEN LABEL THAT WILL SHOW THE PICTURE WHEN SELECTED.
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(heading);
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -156,12 +169,16 @@ public class AddProductView extends JDialog {
         btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Add the created panel to the main Frame
+        //this.add(textFieldPanel, BorderLayout.NORTH);
         this.add(mainPanel, BorderLayout.CENTER);
 
         //make the window visible.
         setVisible(true);
     }
 
+    private void loadProductInfo() {
+
+    }
 
     /**
      * Validates the registration text fields.
@@ -179,5 +196,36 @@ public class AddProductView extends JDialog {
                         quantity.getText().matches("\\d+") &&
                         !image.getText().isEmpty()
         );
+    }
+
+    /**
+     * Creates a JTextField that will highlight the text when it gets focus.
+     * @param label The temporary filler text.
+     * @return the constructed JTextField.
+     */
+    public static JPanel createTextField(String name, String label) {
+
+        final JPanel panel = new JPanel();
+        panel.setMinimumSize(new Dimension(400, 28));
+        final JLabel nameLabel = new JLabel(name);
+        final JTextField textField = new JTextField(label);
+        textField.setMaximumSize(
+                new Dimension(ProjectConstants.TEXTFIELD_WIDTH, textField.getPreferredSize().height));
+
+        //The will highlight the text when it gets focus since its pre-populated.
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        textField.selectAll();
+                    }
+                });
+            }
+        });
+        //textField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(nameLabel);
+        panel.add(textField);
+        return panel;
     }
 }

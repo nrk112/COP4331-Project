@@ -28,6 +28,14 @@ public class InventoryManager {
     private InventoryManager() {
         populateProductList();
     }
+
+    /**
+     * Returns the instance of the InventoryManager singleton.
+     * @return the instance.
+     */
+    public static InventoryManager getInstance() {
+        return instance;
+    }
     
     public void GetSellerData()
     {                
@@ -50,15 +58,21 @@ public class InventoryManager {
     public void createProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy, String image) {
         Product product = ProductFactory.CreateProduct(productID,sellerID, name, description, cost, price, quantity, discountedBy, image);         
         addProduct(product);
+        writeProductsToFile();
     }
 
-
     /**
-     * Returns the instance of the InventoryManager singleton.
-     * @return the instance.
+     * Gets a specific product by its ID
+     * @param ID the ID of the product to get
+     * @return the product
      */
-    public static InventoryManager getInstance() {
-        return instance;
+    public Product getProductByID(int ID) {
+        for (Product product : products) {
+            if (product.getProductID() == ID) {
+                return product;
+            }
+        }
+        return null;
     }
 
 

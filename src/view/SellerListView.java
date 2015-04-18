@@ -66,8 +66,6 @@ public class SellerListView extends JDialog {
     private JButton CreateAddNewButton(final Seller user)
     {
         final JButton btn = new JButton("Add New Product");
-        //Allow enter to press the button at any time.
-        this.getRootPane().setDefaultButton(btn);
         btn.addActionListener(new ActionListener() 
         {
             @Override
@@ -90,19 +88,21 @@ public class SellerListView extends JDialog {
             }
         };
 
+        int TABLE_SIZE = 12;
         //setting the column name
-        Object[] tableColumnNames = new Object[11];
-        tableColumnNames[0] = "Name";
-        tableColumnNames[1] = "Description";
-        tableColumnNames[2] = "Quantity Remaining";
-        tableColumnNames[3] = "Quantity Sold";
-        tableColumnNames[4] = "Cost";
-        tableColumnNames[5] = "Total Cost";
-        tableColumnNames[6] = "Original Price";
-        tableColumnNames[7] = "Discounted By";
-        tableColumnNames[8] = "Current Price";
-        tableColumnNames[9] = "Total Revenue";
-        tableColumnNames[10] = "Total Profit";
+        Object[] tableColumnNames = new Object[TABLE_SIZE];
+        tableColumnNames[0] = "ID";
+        tableColumnNames[1] = "Name";
+        tableColumnNames[2] = "Description";
+        tableColumnNames[3] = "Quantity Remaining";
+        tableColumnNames[4] = "Quantity Sold";
+        tableColumnNames[5] = "Cost";
+        tableColumnNames[6] = "Total Cost";
+        tableColumnNames[7] = "Original Price";
+        tableColumnNames[8] = "Discounted By";
+        tableColumnNames[9] = "Current Price";
+        tableColumnNames[10] = "Total Revenue";
+        tableColumnNames[11] = "Total Profit";
 
         aModel.setColumnIdentifiers(tableColumnNames);
 
@@ -115,7 +115,7 @@ public class SellerListView extends JDialog {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
         NumberFormat percentageFormat = NumberFormat.getPercentInstance(locale);
 
-        Object[] objects = new Object[11];
+        Object[] objects = new Object[TABLE_SIZE];
 
         Product currentProduct;
         double subTotalCost = 0.0;
@@ -134,17 +134,18 @@ public class SellerListView extends JDialog {
                 }
                 RevenueReportingItem rri = user.getRevenueReportingItem(currentProduct);
 
-                objects[0] = currentProduct.getName();
-                objects[1] = currentProduct.getDescription();
-                objects[2] = rri.getRemainingQuantity(currentProduct.getQuantity());
-                objects[3] = rri.getTotalQuantitySold();
-                objects[4] = currencyFormat.format(currentProduct.getCost());
-                objects[5] = currencyFormat.format(rri.getTotalCost());
-                objects[6] = currencyFormat.format(currentProduct.getPrice());
-                objects[7] = (discountedBy==0)? "--" : percentageFormat.format(discountedBy/100);
-                objects[8] = currencyFormat.format(currentProduct.getCurrentPrice());
-                objects[9] = currencyFormat.format(rri.getTotalRevenue());
-                objects[10] = currencyFormat.format(rri.getProfit());
+                objects[0] = currentProduct.getProductID();
+                objects[1] = currentProduct.getName();
+                objects[2] = currentProduct.getDescription();
+                objects[3] = rri.getRemainingQuantity(currentProduct.getQuantity());
+                objects[4] = rri.getTotalQuantitySold();
+                objects[5] = currencyFormat.format(currentProduct.getCost());
+                objects[6] = currencyFormat.format(rri.getTotalCost());
+                objects[7] = currencyFormat.format(currentProduct.getPrice());
+                objects[8] = (discountedBy==0)? "--" : percentageFormat.format(discountedBy/100);
+                objects[9] = currencyFormat.format(currentProduct.getCurrentPrice());
+                objects[10] = currencyFormat.format(rri.getTotalRevenue());
+                objects[11] = currencyFormat.format(rri.getProfit());
 
                 aModel.addRow(objects);
                 subTotalCost += rri.getTotalCost();
@@ -217,7 +218,11 @@ public class SellerListView extends JDialog {
                 if (e.getClickCount() == 2 && e.getSource() instanceof JTable) {
                     JTable jTable = (JTable) e.getSource();
                     int row = jTable.getSelectedRow();
-                    new AddProductView(SellerListView.this.user);
+                    int column = 0;
+                    int productID = (Integer) jTable.getValueAt(row, column);
+                    //JOptionPane.showMessageDialog(null, productID, "", JOptionPane.ERROR_MESSAGE);
+                    new EditProductView(productID, user);
+                    displayData(InventoryManager.getInstance().getProductList(), user);
                 }
             }
 
@@ -242,6 +247,8 @@ public class SellerListView extends JDialog {
             }
         });
     }
+
+
     JTable tbProducts = new JTable();
     Seller user;
 }
