@@ -26,9 +26,8 @@ public class EditProductView extends JDialog {
     private final JTextField price;
     private final JTextField quantity;
     private final JTextField discountedBy;
-    private final Seller seller;
-    private final JTextField image;
     private final JFileChooser fileChooser;
+    private final JLabel imageThumbnail;
     private File imageFile = null;
     private Product product;
 
@@ -41,7 +40,6 @@ public class EditProductView extends JDialog {
         product = InventoryManager.getInstance().getProductByID(productID);
 
         setModal(true);
-        this.seller = user;
         setTitle(TITLE);
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -63,13 +61,18 @@ public class EditProductView extends JDialog {
         cost = Common.createTextField(Double.toString(product.getCost()));
         price = Common.createTextField(Double.toString(product.getPrice()));
         quantity = Common.createTextField(Integer.toString(product.getQuantity()));
-        discountedBy = Common.createTextField("");
+        String image = product.getImage();
+
+        discountedBy = Common.createTextField("0.0");
         if (product instanceof DiscountedProduct) {
             String discountTitle = Double.toString(((DiscountedProduct)product).getDiscountedBy());
             discountedBy.setText(discountTitle);
         }
 
-        image = Common.createTextField("Image file name (image.jpg)");
+        //Create the image icon
+        imageThumbnail = new JLabel();
+        ImageIcon imageIcon = new ImageIcon(image);
+        imageThumbnail.setIcon(imageIcon);
 
         //Create the file chooser.
         fileChooser = new JFileChooser();
@@ -84,14 +87,6 @@ public class EditProductView extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 if (validateFields()) {
-                    product.setName(name.getText());
-                    product.setDescription(description.getText());
-                    product.setCost(Double.parseDouble(cost.getText()));
-                    product.setPrice(Double.parseDouble(price.getText()));
-                    product.setQuantity(Integer.parseInt(quantity.getText()));
-                    //product.setDiscountedBy(Double.parseDouble(discountedBy.getText()));
-                    product.setImage(imageFile.getPath());
-
                     InventoryManager.getInstance().editProductByID(
                             productID,
                             name.getText(),
@@ -99,15 +94,14 @@ public class EditProductView extends JDialog {
                             Double.parseDouble(cost.getText()),
                             Double.parseDouble(price.getText()),
                             Integer.parseInt(quantity.getText()),
-                            0.0,
+                            Double.parseDouble(discountedBy.getText()),
                             imageFile.getPath()
                     );
                     user.populateTransactions();
-
                     dispose();
                     //Otherwise give the error message and let them try again.
                 } else {
-                    JOptionPane.showMessageDialog(null, "Could not save product, please verify all information is provided", "", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "There was a problem editing your product. Please make sure you filled in all the fields with valid information.", "", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -132,12 +126,12 @@ public class EditProductView extends JDialog {
                 if(result == JFileChooser.APPROVE_OPTION) {
                     imageFile = fileChooser.getSelectedFile();
                 }
+                //Update the image
+                ImageIcon imageIcon = new ImageIcon(imageFile.getPath());
+                imageThumbnail.setIcon(imageIcon);
             }
         });
 
-        //JPanel textFieldPanel = new JPanel(new GridLayout(0,2, 20, ProjectConstants.FILLER_Y));
-        //textFieldPanel.add(new JLabel("Name:"));
-        //textFieldPanel.add(name);
 
         //Add all the components to the main panel
         int fillerX = ProjectConstants.FILLER_X;
@@ -166,6 +160,10 @@ public class EditProductView extends JDialog {
         mainPanel.add(discountedBy);
 
         mainPanel.add(Common.getFiller(fillerX, fillerY));
+        mainPanel.add(imageThumbnail);
+        imageThumbnail.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(btnImageChooser);
         btnImageChooser.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -185,10 +183,6 @@ public class EditProductView extends JDialog {
         setVisible(true);
     }
 
-    private void loadProductInfo() {
-
-    }
-
     /**
      * Validates the registration text fields.
      * @return True if all fields are valid.
@@ -202,17 +196,16 @@ public class EditProductView extends JDialog {
                         cost.getText().matches("\\d+(\\.\\d{1,2})?") &&
                         price.getText().matches("\\d+(\\.\\d{1,2})?") &&
                         discountedBy.getText().matches("\\d+(\\.\\d{1,2})?") &&
-                        quantity.getText().matches("\\d+") &&
-                        !image.getText().isEmpty()
+                        quantity.getText().matches("\\d+")
         );
     }
 
     /**
-     * Creates a JTextField that will highlight the text when it gets focus.
+     * Creates a panel that has a label and a textfield that will highlight the text when it gets focus.
      * @param label The temporary filler text.
      * @return the constructed JTextField.
      */
-    public static JPanel createTextField(String name, String label) {
+    public static JPanel createPanelTextField(String name, String label) {
 
         final JPanel panel = new JPanel();
         panel.setMinimumSize(new Dimension(400, 28));

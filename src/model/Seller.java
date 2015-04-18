@@ -2,6 +2,7 @@ package model;
 
 import controller.TransactionManager;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -41,22 +42,21 @@ public class Seller extends UserModel {
             {
                 quantity += currentItem.getQuantity();
                 cost += currentItem.getCost();
-                revenue += currentItem.getPrice();
+                //revenue += currentItem.getPrice();
 
                 //Added because it calculating the total revenue after the discount.
-                /*if (currentItem instanceof ProductDecorator) {
-                    revenue += currentItem.getPrice() - ((DiscountedProduct)currentItem).getDiscountedBy();
+                if (currentItem instanceof DiscountedProduct) {
+                    double percentDiscount = ((DiscountedProduct)currentItem).getDiscountedBy() / 100.0;
+                    JOptionPane.showMessageDialog(null, percentDiscount, "", JOptionPane.ERROR_MESSAGE);
+                    revenue += currentItem.getPrice() - currentItem.getPrice() * percentDiscount;
                 } else {
                     revenue += currentItem.getPrice();
-                }*/
+                }
             }
         }
         return new RevenueReportingItem(cost, revenue, quantity);
     }
 
-    /**
-     *
-     */
     public void populateTransactions() {
         Iterator lineItemIter = TransactionManager.getInstance().getTransactionLineItemList().iterator();
         LineItem currentLineItem ;

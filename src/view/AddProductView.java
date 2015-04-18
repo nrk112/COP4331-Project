@@ -28,6 +28,7 @@ public class AddProductView extends JDialog {
     private final JTextField image;
     private final JFileChooser fileChooser;
     private File imageFile = null;
+    private final JLabel imageThumbnail;
 
     /**
      * Constructs and shows the add product view view
@@ -60,6 +61,10 @@ public class AddProductView extends JDialog {
         quantity = Common.createTextField("Quantity (xxx)");
         discountedBy = Common.createTextField("Discounted By (x.xx)");
         image = Common.createTextField("Image file name (image.jpg)");
+
+        //Create the thumbnail
+        imageThumbnail = new JLabel();
+        imageThumbnail.setVisible(false);
 
         //Create the file chooser.
         fileChooser = new JFileChooser();
@@ -113,6 +118,9 @@ public class AddProductView extends JDialog {
                 if(result == JFileChooser.APPROVE_OPTION) {
                     imageFile = fileChooser.getSelectedFile();
                 }
+                ImageIcon imageIcon = new ImageIcon(imageFile.getPath());
+                imageThumbnail.setIcon(imageIcon);
+                imageThumbnail.setVisible(true);
             }
         });
 
@@ -142,6 +150,10 @@ public class AddProductView extends JDialog {
 
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(discountedBy);
+
+        mainPanel.add(Common.getFiller(fillerX, fillerY));
+        mainPanel.add(imageThumbnail);
+        imageThumbnail.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(btnImageChooser);

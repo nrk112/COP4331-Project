@@ -225,7 +225,6 @@ public class SellerListView extends JDialog {
                     if (row < rowCount-2) {
                         int column = 0;
                         int productID = (Integer) jTable.getValueAt(row, column);
-                        //JOptionPane.showMessageDialog(null, productID, "", JOptionPane.ERROR_MESSAGE);
                         new EditProductView(productID, user);
                         displayData(InventoryManager.getInstance().getProductList(), user);
                     }

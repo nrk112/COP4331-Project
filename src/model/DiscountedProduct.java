@@ -25,6 +25,10 @@ public class DiscountedProduct extends ProductDecorator {
         return discountedBy;
     }
 
+    public void setDiscountedBy(double discountedBy) {
+        this.discountedBy = discountedBy;
+    }
+
     @Override
     public String toString()
     {

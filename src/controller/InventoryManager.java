@@ -6,7 +6,10 @@
 package controller;
 
 import Resources.ProjectConstants;
-import model.*;
+import model.DiscountedProduct;
+import model.Product;
+import model.ProductFactory;
+import model.Seller;
 import view.AddProductView;
 
 import java.io.FileReader;
@@ -66,12 +69,12 @@ public class InventoryManager {
                 product.setName(name);
                 product.setCost(cost);
                 product.setPrice(price);
-
                 if (product instanceof DiscountedProduct) {
-                    //TODO add setDiscountedBy and use it here.
+                    ((DiscountedProduct)product).setDiscountedBy(discountedBy);
                 }
             }
         }
+        writeProductsToFile();
     }
 
     /**
@@ -141,16 +144,17 @@ public class InventoryManager {
                     index = 0;
 
                     //Create product
+                    String regex = "[\\r\\n]";
                     this.createProduct(
                             //Convert string to appropriate types and remove return characters.
-                            Integer.parseInt(data[0].replaceAll("[\\r\\n]", "")),   //ProductID
-                            Integer.parseInt(data[1].replaceAll("[\\r\\n]", "")),   //SellerID
+                            Integer.parseInt(data[0].replaceAll(regex, "")),   //ProductID
+                            Integer.parseInt(data[1].replaceAll(regex, "")),   //SellerID
                             data[2],                                                //Name
                             data[3],                                                //Description
-                            Double.parseDouble(data[4].replaceAll("[\\r\\n]", "")), //Cost
-                            Double.parseDouble(data[5].replaceAll("[\\r\\n]", "")), //Price
-                            Integer.parseInt(data[6].replaceAll("[\\r\\n]", "")),   //Quantity
-                            Double.parseDouble(data[7].replaceAll("[\\r\\n]", "")),  //DiscountedBy
+                            Double.parseDouble(data[4].replaceAll(regex, "")), //Cost
+                            Double.parseDouble(data[5].replaceAll(regex, "")), //Price
+                            Integer.parseInt(data[6].replaceAll(regex, "")),   //Quantity
+                            Double.parseDouble(data[7].replaceAll(regex, "")),  //DiscountedBy
                             data[8]                                                //Image
                     );
                 }
