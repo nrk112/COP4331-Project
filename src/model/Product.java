@@ -4,32 +4,31 @@ package model;
  * Establishes the baseline for products
  */
 public interface Product {
-    public int productID = -1;
-    public int sellerID = -1;
-    public String name = null;
-    public String description = null;
-    public double cost = 0.0;
-    public double price = 0.0;
-    public int quantity = 0;
-    public String image=null;
-    public double getPrice();
-    public double getCurrentPrice();
-    public int getQuantity();
-    public int getProductID();
-    public int getSellerID();
-    public double getCost();
-    public String getName();
-    public String getDescription();
-    public String getImage();
-    public void setPrice(double price);
-    public void setCurrentPrice(double currentPrice);
-    public void setQuantity(int qty);
-    public void setCost(double cost);
-    public void setName(String name);
-    public void setDescription(String description);
-    public void setImage(String fileName);
+    int productID = -1;
+    int sellerID = -1;
+    String name = null;
+    String description = null;
+    double cost = 0.0;
+    double price = 0.0;
+    int quantity = 0;
+    String image=null;
+    double getPrice();
+    double getCurrentPrice();
+    int getQuantity();
+    int getProductID();
+    int getSellerID();
+    double getCost();
+    String getName();
+    String getDescription();
+    String getImage();
+    void setPrice(double price);
+    void setQuantity(int qty);
+    void setCost(double cost);
+    void setName(String name);
+    void setDescription(String description);
+    void setImage(String fileName);
 
-    public String toString();
-    public boolean equals(Object other);   
+    String toString();
+    boolean equals(Object other);
     
 }

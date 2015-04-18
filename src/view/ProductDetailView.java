@@ -17,14 +17,13 @@ import java.awt.event.ActionListener;
 public class ProductDetailView extends JDialog {
 
     private final Buyer buyer;
-    private JFrame parentFrame;
     private Product product;
-    private JComboBox qtyComboBox;
+    private JComboBox<String> qtyComboBox;
 
     /**
      * Constructs and shows the add product view view
      * @param user Current instance of the seller object
-     * @param product
+     * @param product The product that will be used to display details about.
      */
     public ProductDetailView(Buyer user, final Product product) {
 
@@ -51,7 +50,7 @@ public class ProductDetailView extends JDialog {
         //Create the title panel.
         JPanel titlePanel = new JPanel(new BorderLayout());
 
-        String productPrice = String.format("%1$,.2f", product.getCurrentPrice());
+        String productPrice = String.format("$%1$,.2f", product.getCurrentPrice());
 
         //Display the discount portion.
         if(product instanceof DiscountedProduct && ((DiscountedProduct)product).getDiscountedBy() != 0.0){
@@ -60,15 +59,13 @@ public class ProductDetailView extends JDialog {
             discountLabel.setFont(ProjectConstants.TITLE_FONT);
             titlePanel.add(discountLabel, BorderLayout.SOUTH);
 
-            //Format price
-            productPrice = "Was: " + (String.format("%1$,.2f", product.getPrice())) +
-                    " NOW: " + (String.format("%1$,.2f", product.getCurrentPrice())) ;
+            productPrice = String.format("Was: $%1$,.2f NOW ONLY: $%2$,.2f", product.getPrice(), product.getCurrentPrice());
         }
 
         JLabel titleLabel = new JLabel(product.getName());
         titleLabel.setFont(ProjectConstants.TITLE_FONT);
 
-        JLabel priceLabel = new JLabel("$" + productPrice);
+        JLabel priceLabel = new JLabel(productPrice);
         priceLabel.setFont(ProjectConstants.TITLE_FONT);
 
         titlePanel.add(titleLabel, BorderLayout.WEST);
@@ -127,7 +124,7 @@ public class ProductDetailView extends JDialog {
 
         //Make the quantity field
         String[] qytStrings = {"1", "2", "3", "4", "5"};
-        qtyComboBox = new JComboBox(qytStrings);
+        qtyComboBox = new JComboBox<>(qytStrings);
         qtyComboBox.setPreferredSize(new Dimension(50, 27));
 
         //Make the add to cart button

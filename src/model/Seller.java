@@ -41,13 +41,14 @@ public class Seller extends UserModel {
             {
                 quantity += currentItem.getQuantity();
                 cost += currentItem.getCost();
+                revenue += currentItem.getPrice();
 
                 //Added because it calculating the total revenue after the discount.
-                if (currentItem instanceof DiscountedProduct) {
+                /*if (currentItem instanceof ProductDecorator) {
                     revenue += currentItem.getPrice() - ((DiscountedProduct)currentItem).getDiscountedBy();
                 } else {
                     revenue += currentItem.getPrice();
-                }
+                }*/
             }
         }
         return new RevenueReportingItem(cost, revenue, quantity);

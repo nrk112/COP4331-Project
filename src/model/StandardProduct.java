@@ -1,71 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-import java.util.Comparator;
-
 /**
- *
- * abstract class that defines common methods
- */
-public class StandardProduct implements Product{
+ * This is the base concrete class for the product model.
+ * */
+public class StandardProduct implements Product {
 
-    private int productID = -1;
-    private int sellerID = -1;
-    private String name = null;
-    private String description = null;
-    private double cost = 0.0;
-    private double price = 0.0;
+    private int productID;
+    private int sellerID;
+    private String name;
+    private String description;
+    private double cost;
+    private double price;
     private int quantity;
     private String image = null;
-    
-    public StandardProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, String image)
-    {
-        this.cost=cost;
-        this.description = description;
-        this.name = name;
-        this.price = price;
-        this.productID = productID;
-        this.quantity = quantity;
-        this.sellerID = sellerID;
-        this.image = image;
-    }
 
-    public String toString()
-    {
-        return description;
-    }
-    
-    public static Comparator<Product> SortByName()
-    {
-       Comparator comp = new Comparator<Product>()
-       {
-            @Override
-            public int compare(Product s1, Product s2)
-            {
-                return s1.name.compareTo(s2.name);
-            }        
-        };
-    return comp;
-    }
-    
-    @Override
-    public boolean equals(Object other)
-    {
-        if((other.getClass() != this.getClass())) return false;
-        StandardProduct item = (StandardProduct) other;
-        return( 
-                item.getCost() == this.getCost() &&
-                item.getPrice() == this.getPrice() &&
-                item.getProductID() == this.getProductID() &&
-                item.getSellerID() == this.getSellerID() &&
-                item.getName().contentEquals(this.getName()))&&
-                item.getDescription().contentEquals(this.getDescription()) &&
-                item.getImage().contentEquals(this.getImage()
-           );        
+    public StandardProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, String image) {
+        this.productID = productID;
+        this.sellerID = sellerID;
+        this.name = name;
+        this.description = description;
+        this.cost = cost;
+        this.price = price;
+        this.quantity = quantity;
+        this.image = image;
     }
 
     @Override
@@ -120,11 +77,7 @@ public class StandardProduct implements Product{
 
     @Override
     public double getCurrentPrice() {
-        return 0;
-    }
-
-    @Override
-    public void setCurrentPrice(double currentPrice) {
+        return price;
     }
 
     @Override
@@ -145,5 +98,26 @@ public class StandardProduct implements Product{
     @Override
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String toString()
+    {
+        return "";
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if((other.getClass() != this.getClass())) return false;
+        StandardProduct item = (StandardProduct) other;
+        return(
+                item.getCost() == this.getCost() &&
+                        item.getPrice() == this.getPrice() &&
+                        item.getProductID() == this.getProductID() &&
+                        item.getSellerID() == this.getSellerID() &&
+                        item.getName().contentEquals(this.getName()))&&
+                item.getDescription().contentEquals(this.getDescription()) &&
+                item.getImage().contentEquals(this.getImage()
+                );
     }
 }

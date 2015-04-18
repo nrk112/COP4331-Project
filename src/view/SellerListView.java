@@ -161,12 +161,13 @@ public class SellerListView extends JDialog {
             objects[2] = "";
             objects[3] = "";
             objects[4] = "";
-            objects[5] = currencyFormat.format(subTotalCost);
-            objects[6] = "";
+            objects[5] = "";
+            objects[6] = currencyFormat.format(subTotalCost);
             objects[7] = "";
             objects[8] = "";
-            objects[9] = currencyFormat.format(subTotalRev);
-            objects[10] = currencyFormat.format(subTotalProfit);
+            objects[9] = "";
+            objects[10] = currencyFormat.format(subTotalRev);
+            objects[11] = currencyFormat.format(subTotalProfit);
             aModel.addRow(objects);
 
             objects[0] = "Profit Margin:";
@@ -179,7 +180,8 @@ public class SellerListView extends JDialog {
             objects[7] = "";
             objects[8] = "";
             objects[9] = "";
-            objects[10] = percentageFormat.format((subTotalProfit/subTotalCost));
+            objects[10] = "";
+            objects[11] = percentageFormat.format((subTotalProfit/subTotalCost));
             aModel.addRow(objects);
         }
         tbProducts.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {//alternate background color for rows
@@ -217,12 +219,17 @@ public class SellerListView extends JDialog {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && e.getSource() instanceof JTable) {
                     JTable jTable = (JTable) e.getSource();
+                    int rowCount = jTable.getRowCount();
                     int row = jTable.getSelectedRow();
-                    int column = 0;
-                    int productID = (Integer) jTable.getValueAt(row, column);
-                    //JOptionPane.showMessageDialog(null, productID, "", JOptionPane.ERROR_MESSAGE);
-                    new EditProductView(productID, user);
-                    displayData(InventoryManager.getInstance().getProductList(), user);
+
+                    if (row < rowCount-2) {
+                        int column = 0;
+                        int productID = (Integer) jTable.getValueAt(row, column);
+                        //JOptionPane.showMessageDialog(null, productID, "", JOptionPane.ERROR_MESSAGE);
+                        new EditProductView(productID, user);
+                        displayData(InventoryManager.getInstance().getProductList(), user);
+                    }
+
                 }
             }
 
