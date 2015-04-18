@@ -13,6 +13,11 @@ public class Shopazon {
 
             @Override
             public void run() {
+                try {
+                    //Thread.sleep(3000);
+                } catch (Exception e) {
+
+                }
                 //Start the program
                 AccountManager.getInstance();
             }

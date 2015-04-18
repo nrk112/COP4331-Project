@@ -24,12 +24,10 @@ public class ShoppingCartView extends JDialog {
     private JTextField expirationYear;
     private JTable tbProducts;
     private Buyer buyer;
-    private JFrame parentFrame;
-    
-    public ShoppingCartView(JFrame parentFrame, Buyer user) {
+
+    public ShoppingCartView(Buyer user) {
 
         this.buyer = user;
-        this.parentFrame = parentFrame;
 
         setModal(true);
 
@@ -95,11 +93,6 @@ public class ShoppingCartView extends JDialog {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
-                    //Go back to Marketplace view.
-                    //new MarketPlaceView(user);
-                parentFrame.repaint();
-
                     //Close the window
                     dispose();
             }

@@ -70,7 +70,7 @@ public class LoginView extends JFrame {
                 String pass = new String(password.getPassword());
                 if (AccountManager.getInstance().authorizeUser(userName.getText(), pass)) {
                     //Close this window.
-                    dispose();
+                    //dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Login Failed! Please try again!","", JOptionPane.ERROR_MESSAGE);
                 }

@@ -12,3 +12,4 @@
 12~3~1~5~Black Coffee Cup~0.99~4.99~1~
 13~6~1~5~Green Goffee Cup~0.79~4.99~1~
 14~6~1~5~Green Goffee Cup~0.79~4.99~1~
+15~13~4~5~Test product 2~3.33~4.44~1~

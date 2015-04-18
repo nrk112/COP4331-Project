@@ -20,14 +20,15 @@ import java.util.Locale;
 /**
  * Presents to the seller a list of their products
  */
-public class SellerListView extends JFrame {
+public class SellerListView extends JDialog {
 
     public SellerListView(Seller user) {
 
         this.user = user;
+        setModal(true);
         setTitle("Shopazon - " + user.getFullName() + "'s items.");
         setSize(ProjectConstants.WINDOW_WIDTH + 200, ProjectConstants.WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);

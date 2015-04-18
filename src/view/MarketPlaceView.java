@@ -15,7 +15,7 @@ import java.util.Iterator;
 /**
  * Displays all the items currently available for sale in the marketplace.
  */
-public class MarketPlaceView extends JFrame {
+public class MarketPlaceView extends JDialog {
 
     /**
      * Constructor sets up and displays the view.
@@ -26,9 +26,10 @@ public class MarketPlaceView extends JFrame {
         this.user = user;
 
         //Set window properties
+        setModal(true);
         setTitle("Shopazon - Marketplace");
         setSize(ProjectConstants.WINDOW_WIDTH + 50, ProjectConstants.WINDOW_HEIGHT + 50);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         //Open the window in the center of the screen.
         setLocationRelativeTo(null);
@@ -57,7 +58,7 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                new ShoppingCartView(MarketPlaceView.this, user);
+                new ShoppingCartView(user);
                 updateHeading();
             }
 
@@ -156,7 +157,7 @@ public class MarketPlaceView extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                new ProductDetailView(MarketPlaceView.this, user, product);
+                new ProductDetailView(user, product);
                 updateHeading();
             }
 

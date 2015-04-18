@@ -25,10 +25,9 @@ public class ProductDetailView extends JDialog {
      * @param user Current instance of the seller object
      * @param product
      */
-    public ProductDetailView(JFrame parentFrame, Buyer user, final Product product) {
+    public ProductDetailView(Buyer user, final Product product) {
 
         this.buyer = user;
-        this.parentFrame = parentFrame;
         this.product = product;
 
 

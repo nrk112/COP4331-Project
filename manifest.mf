@@ -1,3 +1,5 @@
 Manifest-Version: 1.0
+SplashScreen-Image: COP4331-Project/database/images/default.jpg
 X-COMMENT: Main-Class will be added automatically by build
+
 
