@@ -91,7 +91,7 @@ public class TransactionManager {
                                                             user.getID(), currentProduct.getName(), currentProduct.getCost(), 
                                                             currentProduct.getPrice(), 1); 
         }
-
+        writeTransactionsToFile();
     }
     
      public void readTransactionsFromFile() {

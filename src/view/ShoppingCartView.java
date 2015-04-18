@@ -112,18 +112,12 @@ public class ShoppingCartView extends JDialog {
                 }else if(validateFields()) {
                     ShoppingCartManager.getInstance().BuyNow(user);
 
-                    //TODO: Move this to the buynow method?
-                    // update transactions file
-                    ShoppingCartManager.getInstance().writeTransactionsToFile();
-
                     //Go confirmation view.
                     new ConfirmationView(user);
 
-                    //Close the window
-                    getParent().repaint();
                     dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please provide correct payment information!");
+                    JOptionPane.showMessageDialog(null, "Please provide the correct payment information!");
                 }
             }
         });

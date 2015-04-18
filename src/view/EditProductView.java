@@ -84,17 +84,26 @@ public class EditProductView extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 if (validateFields()) {
-                    //TODO: Figure out where to edit the product. Here or in inventory manager.
-                    /*InventoryManager.getInstance().editProduct(productID,
-                            seller.getID(),
+                    product.setName(name.getText());
+                    product.setDescription(description.getText());
+                    product.setCost(Double.parseDouble(cost.getText()));
+                    product.setPrice(Double.parseDouble(price.getText()));
+                    product.setQuantity(Integer.parseInt(quantity.getText()));
+                    //product.setDiscountedBy(Double.parseDouble(discountedBy.getText()));
+                    product.setImage(imageFile.getPath());
+
+                    InventoryManager.getInstance().editProductByID(
+                            productID,
                             name.getText(),
                             description.getText(),
                             Double.parseDouble(cost.getText()),
                             Double.parseDouble(price.getText()),
                             Integer.parseInt(quantity.getText()),
-                            Double.parseDouble(discountedBy.getText()),
+                            0.0,
                             imageFile.getPath()
-                    );*/
+                    );
+                    user.populateTransactions();
+
                     dispose();
                     //Otherwise give the error message and let them try again.
                 } else {

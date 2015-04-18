@@ -57,6 +57,42 @@ public class DiscountedProduct implements Product{
     {
         return item.getImage();
     }
+
+    @Override
+    public void setPrice(double price) {
+
+    }
+
+    @Override
+    public void setCurrentPrice(double currentPrice) {
+
+    }
+
+    @Override
+    public void setQuantity(int qty) {
+
+    }
+
+    @Override
+    public void setCost(double cost) {
+
+    }
+
+    @Override
+    public void setName(String name) {
+
+    }
+
+    @Override
+    public void setDescription(String description) {
+
+    }
+
+    @Override
+    public void setImage(String fileName) {
+
+    }
+
     public double getDiscountedBy()
     {
         return discountedBy;

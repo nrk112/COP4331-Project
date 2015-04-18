@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Comparator;
-
 /**
  * Establishes the baseline for products
  */
@@ -23,6 +21,14 @@ public interface Product {
     public String getName();
     public String getDescription();
     public String getImage();
+    public void setPrice(double price);
+    public void setCurrentPrice(double currentPrice);
+    public void setQuantity(int qty);
+    public void setCost(double cost);
+    public void setName(String name);
+    public void setDescription(String description);
+    public void setImage(String fileName);
+
     public String toString();
     public boolean equals(Object other);   
     

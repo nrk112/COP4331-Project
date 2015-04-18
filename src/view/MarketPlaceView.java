@@ -72,9 +72,7 @@ public class MarketPlaceView extends JDialog {
 
             }
         });
-
-
-
+        
         headingPanel.add(cartLinkLabel, BorderLayout.EAST);
 
         //Create the scrollable product panel.
@@ -83,11 +81,6 @@ public class MarketPlaceView extends JDialog {
         productPanel.setBackground(Color.WHITE);
         JScrollPane scrollProductPanel = new JScrollPane(productPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollProductPanel.getVerticalScrollBar().setUnitIncrement(ProjectConstants.SCROLL_SPEED);
-
-
-         InventoryManager.getInstance();
-         //populate seller products data
-         InventoryManager.getInstance().GetSellerData();
         
         //Generate products
          Iterator productIter = InventoryManager.getInstance().getProductList().iterator();

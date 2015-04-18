@@ -37,13 +37,6 @@ public class InventoryManager {
         return instance;
     }
     
-    public void GetSellerData()
-    {                
-        //populateProductList();
-        //TransactionManager.getInstance();
-        //TransactionManager.getInstance().getTransactionData();
-    }
-    
     /**
      * Create a product, then add it to the list.
      * @param productID The product id.
@@ -58,7 +51,24 @@ public class InventoryManager {
     public void createProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy, String image) {
         Product product = ProductFactory.CreateProduct(productID,sellerID, name, description, cost, price, quantity, discountedBy, image);         
         addProduct(product);
-        writeProductsToFile();
+    }
+
+    public void editProductByID(int productID, String name, String description, double cost, double price, int quantity, double discountedBy, String image) {
+
+        for (Product product : products) {
+            if (product.getProductID() == productID) {
+                product.setImage(image);
+                product.setQuantity(quantity);
+                product.setDescription(description);
+                product.setName(name);
+                product.setCost(cost);
+                product.setPrice(price);
+
+                if (product instanceof DiscountedProduct) {
+                    //TODO add setDiscountedBy and use it here.
+                }
+            }
+        }
     }
 
     /**
@@ -216,6 +226,7 @@ public class InventoryManager {
         if(!products.contains(product))  
         {
             products.add(product);
+            writeProductsToFile();
         }
     }
 

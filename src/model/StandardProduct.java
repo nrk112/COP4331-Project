@@ -33,44 +33,7 @@ public class StandardProduct implements Product{
         this.sellerID = sellerID;
         this.image = image;
     }
-    
-    public double getPrice() {
-        return price;
-    }
-    public double getCurrentPrice(){
-        return getPrice();
-    }       
-            
-    public int getQuantity()
-    {
-        return quantity;
-    }
-    public int getProductID()
-    {
-        return productID;
-    }
-    public int getSellerID()
-    {
-        return sellerID;
-    }
-    public double getCost()
-    {
-        return cost;
-    }
-    public String getName()
-    {
-        return name;
-    }
-    public String getDescription()
-    {
-        return description;
-    }
-    
-    public String getImage()
-    {
-        return image;
-    }
-    
+
     public String toString()
     {
         return description;
@@ -104,5 +67,83 @@ public class StandardProduct implements Product{
                 item.getImage().contentEquals(this.getImage()
            );        
     }
-    
+
+    @Override
+    public int getProductID() {
+        return productID;
+    }
+
+    @Override
+    public int getSellerID() {
+        return sellerID;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public double getCost() {
+        return cost;
+    }
+
+    @Override
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public double getPrice() {
+        return price;
+    }
+
+    @Override
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public double getCurrentPrice() {
+        return 0;
+    }
+
+    @Override
+    public void setCurrentPrice(double currentPrice) {
+    }
+
+    @Override
+    public int getQuantity() {
+        return quantity;
+    }
+
+    @Override
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String getImage() {
+        return image;
+    }
+
+    @Override
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

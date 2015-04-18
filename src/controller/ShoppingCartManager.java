@@ -155,8 +155,4 @@ public class ShoppingCartManager {
         tbProducts.setRowHeight(ProjectConstants.TABLE_HEIGHT);
         return tbProducts;
     }
-
-    public void writeTransactionsToFile() {
-        TransactionManager.getInstance().writeTransactionsToFile();
-    }
 }
