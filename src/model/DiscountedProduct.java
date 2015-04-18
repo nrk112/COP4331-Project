@@ -78,6 +78,8 @@ public class DiscountedProduct implements Product{
         };
     return comp;
     }
+
+
     @Override
     public boolean equals(Object other)
     {

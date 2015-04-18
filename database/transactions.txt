@@ -13,3 +13,9 @@
 13~6~1~5~Green Goffee Cup~0.79~4.99~1~
 14~6~1~5~Green Goffee Cup~0.79~4.99~1~
 15~13~4~5~Test product 2~3.33~4.44~1~
+16~1~1~5~Red Coffee Cup~0.99~4.99~1~
+17~1~1~5~Red Coffee Cup~0.99~4.99~1~
+18~1~1~5~Red Coffee Cup~0.99~4.99~1~
+19~1~1~5~Red Coffee Cup~0.99~4.99~1~
+20~1~1~5~Red Coffee Cup~0.99~4.99~1~
+21~6~1~5~Green Goffee Cup~0.79~4.99~1~

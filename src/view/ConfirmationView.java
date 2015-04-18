@@ -30,7 +30,6 @@ public class ConfirmationView extends JDialog {
          setLocationRelativeTo(null);
          ShoppingCartManager.getInstance();
          
-         
         //Make the main JPanel to use in the Frame
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -40,14 +39,11 @@ public class ConfirmationView extends JDialog {
         JPanel bottomPanel = new JPanel();
         JButton addButton = CreateReturnButton(buyer);
         bottomPanel.add(addButton);
-         
-        //Add Payment text Fields
         
         //Create the heading
         JLabel heading = new JLabel("Thank you for shopping at Shopazon!");
         heading.setFont(ProjectConstants.TITLE_FONT);
-       
-        
+
         int fillerX = ProjectConstants.FILLER_X;
         int fillerY = 25;
 
@@ -57,7 +53,7 @@ public class ConfirmationView extends JDialog {
         
         
         //populate jtable with products
-        this.tbProducts=ShoppingCartManager.getInstance().DisplayData(InventoryManager.getInstance().getProductList(), buyer);
+        this.tbProducts = ShoppingCartManager.getInstance().DisplayData(InventoryManager.getInstance().getProductList(), buyer);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
 
         mainPanel.add(tableContainer, BorderLayout.CENTER);
@@ -81,7 +77,7 @@ public class ConfirmationView extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) 
             {     
-                  user.ClearShoppingCart();
+                  user.clearShoppingCart();
                   //new MarketPlaceView(user);
                 dispose();
             }

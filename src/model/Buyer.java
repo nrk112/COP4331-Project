@@ -34,9 +34,10 @@ public class Buyer extends UserModel {
                 }
             }
        return count;
+       //return cartItems.size();
     }
 
-    public void ClearShoppingCart() {
+    public void clearShoppingCart() {
         cartItems.clear();
     }
 }

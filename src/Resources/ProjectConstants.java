@@ -43,6 +43,16 @@ public interface ProjectConstants {
     Font TITLE_FONT = new Font("Calibri", Font.BOLD, 24);
 
     /**
+     * @MEDIUM_FONT a medium sized font for tables and such.
+     */
+    Font MEDIUM_FONT = new Font("Calibri", Font.PLAIN, 16);
+
+    /**
+     * @TABLE_HEIGHT the height to use for all table rows.
+     */
+    int TABLE_HEIGHT = 28;
+
+    /**
      * @USER_FILE The location and name of the text file to store the users information in.
      */
     String USER_FILE = "database\\users.txt";

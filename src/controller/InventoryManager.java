@@ -26,13 +26,14 @@ public class InventoryManager {
     private final ArrayList<LineItem> lineItems = new ArrayList<>();
 
     private InventoryManager() {
+        populateProductList();
     }
     
     public void GetSellerData()
     {                
-        populateProductList();   
-        TransactionManager.getInstance();
-        TransactionManager.getInstance().getTransactionData();
+        //populateProductList();
+        //TransactionManager.getInstance();
+        //TransactionManager.getInstance().getTransactionData();
     }
     
     /**
@@ -50,7 +51,8 @@ public class InventoryManager {
         Product product = ProductFactory.CreateProduct(productID,sellerID, name, description, cost, price, quantity, discountedBy, image);         
         addProduct(product);
     }
-    
+
+
     /**
      * Returns the instance of the InventoryManager singleton.
      * @return the instance.
@@ -59,13 +61,16 @@ public class InventoryManager {
         return instance;
     }
 
-   /*
+
+   /**
     *  Get product list
     * @return the product ArrayList.
     */
     public ArrayList getProductList() {
         return products;
     }
+
+
     /**
      * Create a sequential productID.
      * @return the productID.
@@ -79,13 +84,18 @@ public class InventoryManager {
              newID = products.get(products.size() - 1).getProductID();
          }
          return newID + 1;
-     } 
-    /**  Get product list
-    * @return the product ArrayList.
+     }
+
+
+    /**
+     * Get product list
+     * @return the product ArrayList.
     */
     public ArrayList getTransactionLineItemList() {
         return lineItems;
     }
+
+
     /**
      * Populates InventoryManager with all available products by reading from text file.
      */
@@ -113,7 +123,7 @@ public class InventoryManager {
                     index = 0;
 
                     //Create product
-                    InventoryManager.getInstance().createProduct(
+                    this.createProduct(
                             //Convert string to appropriate types and remove return characters.
                             Integer.parseInt(data[0].replaceAll("[\\r\\n]", "")),   //ProductID
                             Integer.parseInt(data[1].replaceAll("[\\r\\n]", "")),   //SellerID
@@ -170,17 +180,19 @@ public class InventoryManager {
             e.printStackTrace();
         }
     }
-        
+
+
     /**
      * Populates the product list.     * 
      */
     private void populateProductList() {
-        if(getProductList().size()> 0)
-        {
+        if(products.size()> 0) {
             products.clear();
         }        
         readProductsFromFile();
     }
+
+
     /**
      * Add a product to the list.
      * @param product the product to add
@@ -196,10 +208,5 @@ public class InventoryManager {
     public void AddProductView(Seller user) {
         new AddProductView(user);
     }
-    
-     public void readTransactionsFromFile() {
 
-       TransactionManager.getInstance().readTransactionsFromFile();
-    }
-    
 }

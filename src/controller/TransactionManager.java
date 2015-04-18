@@ -6,6 +6,10 @@
 package controller;
 
 import Resources.ProjectConstants;
+import model.Buyer;
+import model.Product;
+import model.TransactionLineItem;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,13 +17,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-import model.Buyer;
-import model.Product;
-import model.TransactionLineItem;
 
 /**
  *
- * @author Lenore
  */
 public class TransactionManager {
     
@@ -27,12 +27,9 @@ public class TransactionManager {
     private final ArrayList<TransactionLineItem> lineItems = new ArrayList<>();
 
     private TransactionManager() {
-    }
-    
-    public void getTransactionData()
-    {                
         populateTransactionList();
     }
+
     /**
      * Returns the instance of the SellerManager singleton.
      * @return the instance.
@@ -41,7 +38,7 @@ public class TransactionManager {
         return instance;
     }
     
-   /*
+   /**
     *  Get product list
     * @return the product ArrayList.
     */
@@ -61,7 +58,9 @@ public class TransactionManager {
              newID = lineItems.get(lineItems.size() - 1).getLineItemID();
          }
          return newID + 1;
-     } 
+     }
+
+
     /**
      * Create a product, then add it to the list.
      * @param transactionLineItemID The transaction line item I\id.
@@ -119,7 +118,7 @@ public class TransactionManager {
                     index = 0;
 
                     //Create product
-                    ShoppingCartManager.getInstance().createTransactionLineItem(
+                    this.createTransactionLineItem(
                             //Convert string to appropriate types and remove return characters.
                             Integer.parseInt(data[0].replaceAll("[\\r\\n]", "")),   //TransactionLineItemID
                             Integer.parseInt(data[1].replaceAll("[\\r\\n]", "")),   //ProductID
@@ -174,15 +173,18 @@ public class TransactionManager {
         return new TransactionLineItem(transactionLineItemID, productID, sellerID, buyerID, name, cost, price, quantity);
         
     }
+
+
     private void populateTransactionList() {
-        if(getTransactionLineItemList().size()> 0)
-        {
+        if(getTransactionLineItemList().size()> 0) {
             lineItems.clear();
         }        
         readTransactionsFromFile();
     }
+
+
     private void addTransactionLineitem(TransactionLineItem lineItem) {
             lineItems.add(lineItem);
     }
-    
+
 }

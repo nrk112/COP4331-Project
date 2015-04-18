@@ -2,6 +2,7 @@ package view;
 
 import Resources.ProjectConstants;
 import model.Buyer;
+import model.DiscountedProduct;
 import model.Product;
 
 import javax.swing.*;
@@ -50,22 +51,25 @@ public class ProductDetailView extends JDialog {
         //Create the title panel.
         JPanel titlePanel = new JPanel(new BorderLayout());
 
-        //Format price
-        String productPrice = String.format("%1$,.2f", product.getPrice());
+        String productPrice = String.format("%1$,.2f", product.getCurrentPrice());
+
+        //Display the discount portion.
+        if(product instanceof DiscountedProduct && ((DiscountedProduct)product).getDiscountedBy() != 0.0){
+            JLabel discountLabel = new JLabel("On Sale! " + ((DiscountedProduct)product).getDiscountedBy() + "% OFF!");
+            discountLabel.setBackground(Color.RED);
+            discountLabel.setFont(ProjectConstants.TITLE_FONT);
+            titlePanel.add(discountLabel, BorderLayout.SOUTH);
+
+            //Format price
+            productPrice = "Was: " + (String.format("%1$,.2f", product.getPrice())) +
+                    " NOW: " + (String.format("%1$,.2f", product.getCurrentPrice())) ;
+        }
 
         JLabel titleLabel = new JLabel(product.getName());
         titleLabel.setFont(ProjectConstants.TITLE_FONT);
 
         JLabel priceLabel = new JLabel("$" + productPrice);
         priceLabel.setFont(ProjectConstants.TITLE_FONT);
-
-        //TODO: Add get discount to product?
-        /*if(product.getDiscountedBy() != 0.0){
-            JLabel discountLabel = new JLabel("On Sale! " + product.getDiscountedBy() + "% OFF!");
-            discountLabel.setBackground(Color.RED);
-            discountLabel.setFont(ProjectConstants.TITLE_FONT);
-            titlePanel.add(discountLabel, BorderLayout.SOUTH);
-        }*/
 
         titlePanel.add(titleLabel, BorderLayout.WEST);
         titlePanel.add(priceLabel, BorderLayout.EAST);
