@@ -21,10 +21,13 @@ import java.util.Scanner;
  * Handles all functions related to seller product management. Singleton class.
  */
 public class InventoryManager {
+
     private static final InventoryManager instance = new InventoryManager();
     private final ArrayList<Product> products = new ArrayList<>();
-    private final ArrayList<LineItem> lineItems = new ArrayList<>();
 
+    /**
+     * Constructor sets up InventoryManager.
+     */
     private InventoryManager() {
         populateProductList();
     }
@@ -109,15 +112,6 @@ public class InventoryManager {
          }
          return newID + 1;
      }
-
-
-    /**
-     * Get product list
-     * @return the product ArrayList.
-    */
-    public ArrayList getTransactionLineItemList() {
-        return lineItems;
-    }
 
 
     /**
