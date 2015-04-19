@@ -78,6 +78,24 @@ public class InventoryManager {
     }
 
     /**
+     * Decrement the quantity of a particular product.
+     * @param productID The ID of the product sold
+     * @param qtySold How many of product were sold
+     * @postcondition Must call writeProductsToFile() after updating all quantities.
+     */
+    public void decrementQuantityByID(int productID, int qtySold) {
+
+        for (Product currentProduct : products) {
+            if (currentProduct.getProductID() == productID) {
+                int newQty = currentProduct.getQuantity() - qtySold;
+                currentProduct.setQuantity(newQty);
+            }
+        }
+        writeProductsToFile();
+    }
+
+
+    /**
      * Gets a specific product by its ID
      * @param ID the ID of the product to get
      * @return the product

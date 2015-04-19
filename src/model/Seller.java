@@ -58,6 +58,7 @@ public class Seller extends UserModel {
     }
 
     public void populateTransactions() {
+        lineItems.clear();
         Iterator lineItemIter = TransactionManager.getInstance().getTransactionLineItemList().iterator();
         LineItem currentLineItem ;
         while(lineItemIter.hasNext()) {

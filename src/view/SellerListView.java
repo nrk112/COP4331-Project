@@ -29,6 +29,7 @@ public class SellerListView extends JDialog {
     public SellerListView(Seller user) {
 
         this.user = user;
+        user.populateTransactions();
 
         //Set window properties
         setModal(true);
@@ -137,7 +138,7 @@ public class SellerListView extends JDialog {
                 objects[0] = currentProduct.getProductID();
                 objects[1] = currentProduct.getName();
                 objects[2] = currentProduct.getDescription();
-                objects[3] = rri.getRemainingQuantity(currentProduct.getQuantity());
+                objects[3] = currentProduct.getQuantity();//rri.getRemainingQuantity(currentProduct.getQuantity());
                 objects[4] = rri.getTotalQuantitySold();
                 objects[5] = currencyFormat.format(currentProduct.getCost());
                 objects[6] = currencyFormat.format(rri.getTotalCost());

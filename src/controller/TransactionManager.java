@@ -89,8 +89,11 @@ public class TransactionManager {
              currentProduct = (Product) productIter.next();
              createTransactionLineItem(getTransactionLineItemId(), currentProduct.getProductID(), currentProduct.getSellerID(),
                                                             user.getID(), currentProduct.getName(), currentProduct.getCost(), 
-                                                            currentProduct.getPrice(), 1); 
+                                                            currentProduct.getPrice(), 1);
+            //Added to decrement the actual inventory.
+            InventoryManager.getInstance().decrementQuantityByID(currentProduct.getProductID(), 1);
         }
+        InventoryManager.getInstance().writeProductsToFile();
         writeTransactionsToFile();
     }
     

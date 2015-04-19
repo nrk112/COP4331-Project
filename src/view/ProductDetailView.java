@@ -58,7 +58,6 @@ public class ProductDetailView extends JDialog {
             discountLabel.setBackground(Color.RED);
             discountLabel.setFont(ProjectConstants.TITLE_FONT);
             titlePanel.add(discountLabel, BorderLayout.SOUTH);
-
             productPrice = String.format("Was: $%1$,.2f NOW ONLY: $%2$,.2f", product.getPrice(), product.getCurrentPrice());
         }
 
@@ -89,7 +88,7 @@ public class ProductDetailView extends JDialog {
         panel.setBorder(BorderFactory.createLoweredBevelBorder());
 
         //create the description text area
-        JTextArea description = new JTextArea(product.toString());
+        JTextArea description = new JTextArea(product.getDescription());
         description.setLineWrap(true);
         description.setWrapStyleWord(true);
         description.setEditable(false);
