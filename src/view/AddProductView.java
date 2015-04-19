@@ -117,10 +117,10 @@ public class AddProductView extends JDialog {
                 int result = fileChooser.showDialog(getContentPane(),"Open");
                 if(result == JFileChooser.APPROVE_OPTION) {
                     imageFile = fileChooser.getSelectedFile();
+                    ImageIcon imageIcon = new ImageIcon(imageFile.getPath());
+                    imageThumbnail.setIcon(imageIcon);
+                    imageThumbnail.setVisible(true);
                 }
-                ImageIcon imageIcon = new ImageIcon(imageFile.getPath());
-                imageThumbnail.setIcon(imageIcon);
-                imageThumbnail.setVisible(true);
             }
         });
 

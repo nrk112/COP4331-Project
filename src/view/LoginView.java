@@ -75,7 +75,6 @@ public class LoginView extends JFrame {
                 }else{
                     JOptionPane.showMessageDialog(null, "Login Failed! Please try again!","", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
         });
 
@@ -85,6 +84,9 @@ public class LoginView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AccountManager.getInstance().signupClicked();
+                userName.setText("User Name");
+                password.setText("Password");
+                password.setEchoChar((char)0);
             }
         });
 

@@ -217,18 +217,21 @@ public class SellerListView extends JDialog {
         tbProducts.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2 && e.getSource() instanceof JTable) {
-                    JTable jTable = (JTable) e.getSource();
-                    int rowCount = jTable.getRowCount();
-                    int row = jTable.getSelectedRow();
 
-                    if (row < rowCount-2) {
-                        int column = 0;
-                        int productID = (Integer) jTable.getValueAt(row, column);
+                if (e.getClickCount() == 2 && e.getSource() instanceof JTable) {
+
+                    JTable jTable = (JTable) e.getSource();
+                    int row = jTable.getSelectedRow();
+                    int column = 0;
+                    int productID;
+
+                    try {
+                        productID = (Integer) jTable.getValueAt(row, column);
                         new EditProductView(productID, user);
                         displayData(InventoryManager.getInstance().getProductList(), user);
+                    }catch (ClassCastException exception) {
+                        //If its not an integer that means it is the total fields and we just want to ignore it.
                     }
-
                 }
             }
 

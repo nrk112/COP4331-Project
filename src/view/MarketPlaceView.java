@@ -1,6 +1,7 @@
 package view;
 
 import Resources.ProjectConstants;
+import Resources.WrapLayout;
 import controller.InventoryManager;
 import model.Buyer;
 import model.Product;
@@ -76,9 +77,9 @@ public class MarketPlaceView extends JDialog {
         headingPanel.add(cartLinkLabel, BorderLayout.EAST);
 
         //Create the scrollable product panel.
-        JPanel productPanel = new JPanel(new GridLayout(0,3,10,10));
+        JPanel productPanel = new JPanel(new WrapLayout(FlowLayout.CENTER, 20, 20));
         productPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        productPanel.setBackground(Color.WHITE);
+        productPanel.setBackground(Color.DARK_GRAY);
         JScrollPane scrollProductPanel = new JScrollPane(productPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollProductPanel.getVerticalScrollBar().setUnitIncrement(ProjectConstants.SCROLL_SPEED);
         
@@ -91,7 +92,6 @@ public class MarketPlaceView extends JDialog {
                 productPanel.add(createItemIcon(currentProduct));
             }
 
-        //
         mainPanel.add(headingPanel, BorderLayout.NORTH);
         mainPanel.add(scrollProductPanel, BorderLayout.CENTER);
 
@@ -119,21 +119,24 @@ public class MarketPlaceView extends JDialog {
         panel.setMaximumSize(dimension);
         panel.setMinimumSize(dimension);
         panel.setPreferredSize(dimension);
-        panel.setBackground(Color.GRAY);
+        panel.setBackground(Color.LIGHT_GRAY);
 
         JLabel title = new JLabel(product.getName());
+        title.setFont(ProjectConstants.MEDIUM_FONT);
         title.setBorder(new EmptyBorder(3, 3, 3, 3));
         title.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(title, BorderLayout.NORTH);
+
         JPanel fakePic = new JPanel();
         ImageIcon image = new ImageIcon(product.getImage());
         JLabel label = new JLabel(image);
-        fakePic.setBackground(Color.DARK_GRAY);
+        fakePic.setBackground(Color.GRAY);
         fakePic.add(label);
         panel.add(fakePic, BorderLayout.CENTER);
 
-        JLabel price = new JLabel(String.format("%1$,.2f", product.getCurrentPrice()));
+        JLabel price = new JLabel(String.format("$%1$,.2f", product.getCurrentPrice()));
         price.setBorder(new EmptyBorder(3, 3, 3, 3));
+        price.setFont(ProjectConstants.MEDIUM_FONT);
         price.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(price, BorderLayout.SOUTH);
 

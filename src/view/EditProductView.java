@@ -20,16 +20,36 @@ public class EditProductView extends JDialog {
 
     private final String TITLE = "Shopazon - Edit Existing Product";
 
+    //Labels for the text fields.
+    private final JLabel nameLabel;
+    private final JLabel descriptionLabel;
+    private final JLabel costLabel;
+    private final JLabel priceLabel;
+    private final JLabel quantityLabel;
+    private final JLabel discountedByLabel;
+
+    //Strings for the text field labels
+    private final String nameString = "Name: ";
+    private final String descriptionString = "Description: ";
+    private final String costString = "Cost: ";
+    private final String priceString = "Price: ";
+    private final String quantityString = "Quantity: ";
+    private final String discountedByString = "% Discount: ";
+
+    //The text fields
     private final JTextField name;
     private final JTextField description;
     private final JTextField cost;
     private final JTextField price;
     private final JTextField quantity;
     private final JTextField discountedBy;
+
+    //Other
     private final JFileChooser fileChooser;
     private final JLabel imageThumbnail;
     private File imageFile = null;
     private Product product;
+    private String imagePath;
 
     /**
      * Constructs and shows the add product view view
@@ -37,41 +57,116 @@ public class EditProductView extends JDialog {
      */
     public EditProductView(int productID, Seller user) {
 
+        //Get the reference to the product to edit.
         product = InventoryManager.getInstance().getProductByID(productID);
 
-        setModal(true);
-        setTitle(TITLE);
-        setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
-        //Open the window in the center of the screen.
-        setLocationRelativeTo(null);
-
-        //Make the main JPanel to use in the Frame
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(
-                new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        //Set the window properties
+        this.setModal(true);
+        this.setTitle(TITLE);
+        this.setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
 
         //Create the heading
-        JLabel heading = new JLabel("Please fill in the following information for your product:");
+        JLabel heading = new JLabel("Editing: " + product.getName() + ".");
+        heading.setFont(ProjectConstants.TITLE_FONT);
 
-        //Create the JTextFields
+        //Set up the JTextFields
+        int columns = 60;
         name = Common.createTextField(product.getName());
+        name.setColumns(columns);
+
         description = Common.createTextField(product.getDescription());
+        description.setColumns(columns);
+
         cost = Common.createTextField(Double.toString(product.getCost()));
+        cost.setColumns(columns);
+
         price = Common.createTextField(Double.toString(product.getPrice()));
+        price.setColumns(columns);
+
         quantity = Common.createTextField(Integer.toString(product.getQuantity()));
-        String image = product.getImage();
+        quantity.setColumns(columns);
 
         discountedBy = Common.createTextField("0.0");
         if (product instanceof DiscountedProduct) {
             String discountTitle = Double.toString(((DiscountedProduct)product).getDiscountedBy());
             discountedBy.setText(discountTitle);
         }
+        discountedBy.setColumns(columns);
+
+        //Set up the labels for the text fields
+        nameLabel = new JLabel(nameString);
+        nameLabel.setLabelFor(name);
+        nameLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        descriptionLabel = new JLabel(descriptionString);
+        descriptionLabel.setLabelFor(description);
+        descriptionLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        costLabel = new JLabel(costString);
+        costLabel.setLabelFor(cost);
+        costLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        priceLabel = new JLabel(priceString);
+        priceLabel.setLabelFor(price);
+        priceLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        quantityLabel = new JLabel(quantityString);
+        quantityLabel.setLabelFor(quantity);
+        quantityLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        discountedByLabel = new JLabel(discountedByString);
+        discountedByLabel.setLabelFor(discountedBy);
+        discountedByLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        int fillerX = ProjectConstants.FILLER_X;
+        int fillerY = ProjectConstants.FILLER_Y + 4;
+        //Put the labels in a panel.
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
+        labelPanel.add(nameLabel);
+        labelPanel.add(Common.getFiller(fillerX, fillerY));
+        labelPanel.add(descriptionLabel);
+        labelPanel.add(Common.getFiller(fillerX, fillerY));
+        labelPanel.add(costLabel);
+        labelPanel.add(Common.getFiller(fillerX, fillerY));
+        labelPanel.add(priceLabel);
+        labelPanel.add(Common.getFiller(fillerX, fillerY));
+        labelPanel.add(quantityLabel);
+        labelPanel.add(Common.getFiller(fillerX, fillerY));
+        labelPanel.add(discountedByLabel);
+        fillerY = ProjectConstants.FILLER_Y + 27;
+        labelPanel.add(Common.getFiller(fillerX, fillerY));
+
+        fillerY = ProjectConstants.FILLER_Y;
+        //Put the text fields in a panel.
+        JPanel fieldPanel = new JPanel();
+        fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
+        fieldPanel.add(name);
+        fieldPanel.add(Common.getFiller(fillerX, fillerY));
+        fieldPanel.add(description);
+        fieldPanel.add(Common.getFiller(fillerX, fillerY));
+        fieldPanel.add(cost);
+        fieldPanel.add(Common.getFiller(fillerX, fillerY));
+        fieldPanel.add(price);
+        fieldPanel.add(Common.getFiller(fillerX, fillerY));
+        fieldPanel.add(quantity);
+        fieldPanel.add(Common.getFiller(fillerX, fillerY));
+        fieldPanel.add(discountedBy);
+        fieldPanel.add(Common.getFiller(fillerX, fillerY));
+
+        //Put the labels and fields together
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
+        centerPanel.add(labelPanel);
+        //centerPanel.add(Common.getFiller(fillerX, fillerY));
+        centerPanel.add(fieldPanel);
 
         //Create the image icon
         imageThumbnail = new JLabel();
-        ImageIcon imageIcon = new ImageIcon(image);
+        imagePath = product.getImage();
+        ImageIcon imageIcon = new ImageIcon(imagePath);
         imageThumbnail.setIcon(imageIcon);
 
         //Create the file chooser.
@@ -95,7 +190,7 @@ public class EditProductView extends JDialog {
                             Double.parseDouble(price.getText()),
                             Integer.parseInt(quantity.getText()),
                             Double.parseDouble(discountedBy.getText()),
-                            imageFile.getPath()
+                            imagePath
                     );
                     user.populateTransactions();
                     dispose();
@@ -106,78 +201,45 @@ public class EditProductView extends JDialog {
             }
         });
 
-        //Create the Cancel button.
-        final JButton btnCancel = new JButton("Cancel");
-        //Allow enter to press the button at any time.
-        this.getRootPane().setDefaultButton(btnCancel);
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
-
         //Image chooser button
         final JButton btnImageChooser = new JButton("Select Image");
         btnImageChooser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int result = fileChooser.showDialog(getContentPane(),"Open");
-                if(result == JFileChooser.APPROVE_OPTION) {
+                int result = fileChooser.showDialog(getContentPane(), "Open");
+                if (result == JFileChooser.APPROVE_OPTION) {
                     imageFile = fileChooser.getSelectedFile();
+                    imagePath = imageFile.getPath();
+                    //Update the image
+                    ImageIcon imageIcon = new ImageIcon(imageFile.getPath());
+                    imageThumbnail.setIcon(imageIcon);
                 }
-                //Update the image
-                ImageIcon imageIcon = new ImageIcon(imageFile.getPath());
-                imageThumbnail.setIcon(imageIcon);
             }
         });
 
 
-        //Add all the components to the main panel
-        int fillerX = ProjectConstants.FILLER_X;
-        int fillerY = ProjectConstants.FILLER_Y;
+        //Make the button panel.
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BorderLayout());
+        //buttonPanel.add(btnImageChooser);
+        buttonPanel.add(btnSave, BorderLayout.EAST);
 
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(heading);
-        heading.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(name);
-
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(description);
-
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(cost);
-
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(price);
-
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(quantity);
-
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(discountedBy);
-
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(imageThumbnail);
-        imageThumbnail.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(btnImageChooser);
+        fieldPanel.add(btnImageChooser);
         btnImageChooser.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(btnSave);
-        btnSave.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //Make the main JPanel to use in the Frame
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        mainPanel.setLayout(new BorderLayout());
 
-        mainPanel.add(Common.getFiller(fillerX, fillerY));
-        mainPanel.add(btnCancel);
-        btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //Add all the components to the main panel
+        mainPanel.add(heading, BorderLayout.NORTH);
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(imageThumbnail, BorderLayout.EAST);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         //Add the created panel to the main Frame
-        //this.add(textFieldPanel, BorderLayout.NORTH);
-        this.add(mainPanel, BorderLayout.CENTER);
+        this.add(mainPanel);
 
         //make the window visible.
         setVisible(true);
@@ -198,36 +260,5 @@ public class EditProductView extends JDialog {
                         discountedBy.getText().matches("\\d+(\\.\\d{1,2})?") &&
                         quantity.getText().matches("\\d+")
         );
-    }
-
-    /**
-     * Creates a panel that has a label and a textfield that will highlight the text when it gets focus.
-     * @param label The temporary filler text.
-     * @return the constructed JTextField.
-     */
-    public static JPanel createPanelTextField(String name, String label) {
-
-        final JPanel panel = new JPanel();
-        panel.setMinimumSize(new Dimension(400, 28));
-        final JLabel nameLabel = new JLabel(name);
-        final JTextField textField = new JTextField(label);
-        textField.setMaximumSize(
-                new Dimension(ProjectConstants.TEXTFIELD_WIDTH, textField.getPreferredSize().height));
-
-        //The will highlight the text when it gets focus since its pre-populated.
-        textField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        textField.selectAll();
-                    }
-                });
-            }
-        });
-        //textField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(nameLabel);
-        panel.add(textField);
-        return panel;
     }
 }

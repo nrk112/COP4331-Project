@@ -7,6 +7,6 @@
 7~1~Mirrored Glasses~Shiny pretty (Marked down by 20.0%)~0.15~15.0~600~20.0~database\images\mirrored-glasses.jpg~
 8~2~Silver Slippers~Shiny shoes~2.0~70.0~500~0.0~silver-database\images\slippers.jpg~
 9~2~Gold Slippers~Glittering shoes (Marked down by 5.0%)~3.0~100.0~700~5.0~database\images\gold-slippers.jpg~
-11~4~Test Item1~This is a description~1.23~3.21~13~9.0~database\images\default.jpg~
+11~4~New name~This is a description~1.23~3.21~13~15.0~C:\Users\Nick\IdeaProjects\COP4331-Project\gold-slippers.jpg~
 10~1~New Item Name~This is the new description~2.0~2.0~3~0.0~database\images\default.jpg~
-11~1~New item 1~Description~9.0~99.0~9~0.0~database\images\default.jpg~
+11~1~New name~This is a description~1.23~3.21~13~0.0~C:\Users\Nick\IdeaProjects\COP4331-Project\gold-slippers.jpg~
