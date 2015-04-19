@@ -38,17 +38,17 @@ public class Seller extends UserModel {
         Iterator lineItemIter = lineItems.iterator();
         while(lineItemIter.hasNext()) {
             currentItem = (LineItem) lineItemIter.next();
-            if(currentItem.getProductID()==item.getProductID() && currentItem.getSellerID()==this.getID())
+            if(currentItem.getProductID() == item.getProductID() && currentItem.getSellerID() == this.getID())
             {
                 quantity += currentItem.getQuantity();
                 cost += currentItem.getCost();
                 //revenue += currentItem.getPrice();
 
-                //Added because it calculating the total revenue after the discount.
-                if (currentItem instanceof DiscountedProduct) {
-                    double percentDiscount = ((DiscountedProduct)currentItem).getDiscountedBy() / 100.0;
+                //Added because its not calculating the total revenue after the discount.
+                if (item instanceof DiscountedProduct) {
+                    double percentDiscount = ((DiscountedProduct)item).getDiscountedBy() / 100.0;
                     JOptionPane.showMessageDialog(null, percentDiscount, "", JOptionPane.ERROR_MESSAGE);
-                    revenue += currentItem.getPrice() - currentItem.getPrice() * percentDiscount;
+                    revenue += currentItem.getPrice() - (currentItem.getPrice() * percentDiscount);
                 } else {
                     revenue += currentItem.getPrice();
                 }

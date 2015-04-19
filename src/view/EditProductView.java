@@ -8,6 +8,7 @@ import model.Product;
 import model.Seller;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -171,7 +172,10 @@ public class EditProductView extends JDialog {
 
         //Create the file chooser.
         fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+        fileChooser.setFileFilter(filter);
+        File workingDirectory = new File(System.getProperty("user.dir"));
+        fileChooser.setCurrentDirectory(workingDirectory);
 
         //Create the Save button.
         final JButton btnSave = new JButton("Save");

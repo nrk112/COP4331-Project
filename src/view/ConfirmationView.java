@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
  * Displays a confirmation page that the products were purchased.
  */
 public class ConfirmationView extends JDialog {
-    
+
     public ConfirmationView(Buyer user) {
 
         this.buyer = user;
@@ -25,21 +25,21 @@ public class ConfirmationView extends JDialog {
         setTitle("Shopazon - Confirmation");
         setSize(ProjectConstants.WINDOW_WIDTH, ProjectConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-       
+
         //Open the window in the center of the screen.
-         setLocationRelativeTo(null);
-         ShoppingCartManager.getInstance();
-         
+        setLocationRelativeTo(null);
+
         //Make the main JPanel to use in the Frame
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         //Add new button
         JPanel topPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
         JButton addButton = CreateReturnButton(buyer);
         bottomPanel.add(addButton);
-        
+
         //Create the heading
         JLabel heading = new JLabel("Thank you for shopping at Shopazon!");
         heading.setFont(ProjectConstants.TITLE_FONT);
@@ -49,9 +49,9 @@ public class ConfirmationView extends JDialog {
 
         topPanel.add(Common.getFiller(fillerX, fillerY));
         topPanel.add(heading);
-        heading.setAlignmentX(Component.LEFT_ALIGNMENT);      
-        
-        
+        heading.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+
         //populate jtable with products
         this.tbProducts = ShoppingCartManager.getInstance().DisplayData(InventoryManager.getInstance().getProductList(), buyer);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
@@ -64,27 +64,27 @@ public class ConfirmationView extends JDialog {
         add(mainPanel);
         setVisible(true);
     }
-   
-    
+
+
     private JButton CreateReturnButton(final Buyer user)
     {
         //Create the Save button.
         final JButton btn = new JButton("OK");
         //Allow enter to press the button at any time.
         this.getRootPane().setDefaultButton(btn);
-        btn.addActionListener(new ActionListener() 
+        btn.addActionListener(new ActionListener()
         {
             @Override
-            public void actionPerformed(ActionEvent e) 
-            {     
-                  user.clearShoppingCart();
-                  //new MarketPlaceView(user);
+            public void actionPerformed(ActionEvent e)
+            {
+                user.clearShoppingCart();
+                //new MarketPlaceView(user);
                 dispose();
             }
         });
         return btn;
     }
-    
+
 
     JTable tbProducts = new JTable();
     Buyer buyer;

@@ -113,9 +113,10 @@ public class MarketPlaceView extends JDialog {
      * @return The constructed JPanel holding the information
      */
     private JPanel createItemIcon(final Product product) {
-        int side = 180;
+        int width = 180;
+        int height = 200;
         JPanel panel = new JPanel(new BorderLayout());
-        Dimension dimension = new Dimension(side, side);
+        Dimension dimension = new Dimension(width, height);
         panel.setMaximumSize(dimension);
         panel.setMinimumSize(dimension);
         panel.setPreferredSize(dimension);
@@ -127,12 +128,9 @@ public class MarketPlaceView extends JDialog {
         title.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(title, BorderLayout.NORTH);
 
-        JPanel fakePic = new JPanel();
         ImageIcon image = new ImageIcon(product.getImage());
         JLabel label = new JLabel(image);
-        fakePic.setBackground(Color.GRAY);
-        fakePic.add(label);
-        panel.add(fakePic, BorderLayout.CENTER);
+        panel.add(label, BorderLayout.CENTER);
 
         JLabel price = new JLabel(String.format("$%1$,.2f", product.getCurrentPrice()));
         price.setBorder(new EmptyBorder(3, 3, 3, 3));

@@ -55,8 +55,8 @@ public class ProductDetailView extends JDialog {
         //Display the discount portion.
         if(product instanceof DiscountedProduct && ((DiscountedProduct)product).getDiscountedBy() != 0.0){
             JLabel discountLabel = new JLabel("On Sale! " + ((DiscountedProduct)product).getDiscountedBy() + "% OFF!");
-            discountLabel.setBackground(Color.RED);
             discountLabel.setFont(ProjectConstants.TITLE_FONT);
+            discountLabel.setForeground(Color.RED);
             titlePanel.add(discountLabel, BorderLayout.SOUTH);
             productPrice = String.format("Was: $%1$,.2f NOW ONLY: $%2$,.2f", product.getPrice(), product.getCurrentPrice());
         }
