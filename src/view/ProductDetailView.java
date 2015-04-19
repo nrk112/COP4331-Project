@@ -118,7 +118,9 @@ public class ProductDetailView extends JDialog {
 
         JPanel panel = new JPanel();
 
-        //Make quantity label
+        //Make quantity labels
+        int qtyAvailable = (product.getQuantity() - buyer.getShoppingCartQuantity(product));
+        JLabel availableLabel = new JLabel("Qty Available: " + qtyAvailable + "  ");
         JLabel qtyLabel = new JLabel("Qty: ");
 
         //Make the quantity field
@@ -156,7 +158,7 @@ public class ProductDetailView extends JDialog {
                         break;
                 }
 
-                if (qtySelected <= product.getQuantity()) {
+                if (qtySelected <= qtyAvailable) {
 
                     //Add the specified amount to the cart.
                     for (int i = 0; i < qtySelected; i++) {
@@ -175,6 +177,7 @@ public class ProductDetailView extends JDialog {
         });
 
         //Add the stuff to the panel
+        panel.add(availableLabel);
         panel.add(qtyLabel);
         panel.add(qtyComboBox);
         panel.add(addButton);
