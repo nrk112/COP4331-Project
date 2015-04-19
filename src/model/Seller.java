@@ -2,7 +2,6 @@ package model;
 
 import controller.TransactionManager;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -47,7 +46,6 @@ public class Seller extends UserModel {
                 //Added because its not calculating the total revenue after the discount.
                 if (item instanceof DiscountedProduct) {
                     double percentDiscount = ((DiscountedProduct)item).getDiscountedBy() / 100.0;
-                    JOptionPane.showMessageDialog(null, percentDiscount, "", JOptionPane.ERROR_MESSAGE);
                     revenue += currentItem.getPrice() - (currentItem.getPrice() * percentDiscount);
                 } else {
                     revenue += currentItem.getPrice();
