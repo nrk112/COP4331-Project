@@ -119,7 +119,7 @@ public class ProductDetailView extends JDialog {
         JPanel panel = new JPanel();
 
         //Make quantity labels
-        int qtyAvailable = (product.getQuantity() - buyer.getShoppingCartQuantity(product));
+        final int qtyAvailable = (product.getQuantity() - buyer.getShoppingCartQuantity(product));
         JLabel availableLabel = new JLabel("Qty Available: " + qtyAvailable + "  ");
         JLabel qtyLabel = new JLabel("Qty: ");
 

@@ -53,6 +53,7 @@ public class InventoryManager {
      * @param price The product price.
      * @param quantity The number of products for sale.
      * @param discountedBy the discount amount as percentage.
+     * @param image
      */
     public void createProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy, String image) {
         Product product = ProductFactory.CreateProduct(productID,sellerID, name, description, cost, price, quantity, discountedBy, image);         

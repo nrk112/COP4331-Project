@@ -56,7 +56,7 @@ public class EditProductView extends JDialog {
      * Constructs and shows the add product view view
      * @param user Current instance of the seller object
      */
-    public EditProductView(int productID, Seller user) {
+    public EditProductView(final int productID, final Seller user) {
 
         //Get the reference to the product to edit.
         product = InventoryManager.getInstance().getProductByID(productID);

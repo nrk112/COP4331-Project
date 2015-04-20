@@ -78,7 +78,7 @@ public class SellerListView extends JDialog {
         return btn;
     }
     
-    private void displayData(List<Product> ProductsList, Seller user)
+    private void displayData(List<Product> ProductsList, final Seller user)
     {
         DefaultTableModel aModel = new DefaultTableModel()
         {            //setting the jtable read only
@@ -188,6 +188,7 @@ public class SellerListView extends JDialog {
         tbProducts.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {//alternate background color for rows
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setToolTipText("Double click anywhere in this row to edit this product.");
                 if (!isSelected) {
                     c.setBackground(row % 2 == 0 ? Color.white : Color.LIGHT_GRAY);
                     if(column==0){
