@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- * The window where users can sign up for service.
+ * The window where users can add a product to sell.
  */
 public class AddProductView extends JDialog {
 
@@ -132,7 +132,6 @@ public class AddProductView extends JDialog {
         int fillerX = ProjectConstants.FILLER_X;
         int fillerY = ProjectConstants.FILLER_Y;
 
-        //TODO: ADD A HIDDEN LABEL THAT WILL SHOW THE PICTURE WHEN SELECTED.
         mainPanel.add(Common.getFiller(fillerX, fillerY));
         mainPanel.add(heading);
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);

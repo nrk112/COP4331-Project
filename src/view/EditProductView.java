@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- *
+ * Displays the view where the user can edit a product for sale.
  */
 public class EditProductView extends JDialog {
 
@@ -250,7 +250,7 @@ public class EditProductView extends JDialog {
     }
 
     /**
-     * Validates the registration text fields.
+     * Validates the text fields.
      * @return True if all fields are valid.
      */
     private boolean validateFields() {

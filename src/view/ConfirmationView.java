@@ -12,13 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Displays a confirmation page that the products were purchased.
+ * Displays a confirmation page that presents the products that were purchased.
  */
 public class ConfirmationView extends JDialog {
 
     public ConfirmationView(Buyer user) {
 
-        this.buyer = user;
+        this.user = user;
 
         setModal(true);
 
@@ -37,7 +37,7 @@ public class ConfirmationView extends JDialog {
         //Add new button
         JPanel topPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
-        JButton addButton = CreateReturnButton(buyer);
+        JButton addButton = CreateReturnButton();
         bottomPanel.add(addButton);
 
         //Create the heading
@@ -53,7 +53,7 @@ public class ConfirmationView extends JDialog {
 
 
         //populate jtable with products
-        this.tbProducts = ShoppingCartManager.getInstance().DisplayData(InventoryManager.getInstance().getProductList(), buyer);
+        this.tbProducts = ShoppingCartManager.getInstance().displayData(InventoryManager.getInstance().getProductList(), user);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
 
         mainPanel.add(tableContainer, BorderLayout.CENTER);
@@ -65,8 +65,11 @@ public class ConfirmationView extends JDialog {
         setVisible(true);
     }
 
-
-    private JButton CreateReturnButton(final Buyer user)
+    /**
+     * Creates a confirmation button.
+     * @return The constructed button.
+     */
+    private JButton CreateReturnButton()
     {
         //Create the Save button.
         final JButton btn = new JButton("OK");
@@ -78,7 +81,6 @@ public class ConfirmationView extends JDialog {
             public void actionPerformed(ActionEvent e)
             {
                 user.clearShoppingCart();
-                //new MarketPlaceView(user);
                 dispose();
             }
         });
@@ -87,5 +89,5 @@ public class ConfirmationView extends JDialog {
 
 
     JTable tbProducts = new JTable();
-    Buyer buyer;
+    private Buyer user;
 }

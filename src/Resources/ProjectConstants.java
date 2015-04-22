@@ -31,7 +31,7 @@ public interface ProjectConstants {
      * @FILLER_Y The amount of pixels on the Y axis to use as spacing between view objects.
      */
     int FILLER_Y = 10;
-    
+
     /**
      * @SALES_TAX the sales tax in Florida
      */
@@ -72,7 +72,8 @@ public interface ProjectConstants {
      */
     int SCROLL_SPEED = 16;
 
+    /**
+     * @String Sets the default image file for use when one is not supplied.
+     */
     String DEFAULT_IMAGE_FILE = "database\\images\\default.jpg";
-
-
 }

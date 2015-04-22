@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Presents to the seller a list of their products
+ * A window that presents to the seller a list of their products
  */
 public class SellerListView extends JDialog {
 
@@ -49,7 +49,7 @@ public class SellerListView extends JDialog {
         JPanel topPanel = new JPanel();
         JButton addButton = CreateAddNewButton(user);
         topPanel.add(addButton);
-        
+
         //populate jtable with products
         displayData(InventoryManager.getInstance().getProductList(), user);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
@@ -63,21 +63,31 @@ public class SellerListView extends JDialog {
         add(mainPanel);
         setVisible(true);
     }
-    
+
+    /**
+     * Create the button to add a new product for sale.
+     * @param user The seller whos product list will be modified.
+     * @return The constructed button.
+     */
     private JButton CreateAddNewButton(final Seller user)
     {
         final JButton btn = new JButton("Add New Product");
-        btn.addActionListener(new ActionListener() 
+        btn.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InventoryManager.getInstance().AddProductView(user);
+                new AddProductView(user);
                 displayData(InventoryManager.getInstance().getProductList(), user);
             }
         });
         return btn;
     }
-    
+
+    /**
+     * Constructs a JTable full af a sellers products for sale.
+     * @param ProductsList The list of products to populate the table with.
+     * @param user The seller who's products will be displayed.
+     */
     private void displayData(List<Product> ProductsList, final Seller user)
     {
         DefaultTableModel aModel = new DefaultTableModel()
@@ -260,6 +270,6 @@ public class SellerListView extends JDialog {
     }
 
 
-    JTable tbProducts = new JTable();
-    Seller user;
+    private JTable tbProducts = new JTable();
+    private Seller user;
 }

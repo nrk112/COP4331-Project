@@ -15,12 +15,15 @@ import java.util.List;
 import java.util.Locale;
 
 /**
-  * Shopping Cart Manager handles all functions related with the shopping cart
+  * Shopping Cart Manager handles some functions related to the shopping cart.
   */
 public class ShoppingCartManager {
 
     private static final ShoppingCartManager instance = new ShoppingCartManager();
 
+    /**
+     * Constructor does nothing.
+     */
     private ShoppingCartManager() {
     }
 
@@ -32,17 +35,21 @@ public class ShoppingCartManager {
         return instance;
     }
 
-    public void BuyNow(Buyer user) {
-        TransactionManager.getInstance().BuyNow(user);
+    /**
+     * Passes the shopping cart to the transaction manager where the transactions can be created.
+     * @param user The buyer with attached shopping cart.
+     */
+    public void buyNow(Buyer user) {
+        TransactionManager.getInstance().buyNow(user);
     }
 
     /**
-     * reads all transaction line item data from transaction line item list to a text file.
-     * @param ProductsList
-     * @param user
-     * @return
+     * Creates a JTable for use in the shopping cart and confirmation views.
+     * @param ProductsList The list of products to populate the table with.
+     * @param user The buyer whos products are populating the table.
+     * @return The constructed JTable.
      */
-    public JTable DisplayData(List<Product> ProductsList, Buyer user)
+    public JTable displayData(List<Product> ProductsList, Buyer user)
     {
         JTable tbProducts = new JTable();
         DefaultTableModel aModel = new DefaultTableModel()
@@ -55,13 +62,7 @@ public class ShoppingCartManager {
         };
 
         //setting the column name
-        Object[] tableColumnNames = new Object[5];
-        tableColumnNames[0] = "Name";
-        tableColumnNames[1] = "Price per Item";
-        tableColumnNames[2] = "Quantity";
-        tableColumnNames[3] = "Total Price per item";
-        tableColumnNames[4] = "Totals";
-
+        Object[] tableColumnNames = {"Name", "Price per Item", "Quantity", "Total Price per item", "Totals"};
         aModel.setColumnIdentifiers(tableColumnNames);
 
         if (ProductsList == null) {
@@ -73,7 +74,8 @@ public class ShoppingCartManager {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
         NumberFormat percentageFormat = NumberFormat.getPercentInstance(locale);
 
-        Object[] objects = new Object[5];
+        int columns = tableColumnNames.length;
+        Object[] objects = new Object[columns];
         Product currentProduct;
         double subTotal = 0.0;
         //Write each product to a products file.
@@ -87,7 +89,7 @@ public class ShoppingCartManager {
                 objects[0] = currentProduct.getName();
                 objects[1] = currencyFormat.format(currentProduct.getCurrentPrice());
                 objects[2] = quantity;
-                objects[3] = currencyFormat.format(currentProduct.getCurrentPrice()*quantity);
+                objects[4] = currencyFormat.format(currentProduct.getCurrentPrice()*quantity);
                 aModel.addRow(objects);
                 subTotal += (currentProduct.getCurrentPrice()*quantity);
                 list.add(currentProduct.getProductID());

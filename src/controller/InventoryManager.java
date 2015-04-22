@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import Resources.ProjectConstants;
 import model.DiscountedProduct;
 import model.Product;
 import model.ProductFactory;
-import model.Seller;
-import view.AddProductView;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,7 +14,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /**
- * Handles all functions related to seller product management. Singleton class.
+ * Handles all functions related to seller product management.
  */
 public class InventoryManager {
 
@@ -60,6 +53,17 @@ public class InventoryManager {
         addProduct(product);
     }
 
+    /**
+     * Edits an existing product.
+     * @param productID The product id.
+     * @param name The name of the product.
+     * @param description The description of the product.
+     * @param cost The sellers cost of the product.
+     * @param price The MSRP price of the product.
+     * @param quantity The quantity on hand of the product.
+     * @param discountedBy The percent the product is discounted by.
+     * @param image The filename of the image of the product.
+     */
     public void editProductByID(int productID, String name, String description, double cost, double price, int quantity, double discountedBy, String image) {
 
         for (Product product : products) {
@@ -79,10 +83,10 @@ public class InventoryManager {
     }
 
     /**
-     * Decrement the quantity of a particular product.
+     * Decrement the quantity of a particular product one at a time.
      * @param productID The ID of the product sold
      * @param qtySold How many of product were sold
-     * @postcondition Must call writeProductsToFile() after updating all quantities.
+     * @postcondition Must call InventoryManager.populateProductList() after updating all quantities.
      */
     public void decrementQuantityByID(int productID, int qtySold) {
 
@@ -95,9 +99,8 @@ public class InventoryManager {
         writeProductsToFile();
     }
 
-
     /**
-     * Gets a specific product by its ID
+     * Gets a specific product by its ID.
      * @param ID the ID of the product to get
      * @return the product
      */
@@ -110,19 +113,18 @@ public class InventoryManager {
         return null;
     }
 
-
    /**
-    *  Get product list
+    * Get product list
     * @return the product ArrayList.
     */
     public ArrayList getProductList() {
         return products;
     }
 
-
     /**
      * Create a sequential productID.
      * @return the productID.
+     * @precondition products should never be removed or deleted, only set to 0 quantity.
      */
     public int getProductId(){
          int newID;
@@ -134,7 +136,6 @@ public class InventoryManager {
          }
          return newID + 1;
      }
-
 
     /**
      * Populates InventoryManager with all available products by reading from text file.
@@ -222,9 +223,8 @@ public class InventoryManager {
         }
     }
 
-
     /**
-     * Populates the product list.     * 
+     * Clears and repopulates the product list.
      */
     private void populateProductList() {
         if(products.size()> 0) {
@@ -232,7 +232,6 @@ public class InventoryManager {
         }        
         readProductsFromFile();
     }
-
 
     /**
      * Add a product to the list.
@@ -246,9 +245,4 @@ public class InventoryManager {
             writeProductsToFile();
         }
     }
-
-    public void AddProductView(Seller user) {
-        new AddProductView(user);
-    }
-
 }

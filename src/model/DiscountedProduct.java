@@ -7,6 +7,11 @@ public class DiscountedProduct extends ProductDecorator {
 
     private double discountedBy;
 
+    /**
+     * Constructor saves an instance of the product to be decorated and then decorates it with the discount.
+     * @param product The product to add a discount.
+     * @param discountedBy The percentage the product is discounted by.
+     */
     public DiscountedProduct(Product product, double discountedBy)
     {
         super(product);
@@ -20,11 +25,19 @@ public class DiscountedProduct extends ProductDecorator {
         return Math.round(newPrice*100.0)/100.0;
     }
 
+    /**
+     * Returns the discount associated with this product.
+     * @return The discount.
+     */
     public double getDiscountedBy()
     {
         return discountedBy;
     }
 
+    /**
+     * Sets the discount associated with this product.
+     * @param discountedBy the percentage of discount.
+     */
     public void setDiscountedBy(double discountedBy) {
         this.discountedBy = discountedBy;
     }

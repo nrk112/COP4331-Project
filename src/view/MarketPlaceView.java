@@ -14,7 +14,7 @@ import java.awt.event.MouseListener;
 import java.util.Iterator;
 
 /**
- * Displays all the items currently available for sale in the marketplace.
+ * The window that displays all the items currently available for sale in the marketplace.
  */
 public class MarketPlaceView extends JDialog {
 

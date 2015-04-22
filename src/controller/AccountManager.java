@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Handles all functions related to customer registration. Singleton class.
+ * Handles all functions related to customer registration and is considered the entry point for the program.
  */
 public class AccountManager {
 
@@ -43,7 +43,6 @@ public class AccountManager {
 
     /**
      * Finds the specified user and logs them in.
-     * THIS FUNCTION IS SHOWN AS loginClicked() on the diagrams.
      * @param userName The userName of the user to authorize.
      * @param password The password of the user to authorize.
      * @return true if successful.
@@ -232,7 +231,7 @@ public class AccountManager {
                         currentUser.getCity() + "," +
                         currentUser.getState() + "," +
                         currentUser.getZip() + "," +
-                        currentUser.getIsSeller() + ","
+                        currentUser.isSeller() + ","
                 );
             }
             pw.close();

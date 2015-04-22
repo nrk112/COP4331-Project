@@ -10,7 +10,7 @@ import java.io.IOException;
  *Has functions that are common to more than one other class.
  */
 public class Common {
-   
+
     /**
      * Creates a component that can be used to insert whitespace around GUI elements.
      * @param x the amount of whitespace pixels along the x axis.
@@ -21,7 +21,7 @@ public class Common {
         Dimension size = new Dimension(x, y);
         return new Box.Filler(size, size, size);//Min Max and Preferred are all the same
     }
-    
+
     /**
      * Creates a JTextField that will highlight the text when it gets focus.
      * @param label The temporary filler text.

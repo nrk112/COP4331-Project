@@ -55,7 +55,7 @@ public class ShoppingCartView extends JDialog {
         bottomPanel.add(createClearCartBtn());
 
         //populate jtable with products
-        this.tbProducts = ShoppingCartManager.getInstance().DisplayData(InventoryManager.getInstance().getProductList(), this.user);
+        this.tbProducts = ShoppingCartManager.getInstance().displayData(InventoryManager.getInstance().getProductList(), this.user);
         JScrollPane tableContainer = new JScrollPane(tbProducts);
 
         //Add the panels to the main one.
@@ -110,7 +110,7 @@ public class ShoppingCartView extends JDialog {
                 if(ShoppingCartView.this.user.getShoppingCart().size() == 0) {
                     JOptionPane.showMessageDialog(null, "Your Cart is empty, please add something to purchase.");
                 }else if(validateFields()) {
-                    ShoppingCartManager.getInstance().BuyNow(user);
+                    ShoppingCartManager.getInstance().buyNow(user);
 
                     //Go confirmation view.
                     new ConfirmationView(user);

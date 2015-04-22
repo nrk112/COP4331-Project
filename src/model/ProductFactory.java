@@ -1,7 +1,7 @@
 package model;
 
 /**
- *Creates products
+ *Creates regular or decorated products.
  */
 public class ProductFactory {
 

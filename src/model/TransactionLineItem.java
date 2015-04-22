@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-import java.util.Comparator;
-
 /**
- *
  * Holds the Shopping Cart item for recording purposes
  */
 public class TransactionLineItem implements LineItem{
@@ -21,7 +13,18 @@ public class TransactionLineItem implements LineItem{
     private double price;
     private int quantity;
 
-    public TransactionLineItem(int transactionLineItemId, int productID, int sellerID, int buyerID, String name, double cost, double price, int quantity) {      
+    /**
+     * Creates the transaction line item object.
+     * @param transactionLineItemId The ID of this item.
+     * @param productID The ID of the product associated with this item.
+     * @param sellerID The sellers ID
+     * @param buyerID The buyers ID
+     * @param name The name of the product sold.
+     * @param cost The sellers cost of the product.
+     * @param price The price of the product.
+     * @param quantity The quantity sold.
+     */
+    public TransactionLineItem(int transactionLineItemId, int productID, int sellerID, int buyerID, String name, double cost, double price, int quantity) {
         this.lineItemID     = transactionLineItemId;
         this.productID      = productID;
         this.sellerID       = sellerID;
@@ -70,17 +73,4 @@ public class TransactionLineItem implements LineItem{
     public int getLineItemID() {
         return lineItemID;
     }
-     
-    public static Comparator<LineItem> SortByProductID()
-    {
-       Comparator comp = new Comparator<LineItem>()
-       {            
-            public int compare(LineItem s1, LineItem s2)
-            {
-                return ((Integer)s1.productID).compareTo(s2.productID);
-            }        
-        };
-    return comp;
-    }
-    
 }
