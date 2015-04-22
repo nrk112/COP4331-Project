@@ -4,16 +4,15 @@
  * and open the template in the editor.
  */
 
-import controller.TransactionManager;
+import cop4331.controller.TransactionManager;
 import java.util.ArrayList;
-import model.TransactionLineItem;
+import cop4331.model.TransactionLineItem;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

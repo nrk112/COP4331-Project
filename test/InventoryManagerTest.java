@@ -4,18 +4,17 @@
  * and open the template in the editor.
  */
 
-import controller.InventoryManager;
+import cop4331.controller.InventoryManager;
 import java.util.ArrayList;
-import model.DiscountedProduct;
-import model.Product;
-import model.ProductFactory;
+import cop4331.model.DiscountedProduct;
+import cop4331.model.Product;
+import cop4331.model.ProductFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

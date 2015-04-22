@@ -4,18 +4,17 @@
  * and open the template in the editor.
  */
 
-import controller.AccountManager;
+import cop4331.controller.AccountManager;
 import junit.framework.Assert;
-import model.Buyer;
-import model.Seller;
-import model.UserFactory;
-import model.UserModel;
+import cop4331.model.Buyer;
+import cop4331.model.Seller;
+import cop4331.model.UserFactory;
+import cop4331.model.UserModel;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
