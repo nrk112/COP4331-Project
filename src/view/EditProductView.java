@@ -55,6 +55,7 @@ public class EditProductView extends JDialog {
     /**
      * Constructs and shows the add product view view
      * @param user Current instance of the seller object
+     * @param productID The ID of the product to edit.
      */
     public EditProductView(final int productID, final Seller user) {
 

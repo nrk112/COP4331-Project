@@ -100,7 +100,7 @@ public class AccountManager {
 
     /**
      * Create a user, then add it to the list.
-     * @param userID
+     * @param userID The ID of the user.
      * @param fullName The users full name.
      * @param username The users name.
      * @param password The users password.
@@ -109,7 +109,7 @@ public class AccountManager {
      * @param state The users state.
      * @param zip The users zip code.
      * @param isSeller True if the user is a seller.
-     * @return 
+     * @return True if the user was successfully created.
      */
     public boolean createUser(int userID,
                            String fullName,

@@ -8,72 +8,72 @@ import java.awt.*;
 public interface ProjectConstants {
 
     /**
-     * @WINDOW_WIDTH The standard window width
+     * The standard window width
      */
     int WINDOW_WIDTH = 800;
 
     /**
-     * @WINDOW_HEIIGHT The standard window height
+     * The standard window height
      */
     int WINDOW_HEIGHT = 600;
 
     /**
-     * @TEXTFIELD_WIDTH The standard width for most JTextField objects
+     * The standard width for most JTextField objects
      */
     int TEXTFIELD_WIDTH = 350;
 
     /**
-     * @FILLER_X The amount of pixels on the X axis to use as spacing between view objects.
+     * The amount of pixels on the X axis to use as spacing between view objects.
      */
     int FILLER_X = 5;
 
     /**
-     * @FILLER_Y The amount of pixels on the Y axis to use as spacing between view objects.
+     * The amount of pixels on the Y axis to use as spacing between view objects.
      */
     int FILLER_Y = 10;
 
     /**
-     * @SALES_TAX the sales tax in Florida
+     * the sales tax in Florida
      */
     double SALES_TAX = .06;
 
     /**
-     * @TITLE_FONT the font to use for large title text.
+     * the font to use for large title text.
      */
     Font TITLE_FONT = new Font("Calibri", Font.BOLD, 24);
 
     /**
-     * @MEDIUM_FONT a medium sized font for tables and such.
+     * a medium sized font for tables and such.
      */
     Font MEDIUM_FONT = new Font("Calibri", Font.PLAIN, 16);
 
     /**
-     * @TABLE_HEIGHT the height to use for all table rows.
+     * the height to use for all table rows.
      */
     int TABLE_HEIGHT = 28;
 
     /**
-     * @USER_FILE The location and name of the text file to store the users information in.
+     * The location and name of the text file to store the users information in.
      */
     String USER_FILE = "database\\users.txt";
 
     /**
-     * @TRANSACTION_FILE The location and name of the text file to store the transaction information in.
+     * The location and name of the text file to store the transaction information in.
      */
     String TRANSACTION_FILE = "database\\transactions.txt";
 
     /**
-     * @PRODUCT_FILE The location and name of the text file to store the product information in.
+     * The location and name of the text file to store the product information in.
      */
     String PRODUCT_FILE = "database\\products.txt";
 
     /**
-     * @SCROLL_SPEED The speed that the scroll bars will scroll.
+     * The speed that the scroll bars will scroll.
      */
     int SCROLL_SPEED = 16;
 
     /**
-     * @String Sets the default image file for use when one is not supplied.
+     * Sets the default image file for use when one is not supplied.
      */
     String DEFAULT_IMAGE_FILE = "database\\images\\default.jpg";
 }

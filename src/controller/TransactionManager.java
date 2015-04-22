@@ -52,7 +52,7 @@ public class TransactionManager {
     /**
      * Create a sequential productID.
      * @return the productID.
-     * @precondition transactions can not be removed or deleted for the new ID to be valid.
+     * @pre transactions can not be removed or deleted for the new ID to be valid.
      */
     public int getTransactionLineItemId(){
         int newID;
@@ -192,7 +192,7 @@ public class TransactionManager {
      * @param price The price the item was sold for.
      * @param quantity The number of products purchased.
      * @return The constructed transaction line item.
-     * @precondition Quantity should always be 1.
+     * @pre Quantity should always be 1.
      */
     private TransactionLineItem createLineItem(int transactionLineItemID, int productID, int sellerID, int buyerID, String name, double cost, double price, int quantity) {
 

@@ -46,7 +46,7 @@ public class InventoryManager {
      * @param price The product price.
      * @param quantity The number of products for sale.
      * @param discountedBy the discount amount as percentage.
-     * @param image
+     * @param image The full filename of the image.
      */
     public void createProduct(int productID, int sellerID, String name, String description, double cost, double price, int quantity, double discountedBy, String image) {
         Product product = ProductFactory.CreateProduct(productID,sellerID, name, description, cost, price, quantity, discountedBy, image);         
@@ -86,7 +86,7 @@ public class InventoryManager {
      * Decrement the quantity of a particular product one at a time.
      * @param productID The ID of the product sold
      * @param qtySold How many of product were sold
-     * @postcondition Must call InventoryManager.populateProductList() after updating all quantities.
+     * @post Must call InventoryManager.populateProductList() after updating all quantities.
      */
     public void decrementQuantityByID(int productID, int qtySold) {
 
@@ -124,7 +124,7 @@ public class InventoryManager {
     /**
      * Create a sequential productID.
      * @return the productID.
-     * @precondition products should never be removed or deleted, only set to 0 quantity.
+     * @pre products should never be removed or deleted, only set to 0 quantity.
      */
     public int getProductId(){
          int newID;
